@@ -330,27 +330,6 @@ This command delegates heavy exploration to **background subagent(s)** to keep t
 - Include raw search results
 - Launch docs-researcher for simple bug fixes or internal refactoring
 
-## Context Reporting
-
-At the end of this command, report estimated context utilization:
-
-**Format**: `**Context**: ~[X]K / 200K tokens ([Y]%)`
-
-**Estimation guidance**:
-- Codebase-only exploration: ~15-30K tokens
-- Full exploration (both agents): ~25-50K tokens
-- Complex exploration with many files: ~40-70K tokens
-
-**Threshold warnings**:
-- 40-60%: Optimal range, continue normally
-- 60-80%: Consider compacting after current phase
-- >80%: Recommend immediate compaction before continuing
-
-If context exceeds 60%, append warning:
-```
-⚠️ Context at [Y]% - consider running `/compact` or starting fresh session
-```
-
 ## Important
 
 1. **Conditional research** - Only launch docs-researcher when external documentation adds value

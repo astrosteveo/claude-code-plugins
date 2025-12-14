@@ -80,12 +80,6 @@ All artifacts are stored in `.claude/workflows/NNN-slug/`:
 - Avoid context bloat from excessive grep/glob/read — use subagents instead
 - Summarize build/test output to errors only
 
-**Context Reporting**:
-When completing workflow phases, report estimated context utilization:
-- Format: `**Context**: ~[X]K / 200K tokens ([Y]%)`
-- Warn users when approaching 60% threshold
-- Recommend compaction at 80%+ utilization
-
 ### The Leverage Hierarchy
 
 ```
