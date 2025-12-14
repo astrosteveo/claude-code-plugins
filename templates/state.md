@@ -5,6 +5,7 @@
 **Directory**: docs/{{NNN}}-{{SLUG}}
 **Current Phase**: {{PHASE}}
 **Last Updated**: {{DATE}}
+**Context Estimate**: ~[X]K / 200K tokens ([Y]%)
 
 ## Phase Status
 

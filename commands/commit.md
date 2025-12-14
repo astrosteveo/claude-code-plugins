@@ -188,6 +188,8 @@ Artifacts committed:
 
 [files changed] files changed, [insertions] insertions(+), [deletions] deletions(-)
 
+**Context**: ~[X]K / 200K tokens ([Y]%)
+
 Workflow artifacts included for traceability.
 ```
 
@@ -197,6 +199,28 @@ Workflow artifacts included for traceability.
 
 Reason: [specific issue]
 Resolution: [specific action to take]
+```
+
+## Context Reporting
+
+At the end of this command, report estimated context utilization:
+
+**Format**: `**Context**: ~[X]K / 200K tokens ([Y]%)`
+
+**Estimation guidance**:
+- Light exploration/research: ~20-40K tokens
+- Medium complexity with multiple file reads: ~40-80K tokens
+- Heavy implementation with many tool calls: ~80-120K tokens
+- Extended session with background agents: ~100-150K tokens
+
+**Threshold warnings**:
+- 40-60%: Optimal range, continue normally
+- 60-80%: Consider compacting after current phase
+- >80%: Recommend immediate compaction before continuing
+
+If context exceeds 60%, append warning:
+```
+⚠️ Context at [Y]% - consider running `/compact` or starting fresh session
 ```
 
 ## Safety Rules
