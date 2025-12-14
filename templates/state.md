@@ -2,10 +2,18 @@
 
 **Feature**: {{FEATURE}}
 **Slug**: {{SLUG}}
-**Directory**: docs/{{NNN}}-{{SLUG}}
+**Directory**: .claude/workflows/{{SLUG}}
 **Current Phase**: {{PHASE}}
+**Research Scope**: {{SCOPE}}  <!-- full (codebase + docs) | codebase only -->
 **Last Updated**: {{DATE}}
 **Context Estimate**: ~[X]K / 200K tokens ([Y]%)
+
+## Background Agents
+
+| Agent | Task ID | Status |
+|-------|---------|--------|
+| codebase-explorer | {{TASK_ID}} | running/completed |
+| docs-researcher | {{TASK_ID}} | running/completed |  <!-- omit row if codebase only -->
 
 ## Phase Status
 
