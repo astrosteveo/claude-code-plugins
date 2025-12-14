@@ -24,6 +24,12 @@
   "skills": [
     "./skills/workflow-guide/SKILL.md",
     "./skills/command-creator/SKILL.md",
-    "./skills/epic-explore/SKILL.md"
+    "./skills/epic-explore/SKILL.md",
+    "./skills/epic-plan/SKILL.md",
+    "./skills/epic-implement/SKILL.md",
+    "./skills/epic-validate/SKILL.md",
+    "./skills/epic-commit/SKILL.md",
+    "./skills/epic-handoff/SKILL.md",
+    "./skills/epic-resume/SKILL.md"
   ]
 }
