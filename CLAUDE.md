@@ -20,12 +20,14 @@ This is a Claude Code marketplace plugin implementing the "Frequent Intentional 
 │   ├── plan.md                   # /plan - Create implementation plan
 │   ├── implement.md              # /implement - Execute plan phase-by-phase
 │   ├── validate.md               # /validate - Run tests/lint/build
-│   └── commit.md                 # /commit - Create documented commit
+│   ├── commit.md                 # /commit - Create documented commit
+│   ├── handoff.md                # /handoff - Create session handoff document
+│   └── resume.md                 # /resume - Resume from handoff or workflow
 ├── templates/                    # Artifact templates
 │   ├── codebase.md, docs.md      # Research output templates
 │   ├── implementation-plan.md    # Plan structure template
-│   ├── progress.md               # Implementation progress template
-│   └── state.md                  # Workflow state tracker
+│   ├── state.md                  # Workflow state + progress tracker
+│   └── handoff.md                # Handoff document template
 └── skills/                       # Interactive skills
 ```
 
@@ -33,11 +35,13 @@ This is a Claude Code marketplace plugin implementing the "Frequent Intentional 
 
 | Command | Purpose |
 |---------|---------|
-| `/explore <feature>` | Launch research agents, creates `.claude/workflows/NNN-slug/research/` |
+| `/explore <feature>` | Launch research agents, creates `.claude/workflows/NNN-slug/` |
 | `/plan` | Create phased implementation plan from research |
 | `/implement [--phase N] [--continue]` | Execute plan phase-by-phase with verification |
 | `/validate [--fix]` | Run tests, lint, type check, build |
 | `/commit` | Create commit with workflow artifacts |
+| `/handoff [description]` | Create handoff document for session transfer |
+| `/resume [path]` | Resume from handoff or workflow (picker if no path) |
 
 ## Agents
 
@@ -48,19 +52,20 @@ This is a Claude Code marketplace plugin implementing the "Frequent Intentional 
 
 ## Workflow Artifacts
 
-All artifacts are stored in `.claude/workflows/NNN-slug/`:
+All artifacts are stored in `.claude/workflows/NNN-slug/` (flat structure):
 ```
 .claude/workflows/001-add-authentication/
-├── state.md                    # Current phase, task IDs, status
-├── research/
-│   ├── codebase.md            # Internal codebase findings
-│   └── docs.md                # External documentation (if researched)
-├── plans/
-│   └── implementation-plan.md # Phased plan with verification steps
-├── implementation/
-│   └── progress.md            # Phase completion tracking
-└── validation/
-    └── results.md             # Test/lint/build results
+├── state.md                    # Current phase, task IDs, status, progress tracking
+├── codebase-research.md        # Internal codebase findings
+├── docs-research.md            # External documentation (if researched)
+├── plan.md                     # Phased plan with verification steps
+└── validation.md               # Test/lint/build results
+```
+
+Handoff documents are stored separately in `.claude/handoffs/NNN-slug/`:
+```
+.claude/handoffs/001-add-authentication/
+└── 2025-01-15_14-30-22_phase2-complete.md
 ```
 
 ## Core Workflow Principles (from VISION.md)

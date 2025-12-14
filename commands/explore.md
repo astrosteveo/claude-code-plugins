@@ -34,12 +34,9 @@ Generate a kebab-case slug from the feature description:
 - "add user authentication" → `add-user-authentication`
 - "fix payment bug" → `fix-payment-bug`
 
-Create directory structure:
+Create directory (flat structure, no subdirectories):
 ```bash
-mkdir -p .claude/workflows/[NNN]-[slug]/research
-mkdir -p .claude/workflows/[NNN]-[slug]/plans
-mkdir -p .claude/workflows/[NNN]-[slug]/implementation
-mkdir -p .claude/workflows/[NNN]-[slug]/validation
+mkdir -p .claude/workflows/[NNN]-[slug]
 ```
 
 ### 2. Determine Research Scope
@@ -84,7 +81,7 @@ Task tool parameters:
   prompt: |
     Explore this codebase to understand: [feature description]
 
-    Document your findings to: .claude/workflows/[NNN-slug]/research/codebase.md
+    Document your findings to: .claude/workflows/[NNN-slug]/codebase-research.md
 
     Focus on:
     - Relevant files with file:line references
@@ -107,7 +104,7 @@ Task tool parameters:
   prompt: |
     Research external documentation and best practices for: [feature description]
 
-    Document your findings to: .claude/workflows/[NNN-slug]/research/docs.md
+    Document your findings to: .claude/workflows/[NNN-slug]/docs-research.md
 
     Focus on:
     - Official documentation for relevant libraries
@@ -150,10 +147,10 @@ After launching agent(s), create the workflow state tracker.
 
 | Phase | Status | Artifact |
 |-------|--------|----------|
-| Explore | in_progress | research/*.md |
-| Plan | pending | plans/implementation-plan.md |
-| Implement | pending | implementation/progress.md |
-| Validate | pending | validation/results.md |
+| Explore | in_progress | *-research.md |
+| Plan | pending | plan.md |
+| Implement | pending | (state.md) |
+| Validate | pending | validation.md |
 | Commit | pending | git commit |
 ```
 
@@ -178,10 +175,10 @@ After launching agent(s), create the workflow state tracker.
 
 | Phase | Status | Artifact |
 |-------|--------|----------|
-| Explore | in_progress | research/codebase.md |
-| Plan | pending | plans/implementation-plan.md |
-| Implement | pending | implementation/progress.md |
-| Validate | pending | validation/results.md |
+| Explore | in_progress | codebase-research.md |
+| Plan | pending | plan.md |
+| Implement | pending | (state.md) |
+| Validate | pending | validation.md |
 | Commit | pending | git commit |
 ```
 
@@ -209,8 +206,8 @@ TaskOutput tool parameters:
 **Note:** If both agents running, call both TaskOutput tools in parallel to wait simultaneously.
 
 After agent(s) complete, verify artifacts exist:
-- `.claude/workflows/[NNN-slug]/research/codebase.md` (always)
-- `.claude/workflows/[NNN-slug]/research/docs.md` (if docs-researcher ran)
+- `.claude/workflows/[NNN-slug]/codebase-research.md` (always)
+- `.claude/workflows/[NNN-slug]/docs-research.md` (if docs-researcher ran)
 
 Update `state.md`: Set Explore status to "complete".
 

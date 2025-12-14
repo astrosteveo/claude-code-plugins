@@ -1,8 +1,6 @@
+# Working with Coding Agents in Real Codebases
 
-
-# Getting AI to Work in Complex Codebases
-
-It seems pretty well-accepted that AI coding tools struggle with real production codebases. The Stanford study on AI's impact on developer productivity found:
+Coding agents are exceptional at focused  The Stanford study on AI's impact on developer productivity found:
 
 1. A lot of the "extra code" shipped by AI tools ends up just reworking the slop that was shipped last week.
 2. Coding agents are great for new projects or small changes, but in large established codebases, they can often make developers *less* productive.

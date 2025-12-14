@@ -53,13 +53,13 @@ From the feature directory, read:
 
 | Document | Purpose |
 |----------|---------|
-| `plans/implementation-plan.md` | The approved plan to follow |
-| `implementation/progress.md` | Previous progress (if exists) |
+| `plan.md` | The approved plan to follow |
+| `state.md` | Previous progress (in Current Progress section) |
 
 Determine starting point:
 - If `--phase N` provided → Start at phase N
-- If `--continue` provided → Resume from progress.md
-- If progress.md exists → Ask user: resume or restart?
+- If `--continue` provided → Resume from state.md progress
+- If state.md has progress → Ask user: resume or restart?
 - Otherwise → Start at phase 1
 
 Update `state.md`: Set Implement status to "in_progress".
@@ -149,36 +149,37 @@ npm run typecheck # or cargo check, mypy, etc.
 
 #### 3f. Update Progress
 
-Write/update `implementation/progress.md`:
+Update the `## Current Progress` section in `state.md`:
 
 ```markdown
-# Implementation Progress
+## Current Progress
 
-**Feature**: [description]
-**Last Updated**: [timestamp]
-**Current Phase**: [N] of [total]
+_Last Updated: [timestamp]_
 
-## Phase Status
-
+### Phase Summary
 | Phase | Status | Notes |
 |-------|--------|-------|
 | Phase 1 | ✓ Complete | [notes] |
 | Phase 2 | → In Progress | [notes] |
 | Phase 3 | Pending | |
 
-## Current Phase Details
-
-### Completed
+### Active Work
 - [x] Change 1
 - [x] Change 2
+- [ ] Current change in progress
 
 ### Verification Results
-- Tests: PASS
-- Lint: PASS
-- Types: PASS
+| Check | Status | Notes |
+|-------|--------|-------|
+| Tests | PASS | 42 passed |
+| Lint | PASS | No issues |
+| Types | PASS | No errors |
 
-### Deviations
-[None / Description of any deviations]
+## Deviations from Plan
+
+| Deviation | Reason | Impact |
+|-----------|--------|--------|
+| None | - | - |
 ```
 
 ### 4. Phase Transition
@@ -257,7 +258,7 @@ Phases: [N]/[N] complete
 Verification: All automated checks passed
 
 Artifacts:
-- Progress: implementation/progress.md
+- Progress: state.md (Current Progress section)
 - Changes: [list of modified files]
 
 **Context**: ~[X]K / 200K tokens ([Y]%)
@@ -269,7 +270,7 @@ Next: Run `/validate`, then `/commit`
 
 1. **Plan is law** - Follow it exactly; deviations require human approval
 2. **Verify every phase** - Never skip automated or manual verification
-3. **Document everything** - Progress.md enables session resumption
+3. **Document everything** - state.md progress section enables session resumption
 4. **Stop on failure** - Don't proceed if verification fails
 5. **Ask, don't assume** - When uncertain, use AskUserQuestion
 
@@ -278,7 +279,7 @@ Next: Run `/validate`, then `/commit`
 If you encounter something unexpected:
 
 1. **STOP** - Do not continue implementing
-2. **DOCUMENT** - Record the deviation in progress.md
+2. **DOCUMENT** - Record the deviation in state.md
 3. **COMMUNICATE** - Explain what's different and why
 4. **ASK** - Get human guidance via AskUserQuestion
 5. **WAIT** - Do not proceed without explicit direction

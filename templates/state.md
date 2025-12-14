@@ -1,26 +1,59 @@
-# Workflow State
+---
+feature: {{SLUG}}
+current_phase: {{PHASE}}
+created: {{DATE}}
+last_updated: {{DATE}}
+---
 
-**Feature**: {{FEATURE}}
-**Slug**: {{SLUG}}
-**Directory**: .claude/workflows/{{SLUG}}
-**Current Phase**: {{PHASE}}
-**Research Scope**: {{SCOPE}}  <!-- full (codebase + docs) | codebase only -->
-**Last Updated**: {{DATE}}
-**Context Estimate**: ~[X]K / 200K tokens ([Y]%)
+# Workflow State: {{FEATURE}}
+
+## Phase Status
+
+| Phase | Status | Artifact |
+|-------|--------|----------|
+| Explore | pending | *-research.md |
+| Plan | pending | plan.md |
+| Implement | pending | (this file) |
+| Validate | pending | validation.md |
+| Commit | pending | git commit |
 
 ## Background Agents
 
 | Agent | Task ID | Status |
 |-------|---------|--------|
 | codebase-explorer | {{TASK_ID}} | running/completed |
-| docs-researcher | {{TASK_ID}} | running/completed |  <!-- omit row if codebase only -->
+<!-- Add docs-researcher row if research scope includes external docs -->
 
-## Phase Status
+## Current Progress
 
-| Phase | Status | Artifact |
-|-------|--------|----------|
-| Explore | pending/complete | research/*.md |
-| Plan | pending/complete | plans/implementation-plan.md |
-| Implement | pending/in_progress/complete | implementation/progress.md |
-| Validate | pending/complete | validation/results.md |
-| Commit | pending/complete | (git commit) |
+_Updated during implementation phase._
+
+### Phase Summary
+| Phase | Status | Notes |
+|-------|--------|-------|
+| Phase 1 | pending | |
+| Phase 2 | pending | |
+
+### Active Work
+- [ ] Current task in progress
+
+### Verification Results
+| Check | Status | Notes |
+|-------|--------|-------|
+| Tests | pending | |
+| Lint | pending | |
+| Types | pending | |
+
+## Deviations from Plan
+
+| Deviation | Reason | Impact |
+|-----------|--------|--------|
+| None | - | - |
+
+## Blockers
+
+_None_
+
+## Next Steps
+
+1. Run next phase command

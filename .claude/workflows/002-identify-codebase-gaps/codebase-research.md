@@ -1,3 +1,11 @@
+---
+feature: 002-identify-codebase-gaps
+phase: research
+topic: codebase
+created: 2025-12-14
+status: complete
+---
+
 # Codebase Exploration: Identify Gaps and Missing Features
 
 **Date**: 2025-12-14

@@ -165,7 +165,7 @@ Create validation summary:
 
 ### 5. Write Validation Report
 
-Write results to: `[feature-dir]/validation/results.md`
+Write results to: `[feature-dir]/validation.md`
 
 Use template: `${CLAUDE_PLUGIN_ROOT}/templates/validation-results.md`
 
@@ -271,7 +271,7 @@ Lint: Clean
 Types: No errors
 Build: Success (12s)
 
-Artifact: validation/results.md
+Artifact: validation.md
 
 **Context**: ~[X]K / 200K tokens ([Y]%)
 
@@ -286,7 +286,7 @@ Failed Checks:
 - Tests: 2 failures
 - Build: Missing dependency
 
-Details in: validation/results.md
+Details in: validation.md
 
 Fix issues, then run `/validate` again.
 ```

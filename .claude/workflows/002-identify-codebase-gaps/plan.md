@@ -1,8 +1,15 @@
+---
+feature: 002-identify-codebase-gaps
+phase: plan
+created: 2025-12-14
+status: complete
+---
+
 # Implementation Plan: Remove Subagent Context Reporting
 
 **Date**: 2025-12-14
 **Feature Slug**: 002-identify-codebase-gaps
-**Research**: [Codebase](../research/codebase.md)
+**Research**: [Codebase](./codebase-research.md)
 
 ## Goal
 

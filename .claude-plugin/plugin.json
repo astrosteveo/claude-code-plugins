@@ -1,5 +1,5 @@
 {
-  "name": "explore-plan-implement",
+  "name": "epic",
   "version": "1.0.0",
   "description": "Structured workflow plugin: explore, plan, implement, validate, commit with artifact documentation",
   "author": {
@@ -17,7 +17,9 @@
     "./commands/plan.md",
     "./commands/implement.md",
     "./commands/validate.md",
-    "./commands/commit.md"
+    "./commands/commit.md",
+    "./commands/handoff.md",
+    "./commands/resume.md"
   ],
   "skills": [
     "./skills/workflow-guide/SKILL.md",

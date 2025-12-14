@@ -1,3 +1,11 @@
+---
+feature: 001-context-window-progress-indicator
+phase: research
+topic: codebase
+created: 2025-12-13
+status: complete
+---
+
 # Codebase Exploration: Context Window Progress Indicator
 
 **Date**: 2025-12-13

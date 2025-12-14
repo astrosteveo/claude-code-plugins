@@ -1,8 +1,13 @@
+---
+feature: 001-context-window-progress-indicator
+phase: plan
+created: 2025-12-13
+status: complete
+---
+
 # Implementation Plan: Context Window Progress Indicator
 
-**Date**: 2025-12-13
-**Feature Slug**: 001-context-window-progress-indicator
-**Research**: [Codebase](../research/codebase.md) | [Docs](../research/docs.md)
+**Research**: [Codebase](./codebase-research.md) | [Docs](./docs-research.md)
 
 ## Goal
 

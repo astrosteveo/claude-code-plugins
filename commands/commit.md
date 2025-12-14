@@ -34,9 +34,9 @@ If no `state.md` found, inform user to run `/explore` first.
 ### 2. Gather Workflow Artifacts
 
 From the feature directory, read:
-- `plans/implementation-plan.md` - What was planned
-- `implementation/progress.md` - What was done
-- `validation/results.md` - Test/lint/build results
+- `plan.md` - What was planned
+- `state.md` - What was done (Current Progress section)
+- `validation.md` - Test/lint/build results
 
 Extract:
 - Feature description for commit subject
@@ -63,7 +63,7 @@ Verify readiness by checking:
 
 | Check | Requirement |
 |-------|-------------|
-| Implementation | All phases marked complete in progress.md |
+| Implementation | All phases marked complete in state.md |
 | Validation | Results show PASS status |
 | Working tree | No uncommitted changes outside scope |
 
@@ -120,12 +120,12 @@ Structure the message:
 ```
 <type>: <concise description from feature name>
 
-<Summary of key changes from progress.md>
+<Summary of key changes from state.md>
 
 Artifacts:
-- Research: .claude/workflows/[slug]/research/
-- Plan: .claude/workflows/[slug]/plans/implementation-plan.md
-- Validation: .claude/workflows/[slug]/validation/results.md
+- Research: .claude/workflows/[slug]/*-research.md
+- Plan: .claude/workflows/[slug]/plan.md
+- Validation: .claude/workflows/[slug]/validation.md
 
 Generated with Claude Code using explore-plan-implement workflow
 ```
@@ -172,10 +172,10 @@ Branch: [branch-name]
 Files changed: [count]
 
 Artifacts committed:
-- .claude/workflows/[slug]/research/
-- .claude/workflows/[slug]/plans/
-- .claude/workflows/[slug]/implementation/
-- .claude/workflows/[slug]/validation/
+- .claude/workflows/[slug]/*-research.md
+- .claude/workflows/[slug]/plan.md
+- .claude/workflows/[slug]/state.md
+- .claude/workflows/[slug]/validation.md
 ```
 
 ## Output Format

@@ -1,7 +1,12 @@
-# Documentation Research: {{FEATURE}}
+---
+feature: {{SLUG}}
+phase: research
+topic: {{TOPIC}}
+created: {{DATE}}
+status: complete
+---
 
-**Date**: {{DATE}}
-**Feature Slug**: {{SLUG}}
+# Documentation Research: {{FEATURE}}
 
 ## Goal
 

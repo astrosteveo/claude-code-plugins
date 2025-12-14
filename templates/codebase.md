@@ -1,11 +1,20 @@
-# Codebase Analysis: {{FEATURE}}
+---
+feature: {{SLUG}}
+phase: research
+topic: codebase
+created: {{DATE}}
+status: complete
+---
 
-**Date**: {{DATE}}
-**Feature Slug**: {{SLUG}}
+# Codebase Analysis: {{FEATURE}}
 
 ## Goal
 
 {{GOAL_DESCRIPTION}}
+
+## Summary
+
+_Brief summary of findings._
 
 ## Relevant Files
 

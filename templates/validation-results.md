@@ -1,7 +1,11 @@
-# Validation Results: {{FEATURE}}
+---
+feature: {{SLUG}}
+phase: validate
+created: {{DATE}}
+status: complete
+---
 
-**Date**: {{DATE}}
-**Feature Slug**: {{SLUG}}
+# Validation Results: {{FEATURE}}
 
 ## Summary
 

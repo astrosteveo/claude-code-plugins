@@ -1,8 +1,13 @@
+---
+feature: {{SLUG}}
+phase: plan
+created: {{DATE}}
+status: complete
+---
+
 # Implementation Plan: {{FEATURE}}
 
-**Date**: {{DATE}}
-**Feature Slug**: {{SLUG}}
-**Research**: [Codebase](./research/codebase.md) | [Docs](./research/docs.md)
+**Research**: [Codebase](./codebase-research.md) | [Docs](./docs-research.md)
 
 ## Goal
 

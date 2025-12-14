@@ -42,8 +42,8 @@ From the feature directory, read both research documents:
 
 | Document | Contains |
 |----------|----------|
-| `research/codebase.md` | File locations, patterns, dependencies |
-| `research/docs.md` | Best practices, library docs, security guidance |
+| `codebase-research.md` | File locations, patterns, dependencies |
+| `docs-research.md` | Best practices, library docs, security guidance (if exists) |
 
 Extract key information:
 - Files that need modification (with line numbers)
@@ -96,7 +96,7 @@ Create phases that are:
 
 ### 4. Write Plan Artifact
 
-Write the complete plan to: `[feature-dir]/plans/implementation-plan.md`
+Write the complete plan to: `[feature-dir]/plan.md`
 
 Use template: `${CLAUDE_PLUGIN_ROOT}/templates/implementation-plan.md`
 
@@ -169,7 +169,7 @@ Show the user:
 
 ---
 
-**Plan Location**: .claude/workflows/[slug]/plans/implementation-plan.md
+**Plan Location**: .claude/workflows/[slug]/plan.md
 
 ⚠️ Review the plan before running `/implement`
 Running `/implement` implies approval of this plan.
@@ -189,7 +189,7 @@ Update `state.md`:
 
 Feature: [description]
 Phases: [N] phases defined
-Artifact: .claude/workflows/[slug]/plans/implementation-plan.md
+Artifact: .claude/workflows/[slug]/plan.md
 
 Phase Summary:
 1. [Phase 1] - [files affected]

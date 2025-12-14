@@ -1,3 +1,11 @@
+---
+feature: 001-context-window-progress-indicator
+phase: research
+topic: external-docs
+created: 2025-12-13
+status: complete
+---
+
 # External Research: Context Window Progress Indicator
 
 **Date**: 2025-12-13
