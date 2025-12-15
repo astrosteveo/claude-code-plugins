@@ -6,7 +6,9 @@ allowed-tools:
   - Write
   - Edit
   - Glob
+  - Grep
   - Task
+  - TaskOutput
 ---
 
 # Epic Plan
@@ -88,6 +90,32 @@ Each phase must be:
 
 See `references/plan-template.md` for full structure.
 
+## Plan Validation
+
+After writing the plan, invoke the plan-validator agent to validate it before presenting to user.
+
+### Agent Invocation
+
+```
+Task tool:
+  subagent_type: epic:plan-validator
+  run_in_background: false
+  prompt: |
+    Validate the implementation plan at: .claude/workflows/[slug]/plan.md
+    Research artifacts: .claude/workflows/[slug]/codebase-research.md
+    Write validation report to: .claude/workflows/[slug]/plan-validation.md
+```
+
+**IMPORTANT:** Always launch a fresh agent. Never use the `resume` parameter.
+
+### Handling Validation Results
+
+| Verdict | Action |
+|---------|--------|
+| PASS | Present plan to user for approval |
+| PASS WITH CONCERNS | Present concerns, ask user to review |
+| NEEDS REVISION | Fix issues, re-validate before presenting |
+
 ## Output Format
 
 ```
@@ -96,6 +124,10 @@ See `references/plan-template.md` for full structure.
 Feature: [description]
 Phases: [N] phases defined
 Artifact: .claude/workflows/[slug]/plan.md
+
+Validation: [PASS/PASS WITH CONCERNS]
+- Completeness: ✓
+- Feasibility: ✓
 
 Phase Summary:
 1. [Phase 1] - [files affected]

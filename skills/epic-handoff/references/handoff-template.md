@@ -1,48 +1,67 @@
+# Handoff Template
+
+Template for session handoff documents with YAML frontmatter.
+
+## Template
+
+```markdown
 ---
-date: {{ISO_DATE}}
-git_commit: {{COMMIT_HASH}}
-branch: {{BRANCH}}
+type: handoff
 feature: {{FEATURE_SLUG}}
-topic: "{{FEATURE_DESCRIPTION}}"
+description: "{{FEATURE_DESCRIPTION}}"
+created: {{ISO_DATE}}
+
+git:
+  branch: {{BRANCH}}
+  commit: {{COMMIT_HASH}}
+  clean: true  # false if uncommitted changes
+
+workflow:
+  phase: {{PHASE}}
+  plan_path: "{{WORKFLOW_DIR}}/plan.md"
+  workflow_dir: "{{WORKFLOW_DIR}}"
+
+tasks:
+  - name: "Task description"
+    status: completed  # completed | wip | planned
+    notes: "Additional context"
+
+context_usage: 60  # percentage estimate
+
 tags: [handoff, {{PHASE}}]
-status: complete
 ---
 
 # Handoff: {{FEATURE_SLUG}}
 
-## Task(s)
-
-_Description of task(s) being worked on with status (completed, WIP, planned)._
-_If working from an implementation plan, note the current phase._
+## Task Summary
 
 | Task | Status | Notes |
 |------|--------|-------|
 | [Task description] | completed/WIP/planned | [Additional context] |
 
-**Current Phase**: {{PHASE}} (if applicable)
-**Plan Reference**: {{PLAN_PATH}} (if applicable)
+**Current Phase**: {{PHASE}}
+**Plan Reference**: {{WORKFLOW_DIR}}/plan.md
 
 ## Critical References
 
-_2-3 most important documents that must be followed:_
+_Documents that must be followed:_
 
-- `path/to/critical/doc.md` - [Why it's important]
+- `{{WORKFLOW_DIR}}/plan.md` - Implementation plan
+- `{{WORKFLOW_DIR}}/state.md` - Current workflow state
 
 ## Recent Changes
 
-_Changes made to the codebase in `file:line` syntax:_
+_Changes made in `file:line` format:_
 
 - `path/to/file.ts:45-67` - [What was changed]
 
 ## Learnings
 
-_Important patterns, root causes, or information the next session should know:_
+_Patterns or information the next session should know:_
 
 - [Pattern/learning discovered]
 
 ## Artifacts
-
-_Exhaustive list of artifacts produced or updated:_
 
 | Artifact | Path | Status |
 |----------|------|--------|
@@ -51,15 +70,40 @@ _Exhaustive list of artifacts produced or updated:_
 | State | `{{WORKFLOW_DIR}}/state.md` | [status] |
 | Validation | `{{WORKFLOW_DIR}}/validation.md` | [status] |
 
-## Action Items & Next Steps
-
-_What the next session should accomplish:_
+## Next Steps
 
 1. [ ] [Next action item]
 2. [ ] [Following action item]
 
-## Other Notes
+## Notes
 
-_Additional context, references, or useful information:_
+_Additional context:_
 
 - [Note]
+```
+
+## Frontmatter Fields
+
+| Field | Description |
+|-------|-------------|
+| `type` | Always "handoff" |
+| `git.branch` | Current git branch |
+| `git.commit` | Current commit hash |
+| `git.clean` | Whether working directory is clean |
+| `workflow.phase` | Current workflow phase |
+| `workflow.workflow_dir` | Path to workflow artifacts |
+| `tasks[]` | Array of tasks with status |
+| `context_usage` | Estimated context window usage % |
+| `tags[]` | Searchable tags |
+
+## Task Status Values
+
+- `completed` - Task finished
+- `wip` - Work in progress
+- `planned` - Not yet started
+
+## Guidelines
+
+**Target length**: Under 200 lines total
+**Focus on**: What's needed to resume, not full history
+**Include**: Critical file:line references, not exhaustive lists

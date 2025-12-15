@@ -1,8 +1,40 @@
 ---
+type: validation
 feature: {{SLUG}}
-phase: validate
 created: {{DATE}}
-status: complete
+phase: validate  # validate | phase-N-validation
+
+overall_status: pending  # pass | fail | pending
+
+checks:
+  tests:
+    status: pending  # pass | fail | pending | skipped
+    passed: 0
+    failed: 0
+    skipped: 0
+    duration_ms: 0
+    command: "{{TEST_COMMAND}}"
+  lint:
+    status: pending
+    errors: 0
+    warnings: 0
+    command: "{{LINT_COMMAND}}"
+  types:
+    status: pending
+    errors: 0
+    command: "{{TYPE_COMMAND}}"
+  build:
+    status: pending
+    duration_ms: 0
+    command: "{{BUILD_COMMAND}}"
+
+issues: []
+  # - type: test_failure
+  #   file: "path/to/file.ts"
+  #   line: 45
+  #   message: "Error message"
+
+recommendations: []
 ---
 
 # Validation Results: {{FEATURE}}

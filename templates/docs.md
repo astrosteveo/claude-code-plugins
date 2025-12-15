@@ -1,9 +1,17 @@
 ---
+type: research
+topic: documentation
 feature: {{SLUG}}
-phase: research
-topic: {{TOPIC}}
+description: "{{GOAL_DESCRIPTION}}"
 created: {{DATE}}
 status: complete
+
+technologies: []
+  # - name: "React"
+  #   version: "19.0.0"
+  #   docs_url: "https://react.dev"
+
+sources_consulted: 0
 ---
 
 # Documentation Research: {{FEATURE}}

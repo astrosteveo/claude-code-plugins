@@ -1,9 +1,20 @@
 ---
-feature: {{SLUG}}
-phase: research
+type: research
 topic: codebase
+feature: {{SLUG}}
+description: "{{GOAL_DESCRIPTION}}"
 created: {{DATE}}
 status: complete
+
+stats:
+  files_analyzed: 0
+  patterns_found: 0
+  dependencies: 0
+
+key_files: []
+  # - path: "path/to/file.ts"
+  #   lines: "45-67"
+  #   purpose: "Description"
 ---
 
 # Codebase Analysis: {{FEATURE}}

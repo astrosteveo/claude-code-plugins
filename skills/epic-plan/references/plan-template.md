@@ -1,3 +1,39 @@
+# Implementation Plan Template
+
+Template for phased implementation plans with YAML frontmatter.
+
+## Template
+
+```markdown
+---
+type: plan
+feature: {{SLUG}}
+description: "{{GOAL_DESCRIPTION}}"
+created: {{DATE}}
+status: pending  # pending | approved | in_progress | complete
+
+research:
+  codebase: "./codebase-research.md"
+  docs: "./docs-research.md"  # null if not applicable
+
+phases:
+  total: 2
+  current: 0
+  list:
+    - name: "Phase 1 Name"
+      status: pending
+      files_affected: 0
+    - name: "Phase 2 Name"
+      status: pending
+      files_affected: 0
+
+validation:
+  plan_validated: false
+  validation_report: null
+
+rollback_available: true
+---
+
 # Implementation Plan: {{FEATURE}}
 
 **Research**: [Codebase](./codebase-research.md) | [Docs](./docs-research.md)
@@ -23,9 +59,9 @@ Brief description of the chosen approach and why, based on research findings.
 
 ### Implementation Details
 
-```language
+\`\`\`language
 // Pseudocode or key snippets following patterns from research
-```
+\`\`\`
 
 ### Verification
 
@@ -49,9 +85,9 @@ Brief description of the chosen approach and why, based on research findings.
 
 ### Implementation Details
 
-```language
+\`\`\`language
 // Pseudocode or key snippets
-```
+\`\`\`
 
 ### Verification
 
@@ -80,3 +116,23 @@ If issues arise:
 ## Open Questions
 
 - [ ] Questions requiring human decision before implementation
+```
+
+## Frontmatter Fields
+
+| Field | Description |
+|-------|-------------|
+| `type` | Always "plan" |
+| `status` | Plan status (pending/approved/in_progress/complete) |
+| `phases.total` | Total number of phases |
+| `phases.current` | Current phase number (0 = not started) |
+| `phases.list[]` | Array of phase names and statuses |
+| `validation.plan_validated` | Whether plan-validator has approved |
+| `rollback_available` | Whether rollback is possible |
+
+## Status Values
+
+- `pending` - Plan created, awaiting approval
+- `approved` - Human approved, ready for implementation
+- `in_progress` - Implementation underway
+- `complete` - All phases implemented

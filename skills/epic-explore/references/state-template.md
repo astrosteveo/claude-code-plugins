@@ -1,18 +1,56 @@
-# Workflow State
+# State Template
 
-**Feature**: [feature description]
-**Slug**: [NNN-slug]
-**Directory**: .claude/workflows/[NNN-slug]
-**Current Phase**: explore
-**Research Scope**: codebase only | full (codebase + docs)
-**Last Updated**: [ISO date]
+Template for workflow state tracking with YAML frontmatter.
 
-## Background Agents
+## Template
 
-| Agent | Task ID | Status |
-|-------|---------|--------|
-| codebase-explorer | [task-id] | running/completed |
-| docs-researcher | [task-id] | running/completed |
+```markdown
+---
+feature: {{SLUG}}
+description: "{{FEATURE_DESCRIPTION}}"
+created: {{DATE}}
+last_updated: {{DATE}}
+
+workflow:
+  current_phase: explore
+  phases:
+    explore:
+      status: in_progress
+      artifacts: []
+    plan:
+      status: pending
+      artifacts: []
+    implement:
+      status: pending
+      current_phase_num: 0
+      total_phases: 0
+      artifacts: []
+    validate:
+      status: pending
+      artifacts: []
+    commit:
+      status: pending
+      commit_hash: null
+
+agents:
+  codebase_explorer:
+    task_id: {{TASK_ID}}
+    status: running
+  docs_researcher:
+    task_id: null
+    status: pending
+    enabled: false
+
+verification:
+  tests: pending
+  lint: pending
+  types: pending
+  build: pending
+
+blockers: []
+---
+
+# Workflow State: {{FEATURE}}
 
 ## Phase Status
 
@@ -20,7 +58,7 @@
 |-------|--------|----------|
 | Explore | in_progress | *-research.md |
 | Plan | pending | plan.md |
-| Implement | pending | (state.md) |
+| Implement | pending | (tracked above) |
 | Validate | pending | validation.md |
 | Commit | pending | git commit |
 
@@ -28,7 +66,7 @@
 
 _Updated during implementation phase._
 
-### Phase Summary
+### Implementation Phases
 | Phase | Status | Notes |
 |-------|--------|-------|
 | Phase 1 | pending | |
@@ -37,23 +75,30 @@ _Updated during implementation phase._
 ### Active Work
 - [ ] Current task in progress
 
-### Verification Results
-| Check | Status | Notes |
-|-------|--------|-------|
-| Tests | pending | |
-| Lint | pending | |
-| Types | pending | |
-
 ## Deviations from Plan
 
 | Deviation | Reason | Impact |
 |-----------|--------|--------|
 | None | - | - |
 
-## Blockers
-
-_None_
-
 ## Next Steps
 
 1. Run next phase command
+```
+
+## Frontmatter Fields
+
+| Field | Description |
+|-------|-------------|
+| `workflow.current_phase` | Current active phase (explore/plan/implement/validate/commit) |
+| `workflow.phases.[phase].status` | Phase status (pending/in_progress/complete) |
+| `agents.*` | Background agent task IDs and status |
+| `verification.*` | Verification check statuses |
+| `blockers[]` | List of current blockers |
+
+## Status Values
+
+- `pending` - Not started
+- `in_progress` - Currently active
+- `complete` - Finished successfully
+- `blocked` - Cannot proceed

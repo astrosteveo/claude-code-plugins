@@ -1,8 +1,30 @@
 ---
+type: plan
 feature: {{SLUG}}
-phase: plan
+description: "{{GOAL_DESCRIPTION}}"
 created: {{DATE}}
-status: complete
+status: pending  # pending | approved | in_progress | complete
+
+research:
+  codebase: "./codebase-research.md"
+  docs: "./docs-research.md"  # null if not applicable
+
+phases:
+  total: 2
+  current: 0
+  list:
+    - name: "Phase 1 Name"
+      status: pending
+      files_affected: 0
+    - name: "Phase 2 Name"
+      status: pending
+      files_affected: 0
+
+validation:
+  plan_validated: false
+  validation_report: null
+
+rollback_available: true
 ---
 
 # Implementation Plan: {{FEATURE}}

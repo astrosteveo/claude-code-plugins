@@ -1,3 +1,29 @@
+# Codebase Research Template
+
+Template for codebase analysis output with YAML frontmatter.
+
+## Template
+
+```markdown
+---
+type: research
+topic: codebase
+feature: {{SLUG}}
+description: "{{GOAL_DESCRIPTION}}"
+created: {{DATE}}
+status: complete
+
+stats:
+  files_analyzed: 0
+  patterns_found: 0
+  dependencies: 0
+
+key_files: []
+  # - path: "path/to/file.ts"
+  #   lines: "45-67"
+  #   purpose: "Description"
+---
+
 # Codebase Analysis: {{FEATURE}}
 
 ## Goal
@@ -16,9 +42,9 @@ _Brief summary of findings._
 
 ## Code Flow
 
-```
+\`\`\`
 [Entry Point] → [Step 1] → [Step 2] → [Output]
-```
+\`\`\`
 
 ### Detailed Flow
 
@@ -47,3 +73,14 @@ _Brief summary of findings._
 ## Open Questions
 
 - [ ] Question requiring human input
+```
+
+## Frontmatter Fields
+
+| Field | Description |
+|-------|-------------|
+| `type` | Always "research" |
+| `topic` | Always "codebase" |
+| `stats.files_analyzed` | Count of files examined |
+| `stats.patterns_found` | Count of patterns documented |
+| `key_files[]` | Array of critical file references |

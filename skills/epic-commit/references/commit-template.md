@@ -1,6 +1,6 @@
 # Commit Message Template
 
-This template provides the structure for creating documented commits with workflow artifacts.
+Template for creating documented commits with workflow artifacts.
 
 ## Structure
 
@@ -132,3 +132,15 @@ Generated with Claude Code using explore-plan-implement workflow
 - Always include the workflow signature
 - Helps future developers understand the process used
 - Links commit to documented planning and validation
+
+## Extracting Info from Frontmatter
+
+Read state.md frontmatter to get:
+- `feature` → Use for commit description
+- `workflow.phases.*.status` → Summarize what was completed
+- `verification.*` → Confirm all checks passed
+
+```bash
+# Extract feature from state.md frontmatter
+grep "^feature:" state.md | cut -d: -f2 | xargs
+```

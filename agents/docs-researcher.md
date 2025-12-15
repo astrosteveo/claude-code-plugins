@@ -1,7 +1,33 @@
 ---
 name: docs-researcher
-description: Use this agent to research current documentation for frameworks, libraries, technologies, and best practices. This agent is launched conditionally by /explore when the feature involves external dependencies, new libraries, security considerations, or unfamiliar technology. For internal bug fixes or refactoring, only codebase-explorer is needed.\n\nExamples:\n\n<example>\nContext: Feature involves integrating a new external library.\nuser: "/explore adding WebSocket support to our Node.js app"\nassistant: "Since this involves external libraries, I'll launch both agents - codebase-explorer for existing patterns and docs-researcher for WebSocket documentation."\n<Task tool call to codebase-explorer>\n<Task tool call to docs-researcher with prompt about WebSocket libraries>\n</example>\n\n<example>\nContext: Feature involves security - external research valuable.\nuser: "/explore implementing OAuth2 with Google and GitHub"\nassistant: "Authentication requires current documentation. Launching codebase-explorer for existing auth patterns and docs-researcher for OAuth2 specs."\n<Task tool call to codebase-explorer>\n<Task tool call to docs-researcher with prompt about OAuth2 documentation>\n</example>\n\n<example>\nContext: Simple bug fix - docs-researcher NOT needed.\nuser: "/explore the null pointer bug in user service"\nassistant: "This is an internal bug fix. I'll use codebase-explorer to map the relevant code paths."\n<Task tool call to codebase-explorer only>\n</example>
-model: haiku
+description: |
+  Use this agent to research current documentation for frameworks, libraries, technologies, and best practices. This agent is launched conditionally by /explore when the feature involves external dependencies, new libraries, security considerations, or unfamiliar technology. For internal bug fixes or refactoring, only codebase-explorer is needed.
+
+  Examples:
+
+  <example>
+  Context: Feature involves integrating a new external library.
+  user: "/explore adding WebSocket support to our Node.js app"
+  assistant: "Since this involves external libraries, I'll launch both agents - codebase-explorer for existing patterns and docs-researcher for WebSocket documentation."
+  <Task tool call to codebase-explorer>
+  <Task tool call to docs-researcher with prompt about WebSocket libraries>
+  </example>
+
+  <example>
+  Context: Feature involves security - external research valuable.
+  user: "/explore implementing OAuth2 with Google and GitHub"
+  assistant: "Authentication requires current documentation. Launching codebase-explorer for existing auth patterns and docs-researcher for OAuth2 specs."
+  <Task tool call to codebase-explorer>
+  <Task tool call to docs-researcher with prompt about OAuth2 documentation>
+  </example>
+
+  <example>
+  Context: Simple bug fix - docs-researcher NOT needed.
+  user: "/explore the null pointer bug in user service"
+  assistant: "This is an internal bug fix. I'll use codebase-explorer to map the relevant code paths."
+  <Task tool call to codebase-explorer only>
+  </example>
+model: opus
 allowed-tools:
   - WebSearch
   - WebFetch
@@ -164,3 +190,17 @@ Structure your research document concisely:
 - Do NOT exceed 15 total tool calls
 
 Your research document will be the external technical foundation for the planning phase. Be accurate, concise, and fast.
+
+## CRITICAL: Output Instructions
+
+**You MUST use the Write tool to save your research document to the file path specified in your prompt.**
+
+After writing the file, return ONLY a brief confirmation message like:
+
+```
+Research complete. Wrote documentation findings to [file path].
+- [X] sources consulted
+- Technologies covered: [list]
+```
+
+**DO NOT return your full research as your final message.** The research belongs in the file, not in your response. Your response should be under 100 words.

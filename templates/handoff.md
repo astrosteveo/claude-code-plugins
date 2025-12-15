@@ -1,48 +1,60 @@
 ---
-date: {{ISO_DATE}}
-git_commit: {{COMMIT_HASH}}
-branch: {{BRANCH}}
+type: handoff
 feature: {{FEATURE_SLUG}}
-topic: "{{FEATURE_DESCRIPTION}}"
+description: "{{FEATURE_DESCRIPTION}}"
+created: {{ISO_DATE}}
+
+git:
+  branch: {{BRANCH}}
+  commit: {{COMMIT_HASH}}
+  clean: true
+
+workflow:
+  phase: {{PHASE}}
+  plan_path: "{{PLAN_PATH}}"
+  workflow_dir: "{{WORKFLOW_DIR}}"
+
+tasks:
+  - name: "{{TASK_NAME}}"
+    status: completed  # completed | wip | planned
+    notes: ""
+
+context_usage: 60  # percentage estimate
+
 tags: [handoff, {{PHASE}}]
-status: complete
 ---
 
 # Handoff: {{FEATURE_SLUG}}
 
-## Task(s)
-
-_Description of task(s) being worked on with status (completed, WIP, planned)._
-_If working from an implementation plan, note the current phase._
+## Task Summary
 
 | Task | Status | Notes |
 |------|--------|-------|
 | [Task description] | completed/WIP/planned | [Additional context] |
 
-**Current Phase**: {{PHASE}} (if applicable)
-**Plan Reference**: {{PLAN_PATH}} (if applicable)
+**Current Phase**: {{PHASE}}
+**Plan Reference**: {{PLAN_PATH}}
 
 ## Critical References
 
-_2-3 most important documents that must be followed:_
+_Documents that must be followed:_
 
-- `path/to/critical/doc.md` - [Why it's important]
+- `{{WORKFLOW_DIR}}/plan.md` - Implementation plan
+- `{{WORKFLOW_DIR}}/state.md` - Current workflow state
 
 ## Recent Changes
 
-_Changes made to the codebase in `file:line` syntax:_
+_Changes made in `file:line` format:_
 
 - `path/to/file.ts:45-67` - [What was changed]
 
 ## Learnings
 
-_Important patterns, root causes, or information the next session should know:_
+_Patterns or information the next session should know:_
 
 - [Pattern/learning discovered]
 
 ## Artifacts
-
-_Exhaustive list of artifacts produced or updated:_
 
 | Artifact | Path | Status |
 |----------|------|--------|
@@ -51,15 +63,13 @@ _Exhaustive list of artifacts produced or updated:_
 | State | `{{WORKFLOW_DIR}}/state.md` | [status] |
 | Validation | `{{WORKFLOW_DIR}}/validation.md` | [status] |
 
-## Action Items & Next Steps
-
-_What the next session should accomplish:_
+## Next Steps
 
 1. [ ] [Next action item]
 2. [ ] [Following action item]
 
-## Other Notes
+## Notes
 
-_Additional context, references, or useful information:_
+_Additional context:_
 
 - [Note]

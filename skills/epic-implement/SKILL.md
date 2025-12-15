@@ -8,6 +8,8 @@ allowed-tools:
   - Glob
   - Grep
   - Bash(npm:*, npx:*, cargo:*, go:*, python:*, pytest:*, make:*, git:status, git:diff)
+  - Task
+  - TaskOutput
   - AskUserQuestion
 ---
 
@@ -127,6 +129,38 @@ npm run typecheck # Type checking
 
 ### 6. Update Progress
 Update `state.md` Current Progress section with phase status, verification results, and any deviations.
+
+### 7. Validate Implementation (After Each Phase)
+
+After completing a phase, invoke the implementation-validator agent to verify alignment with the plan.
+
+```
+Task tool:
+  subagent_type: epic:implementation-validator
+  run_in_background: false
+  prompt: |
+    Validate Phase [N] implementation against the plan.
+    Plan: .claude/workflows/[slug]/plan.md
+    Write validation report to: .claude/workflows/[slug]/phase-[N]-validation.md
+
+    Focus on:
+    - Changes made match Phase [N] specification
+    - No unplanned additions or omissions
+    - Verification steps completed
+```
+
+**CRITICAL: Always launch a FRESH agent for each validation.**
+- Never use the `resume` parameter
+- Each phase gets its own independent validation
+- Fresh context ensures unbiased validation
+
+### Validation Results
+
+| Status | Action |
+|--------|--------|
+| ALIGNED | Proceed to next phase |
+| PARTIALLY ALIGNED | Review deviations, ask user before continuing |
+| MISALIGNED | STOP - do not proceed, resolve issues first |
 
 ## Phase Transition
 
