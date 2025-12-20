@@ -1,0 +1,26 @@
+{
+  "name": "claude-code-plugins",
+  "owner": {
+    "name": "astrosteveo"
+  },
+  "metadata": {
+    "description": "A collection of Claude Code plugins for enhanced development workflows",
+    "version": "0.1.0",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "agile-workflow",
+      "source": "agile-workflow",
+      "description": "AGILE-style project management workflow optimized for LLM context limitations. Enforces PRD-first development with explore, plan, and implement phases.",
+      "version": "0.1.0",
+      "author": {
+        "name": "astrosteveo"
+      },
+      "license": "MIT",
+      "keywords": ["agile", "workflow", "project-management", "prd", "planning"],
+      "category": "productivity",
+      "tags": ["agile", "planning", "workflow"]
+    }
+  ]
+}
