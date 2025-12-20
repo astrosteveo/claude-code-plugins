@@ -1,7 +1,8 @@
 {
-  "name": "claude-code-plugins",
+  "name": "astrosteveo-plugins",
   "owner": {
-    "name": "astrosteveo"
+    "name": "astrosteveo",
+    "email": "stevengmjr@gmail.com"
   },
   "metadata": {
     "description": "A collection of Claude Code plugins for enhanced development workflows",
@@ -15,11 +16,14 @@
       "description": "AGILE-style project management workflow optimized for LLM context limitations. Enforces PRD-first development with explore, plan, and implement phases.",
       "version": "0.1.0",
       "author": {
-        "name": "astrosteveo"
+        "name": "astrosteveo",
+        "email":"stevengmjr@gmail.com"
       },
+      "homepage": "https://github.com/astrosteveo/claude-code-plugins",
+      "repository": "https://github.com/astrosteveo/claude-code-plugins",
       "license": "MIT",
       "keywords": ["agile", "workflow", "project-management", "prd", "planning"],
-      "category": "productivity",
+      "category": "workflow",
       "tags": ["agile", "planning", "workflow"]
     }
   ]
