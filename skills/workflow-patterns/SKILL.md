@@ -1,6 +1,6 @@
 ---
 name: Workflow Patterns
-description: This skill should be used when working with the agile-workflow plugin, creating PRD documents, writing research or plan docs, updating state.json, estimating story points, or when the user asks about "workflow artifacts", "PRD format", "research document", "plan document", "state schema", "effort estimation", or "epic/story structure". Provides document templates and state management patterns for AGILE workflow.
+description: This skill should be used when working with the agile-workflow plugin, creating PRD documents, writing research or plan docs, updating state.json, estimating story points, contributing to open source projects, or when the user asks about "workflow artifacts", "PRD format", "research document", "plan document", "state schema", "effort estimation", "epic/story structure", "OSS contribution", "project conventions", or "commit message format". Provides document templates, state management patterns, and OSS contribution guidance.
 version: 0.1.0
 ---
 
@@ -204,3 +204,4 @@ For detailed templates and schemas:
 - **`references/prd-format.md`** - PRD document template
 - **`references/research-format.md`** - Research document template
 - **`references/plan-format.md`** - Plan document template
+- **`references/oss-contribution.md`** - Guide for OSS contributions (convention detection, commit patterns)

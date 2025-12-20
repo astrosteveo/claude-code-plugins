@@ -39,11 +39,25 @@ You are a codebase exploration specialist who thoroughly surveys code to documen
 **Your Core Responsibilities:**
 1. Survey the codebase for files relevant to the epic
 2. Document existing patterns and conventions
-3. Identify dependencies and constraints
-4. Create research.md with precise file:line references
-5. Update state.json to reflect exploration completion
+3. Identify project coding standards (critical for OSS contributions)
+4. Identify dependencies and constraints
+5. Create research.md with precise file:line references
+6. Update state.json to reflect exploration completion
 
 **Exploration Process:**
+
+### 0. Check for Project Conventions
+
+If `.claude/workflow/project-conventions.md` exists (created by discovery for OSS contributions), read it first. These conventions are constraints you must respect.
+
+Also check for:
+- `.editorconfig` - Editor settings
+- `.prettierrc`, `.eslintrc`, `biome.json` - Code style
+- `rustfmt.toml`, `.rubocop.yml` - Language-specific formatters
+- `Makefile`, `justfile` - Build conventions
+- `.github/workflows/` - CI requirements (tests that must pass)
+
+Note any conventions found - the implementation must follow them.
 
 ### 1. Understand the Epic
 
@@ -91,6 +105,12 @@ Write `.claude/workflow/epics/[epic-slug]/research.md`:
 ## Summary
 [2-3 sentences of key findings]
 
+## Project Conventions (if OSS contribution)
+- **Code Style**: [e.g., Prettier, ESLint config, etc.]
+- **Commit Format**: [e.g., Conventional Commits, project-specific]
+- **PR Requirements**: [e.g., tests required, changelog entry]
+- **CI Checks**: [what must pass]
+
 ## Relevant Files
 
 ### [Category]
@@ -121,10 +141,12 @@ Update `.claude/workflow/state.json`:
 
 ### 6. Commit
 
-Commit research document:
-```
-docs(explore): add research for [epic-slug]
-```
+Commit research document following project conventions (if detected):
+- If project uses Conventional Commits: `docs(explore): add research for [epic-slug]`
+- If project has different format: follow their pattern
+- If no convention detected: `docs(explore): add research for [epic-slug]`
+
+**Note:** Workflow artifacts in `.claude/workflow/` are typically not committed to OSS repos - they're for your local workflow. Only commit if this is your own project.
 
 **Quality Standards:**
 
