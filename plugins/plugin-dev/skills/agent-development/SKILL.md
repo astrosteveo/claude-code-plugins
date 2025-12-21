@@ -66,7 +66,7 @@ the subagent should follow.
 
 Unique identifier for the subagent.
 
-**Format:** Lowercase letters, numbers, and hyphens only
+**Format:** Lowercase letters, numbers, and hyphens only (2-50 characters)
 **Examples:** `code-reviewer`, `test-runner`, `api-analyzer`
 
 ### description (required)
@@ -129,6 +129,8 @@ Which model the subagent should use.
 model: inherit
 ```
 
+**Environment variable:** Set `CLAUDE_CODE_SUBAGENT_MODEL` to configure the default model for all subagents.
+
 ### color (optional)
 
 Visual identifier for the agent in the UI.
@@ -138,6 +140,8 @@ Visual identifier for the agent in the UI.
 ```yaml
 color: blue
 ```
+
+**Note:** The `color` field is implemented in Claude Code but not documented in the official specification. It works reliably but may change in future versions.
 
 **Guidelines:**
 - blue/cyan: Analysis, review tasks
@@ -312,6 +316,66 @@ For each test failure, provide:
 - Verification that fix works
 ```
 
+## CLI-Based Configuration
+
+You can define subagents dynamically using the `--agents` CLI flag with JSON:
+
+```bash
+claude --agents '{
+  "code-reviewer": {
+    "description": "Expert code reviewer. Use proactively after code changes.",
+    "prompt": "You are a senior code reviewer. Focus on code quality, security, and best practices.",
+    "tools": ["Read", "Grep", "Glob", "Bash"],
+    "model": "sonnet"
+  }
+}'
+```
+
+**Key differences from file-based agents:**
+- Uses JSON format (tools as array, not comma-separated string)
+- `prompt` field instead of markdown body for system prompt
+- Priority: Lower than project-level agents, higher than user-level agents
+
+**Use cases:**
+- Quick testing of agent configurations
+- Session-specific agents that don't need persistence
+- Automation scripts requiring custom agents
+- Sharing agent definitions in documentation
+
+## Built-In Agents
+
+Claude Code includes three built-in agents:
+
+### General-Purpose Agent
+
+- **Model:** Sonnet
+- **Tools:** All tools available
+- **Purpose:** Complex, multi-step tasks requiring both exploration and modification
+- **Auto-invoked when:**
+  - Task requires both exploration and modification
+  - Complex reasoning is needed
+  - Multiple strategies may be needed
+  - Multi-step dependent tasks
+
+### Plan Agent
+
+- **Model:** Sonnet
+- **Tools:** Read, Glob, Grep, Bash (exploration only)
+- **Purpose:** Research and context gathering during plan mode
+- **Auto-invoked:** When in plan mode and codebase research is needed
+- **Note:** Prevents infinite nesting (subagents cannot spawn subagents)
+
+### Explore Agent
+
+- **Model:** Haiku (fast, low-latency)
+- **Mode:** Strictly read-only
+- **Tools:** Glob, Grep, Read, Bash (read-only commands only)
+- **Purpose:** Fast codebase searching and analysis
+- **Thoroughness levels:**
+  - **Quick** - Fast searches, minimal exploration
+  - **Medium** - Moderate exploration, balanced speed/depth
+  - **Very thorough** - Comprehensive analysis across multiple locations
+
 ## Plugin Agents
 
 Plugin agents are stored in the `agents/` directory at the plugin root:
@@ -354,11 +418,12 @@ The `/agents` command provides an interactive interface:
 An agent file is valid when:
 
 1. **Frontmatter:** Valid YAML between `---` markers
-2. **name:** Lowercase, hyphens, 3-50 characters
+2. **name:** Lowercase letters, numbers, and hyphens only (2-50 characters)
 3. **description:** Simple string (no XML tags or `\n` escapes)
 4. **model:** If present, must be `inherit`, `sonnet`, `opus`, or `haiku`
-5. **tools:** If present, comma-separated tool names
-6. **System prompt:** Non-empty content after frontmatter
+5. **tools:** If present, comma-separated tool names (not JSON array)
+6. **permissionMode:** If present, must be `default`, `acceptEdits`, `bypassPermissions`, `plan`, or `ignore`
+7. **System prompt:** Non-empty content after frontmatter
 
 Use `scripts/validate-agent.sh` to check agent files.
 
@@ -385,11 +450,36 @@ Use `scripts/validate-agent.sh` to check agent files.
 Agents can be resumed to continue previous conversations:
 
 - Each agent execution gets a unique `agentId`
+- Agent conversation stored in: `agent-{agentId}.jsonl`
 - Use the `resume` parameter with the `agentId` to continue
-- Useful for long-running research or multi-step workflows
+- When resumed, the agent continues with full context preserved
+
+**Use cases:**
+- Long-running research across multiple sessions
+- Iterative refinement without losing context
+- Multi-step workflows with sequential related tasks
+
+**Explicit resume example:**
+```
+> Resume agent abc123 and now analyze the authorization logic as well
+```
+
+**Programmatic usage (Task tool):**
+```json
+{
+  "description": "Continue analysis",
+  "prompt": "Now examine the error handling patterns",
+  "subagent_type": "code-analyzer",
+  "resume": "abc123"
+}
+```
+
+Claude Code displays the agent ID when a subagent completes its work.
 
 ## Additional Resources
 
+- **`references/best-practices.md`** - Consolidated best practices for agent development
+- **`references/subagents.md`** - Official Claude Code subagents documentation
 - **`references/system-prompt-design.md`** - Detailed system prompt patterns
 - **`examples/complete-agent-examples.md`** - More working examples
 - **`scripts/validate-agent.sh`** - Validation utility

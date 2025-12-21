@@ -235,7 +235,7 @@ All examples follow the official format:
 1. **description** is a simple string - no XML tags, no `\n` escapes
 2. **tools** is comma-separated - not a JSON array
 3. **model** is optional - defaults to sonnet if omitted
-4. **No color field** - this doesn't exist in the official spec
+4. **color** is optional - implemented but undocumented (works reliably)
 5. **System prompt** in the body is detailed and actionable
 
 Descriptions use phrases like:

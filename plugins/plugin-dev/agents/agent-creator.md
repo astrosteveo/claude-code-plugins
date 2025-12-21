@@ -1,7 +1,7 @@
 ---
 name: agent-creator
 description: Use this agent when the user asks to "create an agent", "generate an agent", "build a new agent", or describes agent functionality they need for plugins.
-model: sonnet
+model: inherit
 tools: Write, Read
 ---
 
