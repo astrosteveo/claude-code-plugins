@@ -1,8 +1,8 @@
 {
   "name": "agile-workflow",
-  "description": "AGILE-style project management workflow optimized for LLM context limitations. Enforces PRD-first development with explore, plan, and implement phases.",
+  "description": "AGILE-style project management with TDD enforcement, Socratic discovery, and systematic debugging. Features PRD-first development, bite-sized task planning, two-stage code review, and git worktree isolation.",
   "author": {
     "name": "astrosteveo"
   },
-  "keywords": ["agile", "workflow", "project-management", "prd", "planning"]
+  "keywords": ["agile", "workflow", "project-management", "prd", "planning", "tdd", "debugging", "code-review", "git-worktrees"]
 }
