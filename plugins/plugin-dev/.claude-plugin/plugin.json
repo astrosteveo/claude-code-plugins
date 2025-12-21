@@ -1,0 +1,7 @@
+{
+  "name": "plugin-dev",
+  "description": "Plugin development toolkit with skills, commands, and agents for creating Claude Code plugins",
+  "author": {
+    "name": "astrosteveo-plugins"
+  }
+}
