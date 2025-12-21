@@ -1,121 +1,89 @@
 ---
-description: AGILE workflow orchestrator - manages PRD, explore, plan, and implement phases
-argument-hint: [explore|plan|implement <epic-slug>] or [new idea description]
-allowed-tools: Read, Write, Edit, Bash, Glob, Grep, Task, AskUserQuestion
+description: Start or continue work - routes to brainstorm, research, plan, or implement based on context
+argument-hint: "[new idea] | research [topic] | plan | implement"
 ---
 
 # Workflow Command
 
-Orchestrate the AGILE workflow for this project. This command routes to the appropriate phase based on current state and arguments.
+Routes to the appropriate skill based on what you need.
 
-## Initial Checks
+## Quick Reference
 
-First, verify git repository exists:
-
-```bash
-git rev-parse --is-inside-work-tree 2>/dev/null || echo "NO_GIT"
-```
-
-If NO_GIT, initialize git repository before proceeding:
-```bash
-git init
-```
-
-## State Detection
-
-Check for workflow artifacts:
-
-1. **Check PRD exists**: Look for `.claude/workflow/PRD.md`
-2. **Check state exists**: Look for `.claude/workflow/state.json`
-3. **Parse arguments**: Determine if explicit phase or new idea
+| Command | What it does |
+|---------|--------------|
+| `/workflow [idea]` | Brainstorm new work |
+| `/workflow research [topic]` | Research existing codebase |
+| `/workflow plan` | Create implementation plan |
+| `/workflow implement` | Execute plan with subagents |
 
 ## Routing Logic
 
-### No PRD Exists
+### New Work: `/workflow [idea description]`
 
-If `.claude/workflow/PRD.md` does not exist:
-- Launch the **discovery** agent to create initial PRD
-- Pass any provided arguments as the initial idea/vision
+Use the **brainstorming** skill to:
+1. Understand what user wants to build
+2. Ask clarifying questions (one at a time)
+3. Present design in digestible chunks
+4. Create or update docs/project.md
+5. Offer next steps (research or plan)
 
-### PRD Exists + New Idea Provided
+### Research: `/workflow research [topic]`
 
-If PRD exists and arguments look like a feature description (not a phase keyword):
-- Launch the **discovery** agent in update mode
-- Pass arguments as the new feature idea to add to PRD
+Use the **research** skill to:
+1. Survey codebase structure
+2. Find relevant files
+3. Document patterns and integration points
+4. Write findings to docs/research/YYYY-MM-DD-topic.md
+5. Offer to proceed to planning
 
-### Explicit Phase Command
+### Planning: `/workflow plan`
 
-If first argument is `explore`, `plan`, or `implement`:
-- `explore <epic-slug>`: Launch **explore** agent for that epic
-- `plan <epic-slug>`: Launch **plan** agent for that epic
-- `implement <epic-slug>`: Launch **implement** agent for that epic
+Use the **writing-plans** skill to:
+1. Review design/research artifacts
+2. Create detailed implementation plan
+3. Break into bite-sized tasks with exact file paths
+4. Write to docs/plans/YYYY-MM-DD-feature.md
+5. Offer execution options
 
-Validate the epic exists in state.json before launching.
+### Implementation: `/workflow implement`
 
-### Auto-Detection (No Arguments)
+Use the **subagent-driven-development** skill to:
+1. Read the plan
+2. Create TodoWrite with all tasks
+3. Dispatch fresh subagent per task
+4. Two-stage review (spec compliance, then quality)
+5. Update docs/project.md when complete
 
-If no arguments provided and PRD exists:
+## Auto-Detection (No Arguments)
 
-1. Read `.claude/workflow/state.json`
-2. Find epics that need work:
-   - Epic with `phase: "explore"` and no `research.md` → run explore
-   - Epic with `phase: "plan"` and no `plan.md` → run plan
-   - Epic with `phase: "implement"` and incomplete stories → run implement
-3. If multiple epics need work, show status and ask user which to continue
-4. If no epics need work, show completion status
+If user just runs `/workflow` with no arguments:
 
-## Status Display
+1. Check for docs/project.md
+2. If exists, read Current Focus and Next Steps
+3. Suggest logical next action based on context
 
-When showing status, display:
-
+Example:
 ```
-Workflow Status
-===============
+Project: Corporate Casualties
+Current Focus: [empty]
+Next Steps:
+- [ ] Add worker needs system
+- [ ] Implement pathfinding
 
-PRD: ✓ exists
-Git: ✓ initialized
-
-Epics:
-  [epic-slug-1] phase: implement | effort: 13 | stories: 2/3 complete
-  [epic-slug-2] phase: plan      | effort: TBD
-  [epic-slug-3] phase: pending   | effort: TBD
-
-Next suggested action: /agile-workflow:workflow implement epic-slug-1
+Suggestion: "Looks like 'Add worker needs system' is next.
+Want to research the codebase first, or jump into planning?"
 ```
 
-## Agent Invocation
+## Project Tracking
 
-When launching agents, use the Task tool with these agent types:
+Throughout the workflow, keep docs/project.md updated:
+- After brainstorming: Add Vision, Tech Stack, Next Steps
+- After completing work: Move items Completed, update Current Focus
+- When decisions are made: Log in Decisions table
 
-- **discovery**: `subagent_type: "agile-workflow:discovery"`
-- **explore**: `subagent_type: "agile-workflow:explore"`
-- **plan**: `subagent_type: "agile-workflow:plan"`
-- **implement**: `subagent_type: "agile-workflow:implement"`
+## Session Start
 
-Pass relevant context to each agent:
-- Current state from state.json
-- Epic slug being worked on
-- Any user-provided context
-
-## Argument Parsing
-
-Arguments: $ARGUMENTS
-
-Parse to determine intent:
-- Empty → auto-detect next action
-- Starts with `explore`/`plan`/`implement` → explicit phase, second word is epic slug
-- Otherwise → treat as new idea for discovery
-
-## Error Handling
-
-- If epic slug doesn't exist in state, list available epics
-- If phase is invalid for epic's current state, explain the workflow gates
-- If PRD exists but state.json is missing, regenerate state from PRD
-
-## Workflow Gates
-
-Enforce these rules:
-- **No PRD → No Explore**: Cannot explore without requirements
-- **No Plan → No Implement**: Cannot implement without a plan
-
-If user tries to skip a gate, explain why and suggest the correct action.
+When starting a new session on an existing project:
+1. Read docs/project.md
+2. Summarize current state
+3. Ask: "What would you like to work on?" or suggest from Next Steps

@@ -1,207 +1,141 @@
 ---
-name: Workflow Patterns
-description: This skill should be used when working with the agile-workflow plugin, creating PRD documents, writing research or plan docs, updating state.json, estimating story points, contributing to open source projects, or when the user asks about "workflow artifacts", "PRD format", "research document", "plan document", "state schema", "effort estimation", "epic/story structure", "OSS contribution", "project conventions", or "commit message format". Provides document templates, state management patterns, and OSS contribution guidance.
-version: 0.1.0
+name: workflow-patterns
+description: Use when working with agile-workflow artifacts - project.md, research docs, plans. Provides document templates and workflow guidance.
 ---
 
 # Workflow Patterns
 
 ## Overview
 
-The agile-workflow plugin enforces a structured development workflow with specific document formats and state management patterns. All artifacts live in `.claude/workflow/` to keep the project root clean.
+The agile-workflow plugin uses a simple Research → Plan → Implement workflow with minimal artifacts.
 
-## Core Concepts
-
-### Workflow Phases
+## Workflow Phases
 
 ```
-PRD exists? → Explore → Plan exists? → Implement
+Brainstorm → Research (optional) → Plan → Implement
 ```
 
-**Gates:**
-- No PRD → No Explore (prevents aimless research)
-- No Plan → No Implement (prevents coding without thinking)
+Each phase creates artifacts in `docs/`:
+- `docs/project.md` - Project tracking (living document)
+- `docs/research/` - Codebase research findings
+- `docs/plans/` - Implementation plans
 
-### Artifact Types
+## Artifact Locations
 
-| Artifact | Format | Purpose |
-|----------|--------|---------|
-| `state.json` | JSON | Machine-readable project state for LLM |
-| `PRD.md` | Markdown | Human-readable requirements |
-| `epics/[slug]/research.md` | Markdown | Exploration findings with file:line refs |
-| `epics/[slug]/plan.md` | Markdown | Implementation approach with stories |
+| Artifact | Location | Purpose |
+|----------|----------|---------|
+| Project tracking | `docs/project.md` | Living project evolution document |
+| Research | `docs/research/YYYY-MM-DD-topic.md` | Codebase exploration findings |
+| Design | `docs/plans/YYYY-MM-DD-topic-design.md` | Brainstorming output |
+| Plan | `docs/plans/YYYY-MM-DD-topic.md` | Implementation tasks |
 
-## State Management
+## Project Tracking Template
 
-### Reading State
+```markdown
+# Project Name
 
-To check project state, read `.claude/workflow/state.json`:
+## Vision
+[What this project is and why - 2-3 sentences]
 
-```bash
-cat .claude/workflow/state.json
+## Tech Stack
+- **Language/Framework**: [X]
+- **Key Dependencies**: [Y]
+- **Deployment**: [Z]
+
+## Decisions Log
+| Date | Decision | Rationale |
+|------|----------|-----------|
+| YYYY-MM-DD | [Decision] | [Why] |
+
+## Completed
+- [x] [Feature] (YYYY-MM-DD)
+
+## Current Focus
+[What we're actively working on]
+
+## Next Steps
+- [ ] [Next item]
+- [ ] [After that]
+
+## Notes
+[Context for future sessions]
 ```
 
-Parse JSON to determine:
-- Which epics exist and their phases
-- Story status and blockers
-- Effort estimates
+## Research Template
 
-### Updating State
+```markdown
+# Research: [Topic]
 
-When updating state, modify specific fields while preserving structure. Use atomic updates - read, modify, write back.
+## Goal
+[What we're trying to understand]
 
-**Status values:**
-- Epic status: `pending`, `in_progress`, `completed`
-- Epic phase: `explore`, `plan`, `implement`, `complete`
-- Story status: `pending`, `in_progress`, `completed`
+## Summary
+[2-3 sentences of key findings]
 
-### State Schema
+## Relevant Files
+| File | Lines | Purpose |
+|------|-------|---------|
+| `path/to/file.ts` | 1-145 | [What it does] |
 
-For complete state structure, see `references/state-schema.md`.
+## Patterns Observed
+- **[Pattern]**: `file:line` - [Description]
 
-## Document Formats
+## Integration Points
+- [Where new code connects]
 
-### PRD Format
+## Constraints
+- [Things we can't change]
 
-The PRD contains vision, requirements, and epic overview. Create at `.claude/workflow/PRD.md`.
-
-**Key sections:**
-1. Vision - One paragraph project purpose
-2. Requirements - Numbered list (REQ-1, REQ-2, etc.)
-3. Epics - High-level epic descriptions with status
-
-For complete PRD template, see `references/prd-format.md`.
-
-### Research Document Format
-
-Create after exploration at `epics/[epic-slug]/research.md`.
-
-**Key sections:**
-1. Summary - 2-3 sentences of findings
-2. Relevant Files - Tables with file:line:purpose
-3. Patterns Observed - Code patterns found
-4. Dependencies - External dependencies
-5. Constraints - Limitations discovered
-
-**Critical:** Use precise `file:line` references, not vague descriptions.
-
-For complete research template, see `references/research-format.md`.
-
-### Plan Document Format
-
-Create after planning at `epics/[epic-slug]/plan.md`.
-
-**Key sections:**
-1. Approach - High-level technical strategy
-2. Stories - Detailed story breakdowns with AC
-3. File Change Summary - What files will change
-4. Order of Operations - Dependency-based sequence
-
-For complete plan template, see `references/plan-format.md`.
-
-## Effort Estimation
-
-### Fibonacci Story Points
-
-Use Fibonacci sequence for story effort: 1, 2, 3, 5, 8, 13
-
-| Points | Complexity |
-|--------|------------|
-| 1 | Trivial - single file, obvious change |
-| 2 | Simple - few files, straightforward |
-| 3 | Moderate - some complexity or unknowns |
-| 5 | Complex - multiple files, integration work |
-| 8 | Large - significant scope, should consider splitting |
-| 13 | Very large - strongly consider breaking down |
-
-### Epic Effort
-
-Epic effort = sum of story points, normalized to nearest Fibonacci.
-
-**Normalization table:**
-| Sum Range | Normalized |
-|-----------|------------|
-| 1-2 | 2 |
-| 3-4 | 3 |
-| 5-6 | 5 |
-| 7-10 | 8 |
-| 11-16 | 13 |
-| 17-27 | 21 |
-| 28+ | Break it down |
-
-### Estimation Guidelines
-
-When estimating effort:
-1. Consider files to modify and create
-2. Account for integration complexity
-3. Factor in testing requirements
-4. Include documentation updates
-5. If estimate exceeds 8, consider splitting the story
-
-## Story Format
-
-Use the standard user story format:
-
-**As a** [user type], **I want** [goal], **so that** [benefit]
-
-**Example:**
-```
-As a user, I want to log in with Google, so that I don't need to create a new account
+## Open Questions
+- [Things still unclear]
 ```
 
-### Acceptance Criteria
+## Plan Template
 
-Write testable, specific criteria:
+```markdown
+# [Feature] Implementation Plan
 
-**Good AC:**
-- User can click 'Login with Google' button
-- User is redirected to Google consent screen
-- Session cookie is set after successful auth
+**Goal:** [One sentence]
 
-**Bad AC:**
-- Login works correctly (too vague)
-- User can authenticate (not specific)
+**Architecture:** [2-3 sentences]
 
-## Identifiers
+**Tech Stack:** [Key technologies]
 
-Use slugs for all identifiers:
-- kebab-case format
-- Lowercase letters and hyphens only
-- Self-documenting names
-- Example: `user-auth`, `oauth-setup`, `guild-system`
+---
 
-## Git Integration
+### Task 1: [Name]
 
-Commits happen automatically at workflow milestones:
+**Files:**
+- Create: `path/to/new.ts`
+- Modify: `path/to/existing.ts:10-25`
 
-| Trigger | Message Pattern |
-|---------|-----------------|
-| PRD created | `docs(prd): initialize PRD for [project]` |
-| PRD updated | `docs(prd): add [epic-slug] epic` |
-| Exploration complete | `docs(explore): add research for [epic-slug]` |
-| Plan complete | `docs(plan): add implementation plan for [epic-slug]` |
-| Story complete | `feat([epic-slug]): [story-slug] - [story name]` |
-| Epic complete | `feat([epic-slug]): complete epic - [epic name]` |
+**What to Build:**
+[Clear description]
 
-## Directory Structure
+**Implementation:**
+[Specific code]
 
-```
-.claude/workflow/
-├── PRD.md              # Requirements and epic overview
-├── state.json          # Machine-readable state
-└── epics/
-    └── [epic-slug]/
-        ├── research.md # Exploration output
-        └── plan.md     # Implementation plan
+**Tests:**
+[What to test]
+
+**Verification:**
+Run: `[command]`
+Expected: [result]
 ```
 
-## Additional Resources
+## Git Commit Patterns
 
-### Reference Files
+| Action | Commit Message |
+|--------|----------------|
+| New project | `docs: initialize project tracking` |
+| Research complete | `docs: add research for [topic]` |
+| Plan complete | `docs: add implementation plan for [topic]` |
+| Feature complete | `feat: [feature description]` |
 
-For detailed templates and schemas:
-- **`references/state-schema.md`** - Complete JSON state structure
-- **`references/prd-format.md`** - PRD document template
-- **`references/research-format.md`** - Research document template
-- **`references/plan-format.md`** - Plan document template
-- **`references/oss-contribution.md`** - Guide for OSS contributions (convention detection, commit patterns)
+## Key Principles
+
+- **YAGNI** - Only build what's needed
+- **TDD** - Test-driven development in plans
+- **DRY** - Don't repeat yourself
+- **Precise references** - Always file:line format
+- **Living documents** - Update as work progresses
