@@ -9,23 +9,12 @@
       "name": "agent-workflow",
       "description": "A rigorous, systematic development workflow for coding agents. Enforces discovery, planning, TDD, and review phases to keep agents on track.",
       "author": {
-        "name": "astrosteveo",
-        "email": "stevengmjr@gmail.com"
+        "name": "Jesse Vincent (original author), Steven Mosley",
+        "email": "jesse@fsck.com, stevengmjr@gmail.com"
       },
       "source": "./plugins/agent-workflow",
       "category": "development",
       "homepage": "https://github.com/astrosteveo/claude-code-plugins"
-    },
-    {
-      "name": "plugin-dev",
-      "description": "Comprehensive toolkit for developing Claude Code plugins. Includes 7 expert skills covering hooks, MCP integration, commands, agents, and best practices. AI-assisted plugin creation and validation.",
-      "author": {
-        "name": "Anthropic",
-        "email": "support@anthropic.com"
-      },
-      "source": "./plugins/plugin-dev",
-      "category": "development",
-      "homepage": "https://github.com/anthropics/claude-plugins-public/tree/main/plugins/plugin-dev"
     }
   ]
 }
