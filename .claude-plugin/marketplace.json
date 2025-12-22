@@ -6,13 +6,13 @@
   },
   "plugins": [
     {
-      "name": "agile-workflow",
-      "description": "Iterative development with Socratic discovery, smallest vertical slice planning, and fresh-agent-per-task implementation.",
+      "name": "agent-workflow",
+      "description": "A rigorous, systematic development workflow for coding agents. Enforces discovery, planning, TDD, and review phases to keep agents on track.",
       "author": {
         "name": "astrosteveo",
         "email": "stevengmjr@gmail.com"
       },
-      "source": "./plugins/agile-workflow",
+      "source": "./plugins/agent-workflow",
       "category": "development",
       "homepage": "https://github.com/astrosteveo/claude-code-plugins"
     },

@@ -1,0 +1,19 @@
+{
+  "name": "agent-workflow",
+  "description": "Rigorous, systematic development workflow for coding agents. Enforces discovery, planning, TDD, and review phases.",
+  "version": "1.0.0",
+  "author": {
+    "name": "astrosteveo"
+  },
+  "contributors": [
+    {
+      "name": "Jesse Vincent",
+      "email": "jesse@fsck.com",
+      "note": "Original Superpowers project author"
+    }
+  ],
+  "homepage": "https://github.com/astrosteveo/claude-code-plugins",
+  "repository": "https://github.com/astrosteveo/claude-code-plugins",
+  "license": "MIT",
+  "keywords": ["skills", "tdd", "debugging", "collaboration", "best-practices", "workflows", "agent"]
+}
