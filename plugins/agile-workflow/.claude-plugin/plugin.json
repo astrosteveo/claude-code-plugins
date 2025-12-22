@@ -4,5 +4,15 @@
   "author": {
     "name": "astrosteveo"
   },
-  "keywords": ["agile", "workflow", "project-management", "prd", "planning", "tdd", "debugging", "code-review", "git-worktrees"]
+  "keywords": [
+    "agile",
+    "workflow",
+    "project-management",
+    "prd",
+    "planning",
+    "tdd",
+    "debugging",
+    "code-review",
+    "git-worktrees"
+  ]
 }
