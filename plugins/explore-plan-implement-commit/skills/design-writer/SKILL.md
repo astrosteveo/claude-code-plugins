@@ -1,18 +1,17 @@
 ---
 name: design-writer
-description: Use when writing or updating design documents. Writes robust designs following software architecture best practices, using mermaid diagrams for visual clarity. Not for decision-making (use design-architect skill) - this is for the craft of documentation.
+description: Use after research to architect and document the solution. Makes key architectural decisions through Socratic dialogue, then documents them with robust Mermaid diagrams following software architecture best practices. Outputs design.md.
 ---
 
 # Design Writer
 
 ## Overview
 
-Transform design decisions into professional, maintainable documentation. This skill focuses on the **craft of writing** design documents—not making design decisions (that's the `design-architect` skill's job).
+Architect the solution and document it professionally. This skill makes key architectural decisions through Socratic dialogue, synthesizing codebase patterns and research findings, then documents everything with clear Mermaid diagrams.
 
-**Purpose:** Write robust, clear, visually-rich design documents following software architecture best practices.
+**Purpose:** Make architectural decisions collaboratively and document them following software architecture best practices.
 
 **Input:**
-- Design decisions (from `design-architect` skill or user discussion)
 - Context from `.workflow/NNN-feature-slug/codebase.md`
 - Research from `.workflow/NNN-feature-slug/research.md`
 
@@ -20,15 +19,15 @@ Transform design decisions into professional, maintainable documentation. This s
 - Updated `.workflow/NNN-feature-slug/design.md`
 - Updated `.workflow/NNN-feature-slug/contracts.md` (if applicable)
 
-**Announce at start:** "I'm using the design-writer skill to document this design following architecture best practices."
+**Announce at start:** "I'm using the design-writer skill to architect and document the solution."
 
 ## When to Use
 
-- After design decisions have been made
-- User says "write the design", "document this", "create the design doc"
-- When updating or improving existing design documents
+- After `research` skill completes
+- User says "design", "architect", "how should we build this"
+- When creating or updating design documents
 - Invoked directly via `/design-writer`
-- When a design exists but needs better documentation
+- Before `plan` skill (design decisions inform implementation steps)
 
 ## Core Principles
 

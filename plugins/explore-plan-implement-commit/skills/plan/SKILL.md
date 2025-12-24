@@ -7,7 +7,7 @@ description: Use after design to create a concrete implementation plan. Breaks t
 
 ## Overview
 
-Transform design into action. This skill takes the architecture from `design-architect` and creates a step-by-step implementation plan with structured task templates that the Coder subagent can execute without additional exploration.
+Transform design into action. This skill takes the architecture from `design-writer` and creates a step-by-step implementation plan with structured task templates that the Coder subagent can execute without additional exploration.
 
 **Input:**
 - `.workflow/NNN-feature-slug/codebase.md`
@@ -21,7 +21,7 @@ Transform design into action. This skill takes the architecture from `design-arc
 
 ## When to Use
 
-- After `design-architect` skill completes
+- After `design-writer` skill completes
 - User says "plan", "break it down", "what are the steps"
 - Invoked directly via `/plan`
 - Before `implement` skill (plan guides implementation)
