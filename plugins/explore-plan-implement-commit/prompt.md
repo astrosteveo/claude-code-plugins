@@ -71,7 +71,10 @@ The **Discoverer** subagent (using the **Research** skill) conducts targeted res
 
 ## Phase 4: Design
 
-Claude uses the **Design** skill to architect the solution, synthesizing findings from Exploration and Research.
+Claude uses two complementary skills for design:
+
+1. **Design-Architect** skill — Makes key architectural decisions through Socratic dialogue, synthesizing codebase patterns and research findings
+2. **Design-Writer** skill — Documents the design following software architecture best practices, using Mermaid diagrams for visual clarity
 
 If ambiguities remain, Claude continues clarifying questions until confident in the approach. Once the user approves:
 

@@ -61,7 +61,7 @@ When you need user input (e.g., to resolve conflicting guidance or fill gaps), u
 - After `explore` skill completes
 - User says "research", "best practices", "how should this be done"
 - Invoked directly via `/research`
-- Before `design` skill (research informs design decisions)
+- Before `design-architect` skill (research informs architecture decisions)
 
 ## The Process
 
@@ -302,7 +302,7 @@ The research found conflicting guidance on [topic]:
 Which approach fits your needs?
 ```
 
-**Transition to:** `design` skill (if user confirms)
+**Transition to:** `design-architect` skill (if user confirms)
 
 ## Key Principles
 

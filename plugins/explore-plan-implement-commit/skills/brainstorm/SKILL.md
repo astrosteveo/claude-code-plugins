@@ -245,7 +245,7 @@ Great, we have a clear direction!
 - Present options without a recommendation
 - Skip the "Other" option
 - Jump into codebase exploration (that's `explore`)
-- Discuss implementation details (that's `design`/`plan`)
+- Discuss implementation details (that's `design-architect`/`plan`)
 - Write any code
 - Assume skill level without asking
 - Propose only one option

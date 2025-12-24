@@ -1,13 +1,13 @@
 ---
-name: design
-description: Use after research to design the architecture and technical approach. Synthesizes codebase analysis and research findings into a concrete technical design. Outputs design.md.
+name: design-architect
+description: Use after research to architect the solution collaboratively. Makes key technical decisions through Socratic dialogue, synthesizing codebase patterns and research findings. Outputs design.md. For polished documentation with diagrams, use design-writer.
 ---
 
-# Design
+# Design Architect
 
 ## Overview
 
-Transform discovery into architecture. This skill takes the codebase analysis from `explore` and the validated research from `research`, then works with the user to create a concrete technical design.
+Architect the solution collaboratively. This skill takes the codebase analysis from `explore` and the validated research from `research`, then works with the user to make key architectural decisions through Socratic dialogue.
 
 **Input:**
 - `.workflow/NNN-feature-slug/codebase.md`
@@ -17,14 +17,14 @@ Transform discovery into architecture. This skill takes the codebase analysis fr
 - `.workflow/NNN-feature-slug/design.md`
 - `.workflow/NNN-feature-slug/contracts.md` (optional)
 
-**Announce at start:** "I'm using the design skill to architect this feature based on our codebase analysis and research findings."
+**Announce at start:** "I'm using the design-architect skill to work through architectural decisions based on our codebase analysis and research findings."
 
 ## When to Use
 
 - After `research` skill completes
-- User says "design", "architect", "how should we build this"
-- Invoked directly via `/design`
-- Before `plan` skill (design informs implementation steps)
+- User says "architect", "design decisions", "how should we build this"
+- Invoked directly via `/design-architect`
+- Before `plan` skill (architecture decisions inform implementation steps)
 
 ## Global Rule: Asking Questions
 
