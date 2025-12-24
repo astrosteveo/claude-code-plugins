@@ -1,7 +1,6 @@
 {
   "name": "explore-plan-implement-commit",
   "description": "Structured feature development workflow using 3 subagents (Orchestrator, Discoverer, Coder). Guides from brainstorming through exploration, research, design, planning, and implementation with TDD and quality gates. Skills provide the logic; subagents provide execution context.",
-  "version": "1.1.0",
   "author": {
     "name": "astrosteveo"
   },
