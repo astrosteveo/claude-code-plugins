@@ -1,15 +1,15 @@
 ---
 name: using-harness
-description: "Orchestrates the harness workflow (Define → Research → Plan → Execute → Verify). Loaded at session start - intercepts all task-related messages and routes to appropriate phase skill before any response."
+description: "Orchestrates the harness workflow (Define → Research → Plan → Execute → Verify). Routes task messages to appropriate phase skill."
 ---
 
-<EXTREMELY-IMPORTANT>
-ANY task that involves building, adding, fixing, changing, or exploring code MUST go through the harness workflow.
+## CRITICAL REQUIREMENT
 
-IF A HARNESS SKILL APPLIES, YOU DO NOT HAVE A CHOICE. YOU MUST USE IT.
+**ANY task that involves building, adding, fixing, changing, or exploring code MUST go through the harness workflow.**
+
+**IF A HARNESS SKILL APPLIES, YOU DO NOT HAVE A CHOICE. YOU MUST USE IT.**
 
 This is not negotiable. This is not optional. You cannot rationalize your way out of this.
-</EXTREMELY-IMPORTANT>
 
 ## Intent Detection - CRITICAL
 
@@ -32,6 +32,17 @@ This is not negotiable. This is not optional. You cannot rationalize your way ou
 | "Help me understand..." | → Invoke harness:defining |
 | "I need to..." | → Invoke harness:defining |
 | "Could you..." (+ any action) | → Invoke harness:defining |
+| "Refactor X" | → Invoke harness:defining |
+| "Delete/remove X" | → Invoke harness:defining |
+| "Update X" | → Invoke harness:defining |
+| "Migrate X" | → Invoke harness:defining |
+| "Debug X" | → Invoke harness:defining |
+| "Optimize X" | → Invoke harness:defining |
+| "Write tests for X" | → Invoke harness:defining |
+| "Review X" | → Invoke harness:defining |
+| "Document X" | → Invoke harness:defining |
+| "Create X" | → Invoke harness:defining |
+| "Set up X" | → Invoke harness:defining |
 
 **The ONLY time you respond directly (no skill):**
 - Pure greetings: "Hello", "Hi", "Good morning"

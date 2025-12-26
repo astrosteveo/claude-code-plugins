@@ -1,6 +1,6 @@
 ---
 name: verifying
-description: "Performs rigorous validation before marking a task complete. Use after execution - runs full test suite, validates against requirements.md and plan.md, delegates to verifier agent for peer review. Not done until tests pass AND user is satisfied."
+description: "Validates implementation before completion. Use after execution - runs tests, checks requirements.md and plan.md, delegates to verifier agent."
 ---
 
 # Verifying Phase

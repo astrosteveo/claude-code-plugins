@@ -1,6 +1,6 @@
 ---
 name: researching
-description: "Explores codebase, mines git history, researches best practices, and presents implementation approaches. Use after requirements.md exists and user has committed to building - produces codebase.md and research.md before design work begins."
+description: "Explores codebase, git history, and best practices. Use after requirements.md exists. Produces codebase.md and research.md with implementation approaches."
 ---
 
 # Researching Phase
