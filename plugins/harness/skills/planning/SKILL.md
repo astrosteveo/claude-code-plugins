@@ -1,8 +1,6 @@
 ---
 name: planning
-description: |
-  Use this skill for collaborative design through Socratic dialogue.
-  Produces: .harness/{nnn}-{slug}/design.md and plan.md
+description: "Use when user has approved a research approach - you MUST create design.md and plan.md through Socratic dialogue BEFORE any code is written."
 ---
 
 # Planning Phase

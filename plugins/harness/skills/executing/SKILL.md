@@ -1,8 +1,6 @@
 ---
 name: executing
-description: |
-  Use this skill to implement changes following the approved plan with TDD by default.
-  Updates: plan.md with progress
+description: "Use when plan.md is approved - you MUST follow the plan step-by-step with TDD by default, updating progress as you go. No improvising beyond the approved plan."
 ---
 
 # Executing Phase

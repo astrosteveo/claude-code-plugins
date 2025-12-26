@@ -1,8 +1,6 @@
 ---
 name: researching
-description: |
-  Use this skill for informed discovery - exploring the codebase, mining git history, and researching best practices.
-  Produces: .harness/{nnn}-{slug}/codebase.md and research.md
+description: "Use when requirements.md exists and user has committed to building - you MUST explore codebase, mine git history, research best practices, and present approaches BEFORE any design work begins."
 ---
 
 # Researching Phase

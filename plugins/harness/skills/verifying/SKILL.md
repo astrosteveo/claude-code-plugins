@@ -1,8 +1,6 @@
 ---
 name: verifying
-description: |
-  Use this skill for rigorous validation before marking a task complete.
-  Delegates to verifier agent for peer review simulation.
+description: "Use when execution is complete - you MUST run full test suite, validate against requirements.md and plan.md, and get user satisfaction BEFORE claiming the task is done."
 ---
 
 # Verifying Phase
