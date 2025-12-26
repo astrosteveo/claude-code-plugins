@@ -1,7 +1,6 @@
 {
   "name": "harness",
   "description": "A 5-phase workflow for Claude Code: Define → Research → Plan → Execute → Verify",
-  "version": "1.0.0",
   "author": {
     "name": "astrosteveo"
   },
