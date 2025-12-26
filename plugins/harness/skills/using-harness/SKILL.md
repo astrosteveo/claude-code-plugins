@@ -1,70 +1,107 @@
 ---
 name: using-harness
-description: |
-  Meta-skill for workflow awareness and intent detection. Injected at session start.
+description: Use when starting any conversation - establishes the harness workflow and requires skill invocation BEFORE any response including clarifying questions
 ---
+
+<EXTREMELY-IMPORTANT>
+ANY task that involves building, adding, fixing, changing, or exploring code MUST go through the harness workflow.
+
+"Let's add X" → Invoke harness:defining FIRST
+"Take a look at Y" → Invoke harness:defining FIRST
+"Can you help me with Z" → Invoke harness:defining FIRST
+
+IF A HARNESS SKILL APPLIES, YOU DO NOT HAVE A CHOICE. YOU MUST USE IT.
+
+This is not negotiable. This is not optional. You cannot rationalize your way out of this.
+</EXTREMELY-IMPORTANT>
 
 # Harness Workflow
 
-You are working in a project that uses the harness workflow: **Define → Research → Plan → Execute → Verify**.
+**Define → Research → Plan → Execute → Verify**
 
-## Workflow Overview
+## The Rule
 
-| Phase | Purpose | Produces |
-|-------|---------|----------|
-| **Define** | Establish requirements through Socratic dialogue | `requirements.md` |
-| **Research** | Explore codebase and best practices | `codebase.md`, `research.md` |
-| **Plan** | Collaborative design with user approval | `design.md`, `plan.md` |
-| **Execute** | TDD implementation following the plan | Code + tests |
-| **Verify** | Rigorous validation before completion | Passing tests + user satisfaction |
+**Check for harness skills BEFORE ANY RESPONSE.** This includes clarifying questions. Even 1% chance means invoke the skill first.
+
+```
+User message received
+    ↓
+Could this be a task? (adding, fixing, building, exploring, changing anything)
+    ↓
+YES (even 1% chance) → Invoke harness:defining skill FIRST
+    ↓
+NO (purely conversational, no action implied) → Respond directly
+```
+
+## Red Flags
+
+These thoughts mean STOP—you're rationalizing:
+
+| Thought | Reality |
+|---------|---------|
+| "Let me just take a quick look first" | That IS the task. Start with defining. |
+| "This is just a simple question" | Questions about code are tasks. Use defining. |
+| "I need more context first" | Defining skill gathers context properly. |
+| "Let me explore the codebase first" | Research phase does that. Start with defining. |
+| "I can check this quickly" | Quick checks become tasks. Use the workflow. |
+| "This doesn't need the full workflow" | Use lightweight mode, but START with defining. |
+| "I'll just do this one thing first" | Check BEFORE doing anything. |
+| "The user just wants a quick answer" | The workflow has lightweight mode for that. |
+| "This feels productive" | Undisciplined action wastes time. Workflow prevents this. |
+
+## Skill Priority
+
+When the user presents any task:
+
+1. **ALWAYS start with `harness:defining`** - Even for "simple" things
+2. **Defining will route you** - It handles lightweight mode, spikes, etc.
+3. **Never skip to later phases** - The workflow exists for a reason
+
+"Let's add X" → harness:defining (will gather requirements)
+"Take a look at Y" → harness:defining (may suggest spike or research)
+"Fix this bug" → harness:defining (will clarify what's broken)
+"Explore this codebase" → harness:defining (will scope the exploration)
+
+## Phase Overview
+
+| Phase | Skill | Purpose | Produces |
+|-------|-------|---------|----------|
+| **Define** | `harness:defining` | Establish requirements through Socratic dialogue | `requirements.md` |
+| **Research** | `harness:researching` | Explore codebase and best practices | `codebase.md`, `research.md` |
+| **Plan** | `harness:planning` | Collaborative design with user approval | `design.md`, `plan.md` |
+| **Execute** | `harness:executing` | TDD implementation following the plan | Code + tests |
+| **Verify** | `harness:verifying` | Rigorous validation before completion | Passing tests + user satisfaction |
 
 ## Slash Commands
 
+Users can explicitly invoke phases:
 - `/define` - Start or return to Define phase
 - `/research` - Start or return to Research phase
 - `/plan` - Start or return to Plan phase
 - `/execute` - Start execution
 - `/verify` - Run verification
 
-## Intent Detection
+## Lightweight Mode
 
-When the user presents a task, determine the appropriate response:
+For trivial tasks, the **defining skill** will recognize this and suggest lightweight mode:
+- Typo fixes, config tweaks, one-line changes
+- Quick verbal define → execute → verify
+- Still goes through defining first to make that determination
 
-**New Task**
-- Invoke the `harness:defining` skill
-- Create task directory: `.harness/{nnn}-{slug}/`
-- Guide through requirements gathering
+## Spikes
 
-**Continuing Existing Task**
-- Check for active task in `.harness/`
-- Read artifacts to restore context
-- Confirm with user: "Last time we completed X, ready to continue with Y?"
+For exploratory work, the **defining skill** will recognize this and suggest a spike:
+- When requirements can't be defined without exploring first
+- Creates `.harness/{nnn}-spike-{topic}/`
+- Produces `spike-findings.md`
 
-**Simple/Trivial Task**
-- Suggest lightweight mode
-- "This seems straightforward. Want to skip the full workflow and just do it?"
-- If accepted: quick verbal define → execute → verify
+## Active Task Detection
 
-**Exploratory/Unknown Task**
-- Suggest a spike
-- "We don't know enough to define this yet. Want to do a quick spike to explore?"
-- Create: `.harness/{nnn}-spike-{topic}/`
-- Spike produces: `spike-findings.md`
-
-## Phase Transitions
-
-**Hybrid Approach**
-- Recognize when a phase is complete
-- Offer transition: "Ready to move to {next phase}?"
-- User can accept, decline, or redirect
-- User can always use slash commands for explicit control
-
-**Transition Triggers**
-- Define → Research: Requirements documented, user confirms
-- Research → Plan: Approach approved by user
-- Plan → Execute: Full plan approved
-- Execute → Verify: All plan steps complete
-- Verify → Done: Tests pass AND user satisfied
+At session start:
+1. Check for `.harness/` directories
+2. Find the most recent task
+3. Read its artifacts to understand current state
+4. Offer to continue or start fresh
 
 ## Artifact Structure
 
@@ -90,33 +127,8 @@ When the user presents a task, determine the appropriate response:
 - **Artifacts stay current** - Update when understanding changes
 - **Don't get stuck** - Loop back when blocked, iterate
 
-## Checking Active Context
+## User Instructions
 
-At session start or when resuming:
+Instructions say WHAT, not HOW. "Add X" or "Fix Y" doesn't mean skip workflows.
 
-1. Check for `.harness/` directories
-2. Find the most recent task (highest number or most recent modification)
-3. Read its artifacts to understand current state
-4. Offer to continue or start fresh
-
-## Backlog Management
-
-Deferred items, discovered bugs, and refactoring opportunities go to `.harness/backlog.md`:
-
-```markdown
-# Backlog
-
-## Deferred from {nnn}-{slug}
-- [ ] {Item} - {Reason}
-
-## Discovered Bugs
-- [ ] {Bug description} - Found in {location}
-
-## Refactoring Opportunities
-- [ ] {Opportunity} - {Context}
-
-## Blocked Items
-- [ ] [BLOCKED by {nnn}] {Item description}
-```
-
-Periodically suggest backlog review during natural breaks.
+The user hired the workflow. Trust it. Start with defining.
