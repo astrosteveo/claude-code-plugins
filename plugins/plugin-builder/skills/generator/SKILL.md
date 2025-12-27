@@ -205,10 +205,10 @@ For skill examples:
    For skills: Also read examples/*.md
    ```
 
-5. **Generate Content**
+5. **Generate Domain-Specific Content**
    ```
-   Note: Domain-specific generation will be added in next step (001-5)
-   For now, use placeholder text
+   Use Claude's knowledge of the domain to create relevant examples
+   See "Domain-Specific Content Generation" section below
    ```
 
 6. **Substitute Variables**
@@ -260,11 +260,202 @@ Test the NL parsing with these inputs:
    - Input: "create a skill"
    - Expected: Error or ask for domain
 
+## Domain-Specific Content Generation
+
+Use Claude's knowledge of the domain to generate relevant, practical examples.
+
+### Content Generation Strategy
+
+For each domain, generate contextually appropriate content based on what the domain involves.
+
+**Process:**
+1. Understand the domain (e.g., "code quality review" → linting, best practices, maintainability)
+2. Generate introduction explaining the domain
+3. Create when-to-use criteria specific to the domain
+4. Develop process steps tailored to domain workflows
+5. Formulate key principles/best practices for the domain
+6. For skills: Create 3 examples showing progression
+
+### Example Domains and Their Content
+
+#### Code Quality Review
+
+**Domain Intro:**
+"Code quality review ensures code meets standards for readability, maintainability, security, and performance. It catches issues before they reach production."
+
+**When to Use:**
+- Before merging pull requests
+- During code reviews
+- When refactoring legacy code
+- As part of CI/CD pipeline
+
+**Process Steps:**
+1. Check syntax and formatting
+2. Review naming conventions
+3. Identify code smells
+4. Verify error handling
+5. Assess security vulnerabilities
+6. Evaluate performance implications
+
+**Simple Example:** Basic linting checklist (syntax, formatting, simple rules)
+**Advanced Example:** Code smell detection (duplication, complexity metrics, architectural violations)
+**Production Example:** Full review workflow (security scanning, performance profiling, automated suggestions)
+
+#### Deployment Automation
+
+**Domain Intro:**
+"Deployment automation streamlines the process of releasing code to various environments, reducing manual errors and increasing deployment frequency."
+
+**When to Use:**
+- Deploying to staging/production
+- Implementing CI/CD pipelines
+- Managing multi-environment deployments
+- Coordinating rollouts with rollback capability
+
+**Process Steps:**
+1. Validate deployment prerequisites
+2. Run pre-deployment tests
+3. Execute deployment to target environment
+4. Perform health checks
+5. Monitor for issues
+6. Rollback if necessary
+
+**Simple Example:** Single command deploy script
+**Advanced Example:** Multi-environment deployment with validation gates
+**Production Example:** Blue-green deployment with automated rollback and monitoring
+
+#### Test Runner
+
+**Domain Intro:**
+"Test automation ensures code correctness through systematic validation, catching regressions and verifying new functionality."
+
+**When to Use:**
+- During development (TDD workflow)
+- Before committing code
+- In CI/CD pipelines
+- For regression testing
+
+**Process Steps:**
+1. Discover test files
+2. Select tests to run (all, changed, by pattern)
+3. Execute tests in appropriate environment
+4. Collect and format results
+5. Report failures with details
+6. Generate coverage reports
+
+**Simple Example:** Run all tests with single command
+**Advanced Example:** Selective test execution with pattern matching
+**Production Example:** Parallel test execution with detailed reporting and coverage
+
+### Generation Function for Skills
+
+When generating a skill, create:
+
+1. **DOMAIN_INTRO** - 1-2 sentences explaining what the domain involves
+
+2. **WHEN_TO_USE** - 3-5 bullet points of specific scenarios
+   - Be specific: "When X happens" not "When you need Y"
+   - Include trigger conditions
+   - Reference common workflows
+
+3. **PROCESS_STEPS** - Numbered list of 4-8 steps
+   - Action-oriented verbs
+   - Clear sequence
+   - Specific to domain, not generic
+
+4. **KEY_PRINCIPLES** - 4-6 best practices
+   - Domain-specific wisdom
+   - Trade-offs to consider
+   - Common pitfalls to avoid
+
+5. **Simple Example** - Basic pattern
+   - Focus on fundamentals
+   - Minimal complexity
+   - Quick to implement (< 30 min)
+   - Clear value proposition
+
+6. **Advanced Example** - Intermediate pattern
+   - Add key features from production pattern
+   - Handle edge cases
+   - Moderate complexity (1-2 hours)
+   - Production-capable for small/medium use
+
+7. **Production Example** - Enterprise pattern
+   - Full feature set
+   - Error handling, logging, monitoring
+   - Scalable and maintainable
+   - Significant investment (3-4 hours)
+
+### Generation Function for Agents
+
+When generating an agent, create:
+
+1. **ROLE_DESCRIPTION** - What the agent specializes in
+   - "You are a {domain} specialist"
+   - "Your expertise includes..."
+   - "You focus on..."
+
+2. **CAPABILITIES** - Specific things the agent can do
+   - List 4-8 capabilities
+   - Be concrete: "Analyze test failures" not "Help with tests"
+   - Domain-specific actions
+
+3. **PROCESS_STEPS** - Agent's workflow
+   - How the agent approaches problems
+   - Information gathering
+   - Analysis steps
+   - Output generation
+
+### Generation Function for Commands
+
+When generating a command, create:
+
+1. **COMMAND_INSTRUCTIONS** - What the command does and how
+   - Clear description of command purpose
+   - Input parameters (if any)
+   - Expected output
+
+2. **USAGE_EXAMPLES** - 2-3 concrete examples
+   - Show different use cases
+   - Include expected output
+   - Demonstrate options/parameters
+
+3. **OPTIONS** - Available command options (if applicable)
+   - Option flags
+   - Default values
+   - Examples of each option
+
+### Generation Function for Hooks
+
+When generating a hook, create:
+
+1. **Determine HOOK_TYPE**
+   - SessionStart: For initialization, setup
+   - PreToolUse: For validation, gates, blocking
+   - PostToolUse: For cleanup, logging, follow-up
+
+2. **INPUT_HANDLING** - How to read input
+   - PreToolUse: Read JSON from stdin
+   - SessionStart: No input needed
+   - Include jq parsing examples
+
+3. **HOOK_LOGIC** - Domain-specific validation/action
+   - Check conditions
+   - Perform validation
+   - Execute actions
+
+4. **MATCHER** - Regex pattern for when hook triggers
+   - Tool names for PreToolUse
+   - Event names for SessionStart
+
 ## Key Principles
 
 - **Clear parsing** - Extract type, domain, name accurately
+- **Domain-aware** - Generate content that demonstrates deep understanding of the domain
 - **Fail gracefully** - Provide helpful error messages
 - **Confirm understanding** - List what will be created before writing
 - **File safety** - Check if files exist, offer overwrite option
 - **Helpful output** - Show files created, suggest next steps
-- **Template-driven** - Use templates, don't hardcode content (except for basic scaffolding)
+- **Template-driven** - Use templates for structure, Claude for domain content
+- **Educational** - Show progression from simple to production-ready
+- **Practical** - Examples should be realistic and immediately useful
