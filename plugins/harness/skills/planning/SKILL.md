@@ -13,14 +13,6 @@ Collaborative design through Socratic dialogue. Iterate until full agreement on 
 - For any non-trivial implementation (3+ steps or multiple files)
 - Returning to revise the plan after execution reveals issues
 
-## Subagent Dispatch
-
-**IMPORTANT: Use a subagent to perform the planning work.**
-
-Dispatch the Task tool with `subagent_type="general-purpose"` to handle the planning phase work. This keeps main context low while the subagent does the detailed design and planning.
-
-The subagent should follow the process below.
-
 ## The Process
 
 ### 1. Read Prior Artifacts
