@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "{{HOOK_TYPE}}": [
+      {
+        "matcher": "{{MATCHER}}",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/{{NAME}}.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}
