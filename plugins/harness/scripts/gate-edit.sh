@@ -4,8 +4,13 @@
 
 FILE_PATH="$1"
 
+# Debug: Log what we received (remove after debugging)
+echo "DEBUG gate-edit.sh: FILE_PATH='$FILE_PATH'" >&2
+echo "DEBUG gate-edit.sh: PWD='$(pwd)'" >&2
+
 # Allow edits to .harness/ artifacts (always allowed)
 if [[ "$FILE_PATH" == *".harness/"* ]]; then
+    echo "DEBUG gate-edit.sh: ALLOWING .harness/ file" >&2
     exit 0
 fi
 
