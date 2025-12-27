@@ -1,55 +1,83 @@
 ---
 name: using-harness
-description: "Orchestrates the harness workflow (Define → Research → Plan → Execute → Verify). Routes task messages to appropriate phase skill."
+description: "Guide for when to use harness phase skills. Classifies user intent as write (invoke workflow), read (respond directly), or ambiguous (ask for clarification first)."
 ---
 
 ## CRITICAL REQUIREMENT
 
-**ANY task that involves building, adding, fixing, changing, or exploring code MUST go through the harness workflow.**
+**Code-changing tasks MUST go through the harness workflow.**
 
-**IF A HARNESS SKILL APPLIES, YOU DO NOT HAVE A CHOICE. YOU MUST USE IT.**
+**But not everything is a code-changing task.** Some requests are purely about understanding or analysis. The workflow helps you distinguish:
 
-This is not negotiable. This is not optional. You cannot rationalize your way out of this.
+- **Write-intent**: User wants to build, fix, or change code → Invoke `harness:defining`
+- **Read-intent**: User wants to understand or analyze → Respond directly
+- **Ambiguous**: Could be either → Ask a clarifying question first
 
-## Intent Detection - CRITICAL
+## Intent Detection
 
-**When you see ANY of these patterns, invoke `harness:defining` IMMEDIATELY:**
+### Write-Intent (invoke harness:defining immediately)
 
-| User Says | Your Response |
-|-----------|---------------|
-| "Let's add X" | → Invoke harness:defining |
-| "Take a look at Y" | → Invoke harness:defining |
-| "Can you help me with Z" | → Invoke harness:defining |
-| "I want to build..." | → Invoke harness:defining |
-| "We need to fix..." | → Invoke harness:defining |
-| "Let's implement..." | → Invoke harness:defining |
-| "Can we add..." | → Invoke harness:defining |
-| "I'm thinking about..." | → Invoke harness:defining |
-| "What if we..." | → Invoke harness:defining |
-| "How would you approach..." | → Invoke harness:defining |
-| "Let's explore..." | → Invoke harness:defining |
-| "Take a look at adding..." | → Invoke harness:defining |
-| "Help me understand..." | → Invoke harness:defining |
-| "I need to..." | → Invoke harness:defining |
-| "Could you..." (+ any action) | → Invoke harness:defining |
-| "Refactor X" | → Invoke harness:defining |
-| "Delete/remove X" | → Invoke harness:defining |
-| "Update X" | → Invoke harness:defining |
-| "Migrate X" | → Invoke harness:defining |
-| "Debug X" | → Invoke harness:defining |
-| "Optimize X" | → Invoke harness:defining |
-| "Write tests for X" | → Invoke harness:defining |
-| "Review X" | → Invoke harness:defining |
-| "Document X" | → Invoke harness:defining |
-| "Create X" | → Invoke harness:defining |
-| "Set up X" | → Invoke harness:defining |
+These patterns indicate the user wants to make changes:
 
-**The ONLY time you respond directly (no skill):**
-- Pure greetings: "Hello", "Hi", "Good morning"
-- Meta questions about the workflow itself: "What is harness?", "How does this work?"
-- Explicit requests to skip: "Just do X without the workflow"
+| Pattern | Action |
+|---------|--------|
+| "Add X", "Build X", "Create X", "Implement X" | → Invoke harness:defining |
+| "Fix X", "Debug X", "Refactor X" | → Invoke harness:defining |
+| "Update X", "Change X", "Modify X" | → Invoke harness:defining |
+| "Delete X", "Remove X" | → Invoke harness:defining |
+| "Migrate X", "Optimize X" | → Invoke harness:defining |
+| "Write tests for X", "Set up X" | → Invoke harness:defining |
+| "I want to build...", "We need to fix..." | → Invoke harness:defining |
+| "Let's implement...", "Can we add..." | → Invoke harness:defining |
+| "What should I work on...", "What's next..." | → Invoke harness:defining |
 
-**When in doubt → Invoke harness:defining. Let the defining skill decide if it's lightweight.**
+### Read-Intent (respond directly, no workflow)
+
+These patterns indicate the user wants information, not changes:
+
+| Pattern | Action |
+|---------|--------|
+| "What does X do?" | → Respond directly |
+| "How does X work?" | → Respond directly |
+| "Why is X designed this way?" | → Respond directly |
+| Pure greetings: "Hello", "Hi", "Good morning" | → Respond directly |
+| Meta questions: "What is harness?", "How does this workflow work?" | → Respond directly |
+| Explicit skip: "Just do X without the workflow" | → Respond directly |
+
+### Ambiguous Intent (ask clarifying question first)
+
+These patterns could go either way—ask before proceeding:
+
+| Pattern | Clarification |
+|---------|---------------|
+| "Review X" | Could be analysis or finding issues to fix |
+| "Take a look at X", "Look at X" | Could be understanding or prep for changes |
+| "Check X" | Could be verification or investigation |
+| "Help me understand X" | Could be learning or informing upcoming work |
+| "Explain X" | Could be education or prep for modification |
+| "Explore X" | Could be discovery or scoping changes |
+| "Can you help me with X" | Depends entirely on what X is |
+| "I'm thinking about X" | Could be brainstorming or planning changes |
+| "What if we X" | Could be hypothetical or a proposal |
+
+**Clarification template:**
+> "Before I proceed—are you looking to **understand/analyze** this, or do you want to **make changes**?"
+
+After the user responds:
+- If they want understanding → Respond directly with analysis
+- If they want changes → Invoke `harness:defining`
+
+## The Decision Flow
+
+```mermaid
+flowchart TD
+    A[User message received] --> B{Classify intent}
+    B -->|Clear write-intent| C[Invoke harness:defining]
+    B -->|Clear read-intent| D[Respond directly]
+    B -->|Ambiguous| E[Ask clarifying question]
+    E -->|User wants changes| C
+    E -->|User wants understanding| D
+```
 
 # Harness Workflow
 
@@ -57,43 +85,32 @@ This is not negotiable. This is not optional. You cannot rationalize your way ou
 
 ## The Rule
 
-**Check for harness skills BEFORE ANY RESPONSE.** This includes clarifying questions. Even 1% chance means invoke the skill first.
-
-```mermaid
-flowchart TD
-    A[User message received] --> B{Could this be a task?}
-    B -->|YES - even 1% chance| C[Invoke harness:defining skill FIRST]
-    B -->|NO - purely conversational| D[Respond directly]
-```
+**Classify intent BEFORE responding.** Write-intent gets the workflow. Read-intent gets a direct answer. Ambiguous gets clarification.
 
 ## Red Flags
 
-These thoughts mean STOP—you're rationalizing:
+These thoughts mean you should pause and classify properly:
 
-| Thought | Reality |
-|---------|---------|
-| "Let me just take a quick look first" | That IS the task. Start with defining. |
-| "This is just a simple question" | Questions about code are tasks. Use defining. |
-| "I need more context first" | Defining skill gathers context properly. |
-| "Let me explore the codebase first" | Research phase does that. Start with defining. |
-| "I can check this quickly" | Quick checks become tasks. Use the workflow. |
-| "This doesn't need the full workflow" | Use lightweight mode, but START with defining. |
-| "I'll just do this one thing first" | Check BEFORE doing anything. |
-| "The user just wants a quick answer" | The workflow has lightweight mode for that. |
-| "This feels productive" | Undisciplined action wastes time. Workflow prevents this. |
+| Thought | Consider |
+|---------|----------|
+| "Let me just take a quick look first" | Is this exploration (read) or prep for changes (write)? Ask if unclear. |
+| "This is just a simple question" | Questions about what/how/why are read-intent. Respond directly. |
+| "I need more context first" | If context is for changes, that's the Define phase. If just curiosity, respond. |
+| "The user just wants a quick answer" | If it's a question, answer it. If it's a task disguised as a question, use workflow. |
+| "This feels like it could go either way" | That's ambiguous. Ask for clarification. |
 
 ## Skill Priority
 
-When the user presents any task:
+When the user presents a task:
 
-1. **ALWAYS start with `harness:defining`** - Even for "simple" things
-2. **Defining will route you** - It handles lightweight mode, spikes, etc.
-3. **Never skip to later phases** - The workflow exists for a reason
+1. **Classify the intent** - Write, read, or ambiguous?
+2. **For ambiguous, ask first** - One clarifying question resolves it
+3. **Then proceed accordingly** - Workflow for write, direct response for read
 
-"Let's add X" → harness:defining (will gather requirements)
-"Take a look at Y" → harness:defining (may suggest spike or research)
-"Fix this bug" → harness:defining (will clarify what's broken)
-"Explore this codebase" → harness:defining (will scope the exploration)
+Examples:
+- "Add a new feature" → Write-intent → harness:defining
+- "How does authentication work here?" → Read-intent → Respond directly
+- "Take a look at this bug" → Ambiguous → Ask: "Understanding it or fixing it?"
 
 ## Phase Overview
 
@@ -167,6 +184,8 @@ The workflow is enforced by hooks that BLOCK operations if prerequisites aren't 
 
 ## Key Principles
 
+- **Classify first** - Determine intent before acting
+- **Ask when unsure** - One clarifying question prevents wrong-path recovery
 - **Socratic method** - Guide through questions, don't dictate
 - **Human in the loop** - User controls all decisions
 - **TDD by default** - Write tests first, document exceptions
@@ -176,6 +195,4 @@ The workflow is enforced by hooks that BLOCK operations if prerequisites aren't 
 
 ## User Instructions
 
-Instructions say WHAT, not HOW. "Add X" or "Fix Y" doesn't mean skip workflows.
-
-The user hired the workflow. Trust it. Start with defining.
+Instructions say WHAT, not HOW. But "understand X" and "build X" are different intents—classify correctly.

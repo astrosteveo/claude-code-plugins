@@ -1,6 +1,6 @@
 ---
 name: defining
-description: "Establishes requirements through Socratic dialogue. Use when starting any task - adding features, fixing bugs, or exploring code. Produces requirements.md."
+description: "You MUST use this when the user wants to start any work - building, fixing, refactoring, exploring what to work on, or asking what's next. Establishes requirements through Socratic dialogue. Produces requirements.md."
 ---
 
 # Defining Phase

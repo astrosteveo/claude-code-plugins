@@ -1,6 +1,6 @@
 ---
 name: verifying
-description: "Validates implementation before completion. Use after execution - runs tests, checks requirements.md and plan.md, delegates to verifier agent."
+description: "Use after code changes are complete but before marking task done. Validates implementation - runs tests, checks requirements.md and plan.md, delegates to verifier agent."
 ---
 
 # Verifying Phase
