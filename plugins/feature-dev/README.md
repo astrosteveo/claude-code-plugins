@@ -34,40 +34,44 @@ The command will guide you through the entire process interactively.
 
 ## The 7-Phase Workflow
 
-### Phase 1: Discovery
+### Phase 1: Requirements
 
-**Goal**: Understand what needs to be built
+**Goal**: Fully understand what needs to be built through Socratic dialogue
 
 **What happens:**
-- Clarifies the feature request if it's unclear
-- Asks what problem you're solving
-- Identifies constraints and requirements
-- Summarizes understanding and confirms with you
+- Starts broad, then narrows down through questioning
+- **Problem Space**: What problem is being solved? Who experiences it?
+- **Solution Vision**: What does success look like? What's the user experience?
+- **Constraints**: Technical constraints, performance requirements, compatibility needs?
+- **Success Criteria**: How do we know it's done? How do we test it?
+- Questions are asked ONE AT A TIME - no assumptions
 
 **Example:**
 ```
 You: /feature-dev Add caching
 Claude: Let me understand what you need...
-        - What should be cached? (API responses, computed values, etc.)
-        - What are your performance requirements?
-        - Do you have a preferred caching solution?
+        - What problem is this solving? (slow API responses, repeated computations?)
+        - Who experiences this problem most?
+        - What does success look like for you?
 ```
 
-### Phase 2: Codebase Exploration
+**Artifact produced:** `requirements.md`
+
+### Phase 2: Exploration
 
 **Goal**: Understand relevant existing code and patterns
 
 **What happens:**
 - Launches 2-3 `code-explorer` agents in parallel
-- Each agent explores different aspects (similar features, architecture, UI patterns)
+- Each agent explores different aspects (similar features, architecture, patterns)
 - Agents return comprehensive analyses with key files to read
 - Claude reads all identified files to build deep understanding
-- Presents comprehensive summary of findings
+- Documents any tech debt, bugs, or improvements discovered (logged to backlog)
 
 **Agents launched:**
 - "Find features similar to [feature] and trace implementation"
 - "Map the architecture and abstractions for [area]"
-- "Analyze current implementation of [related feature]"
+- "Identify patterns, testing approaches, extension points"
 
 **Example output:**
 ```
@@ -82,46 +86,19 @@ Key files to understand:
 - src/config/security.ts:8 - Security configuration
 ```
 
-### Phase 3: Clarifying Questions
+**Artifact produced:** `exploration.md`
 
-**Goal**: Fill in gaps and resolve all ambiguities
-
-**What happens:**
-- Reviews codebase findings and feature request
-- Identifies underspecified aspects:
-  - Edge cases
-  - Error handling
-  - Integration points
-  - Backward compatibility
-  - Performance needs
-- Presents all questions in an organized list
-- **Waits for your answers before proceeding**
-
-**Example:**
-```
-Before designing the architecture, I need to clarify:
-
-1. OAuth provider: Which OAuth providers? (Google, GitHub, custom?)
-2. User data: Store OAuth tokens or just user profile?
-3. Existing auth: Replace current auth or add alongside?
-4. Sessions: Integrate with existing session management?
-5. Error handling: How to handle OAuth failures?
-```
-
-**Critical**: This phase ensures nothing is ambiguous before design begins.
-
-### Phase 4: Architecture Design
+### Phase 3: Architecture
 
 **Goal**: Design multiple implementation approaches
 
 **What happens:**
 - Launches 2-3 `code-architect` agents with different focuses:
-  - **Minimal changes**: Smallest change, maximum reuse
+  - **Minimal changes**: Smallest diff, maximum reuse
   - **Clean architecture**: Maintainability, elegant abstractions
   - **Pragmatic balance**: Speed + quality
-- Reviews all approaches
-- Forms opinion on which fits best for this task
-- Presents comparison with trade-offs and recommendation
+- Reviews all approaches and forms recommendation
+- Presents comparison with trade-offs
 - **Asks which approach you prefer**
 
 **Example output:**
@@ -131,93 +108,115 @@ I've designed 3 approaches:
 Approach 1: Minimal Changes
 - Extend existing AuthService with OAuth methods
 - Add new OAuth routes to existing auth router
-- Minimal refactoring required
 Pros: Fast, low risk
 Cons: Couples OAuth to existing auth, harder to test
 
 Approach 2: Clean Architecture
 - New OAuthService with dedicated interface
 - Separate OAuth router and middleware
-- Refactor AuthService to use common interface
 Pros: Clean separation, testable, maintainable
 Cons: More files, more refactoring
 
 Approach 3: Pragmatic Balance
 - New OAuthProvider abstraction
 - Integrate into existing AuthService
-- Minimal refactoring, good boundaries
 Pros: Balanced complexity and cleanliness
 Cons: Some coupling remains
 
-Recommendation: Approach 3 - gives you clean boundaries without
-excessive refactoring, and fits your existing architecture well.
+Recommendation: Approach 3 - fits your existing architecture well.
 
 Which approach would you like to use?
 ```
+
+**Artifact produced:** `architecture.md`
+
+### Phase 4: Plan
+
+**Goal**: Create detailed implementation steps
+
+**What happens:**
+- Reviews all artifacts: requirements, exploration, architecture
+- Breaks down into specific, ordered tasks
+- Identifies dependencies between tasks
+- Creates testing and verification plan
+
+**Example output:**
+```
+## Tasks
+
+### Task 1: Create OAuthProvider interface
+- File: src/auth/OAuthProvider.ts (new)
+- Depends on: nothing
+
+### Task 2: Implement GoogleOAuthProvider
+- File: src/auth/providers/GoogleOAuthProvider.ts (new)
+- Depends on: Task 1
+
+### Task 3: Update AuthService
+- File: src/auth/AuthService.ts (modify)
+- Depends on: Task 2
+```
+
+**Artifact produced:** `plan.md`
 
 ### Phase 5: Implementation
 
 **Goal**: Build the feature
 
 **What happens:**
-- **Waits for explicit approval** before starting
-- Reads all relevant files identified in previous phases
-- Implements following chosen architecture
+- **Waits for explicit approval** before starting ("Proceed with implementation?")
+- Works through each task from the plan in order
 - Follows codebase conventions strictly
-- Writes clean, well-documented code
 - Updates todos as progress is made
 
 **Notes:**
-- Implementation only starts after you approve
+- Implementation only starts after you say "yes"
 - Follows patterns discovered in Phase 2
-- Uses architecture designed in Phase 4
-- Continuously tracks progress
+- Uses architecture chosen in Phase 3
+- All tasks must complete before proceeding
 
-### Phase 6: Quality Review
+### Phase 6: Review
 
-**Goal**: Ensure code is simple, DRY, elegant, and functionally correct
+**Goal**: Ensure quality
 
 **What happens:**
 - Launches 3 `code-reviewer` agents in parallel with different focuses:
   - **Simplicity/DRY/Elegance**: Code quality and maintainability
   - **Bugs/Correctness**: Functional correctness and logic errors
   - **Conventions/Abstractions**: Project standards and patterns
-- Consolidates findings
-- Identifies highest severity issues
-- **Presents findings and asks what you want to do**:
+- Consolidates findings (only high-confidence issues ≥80)
+- Presents findings and **asks what you want to do**:
   - Fix now
   - Fix later
   - Proceed as-is
-- Addresses issues based on your decision
+- Any pre-existing issues discovered are logged to the backlog
 
 **Example output:**
 ```
 Code Review Results:
 
-High Priority Issues:
-1. Missing error handling in OAuth callback (src/auth/oauth.ts:67)
-2. Memory leak: OAuth state not cleaned up (src/auth/oauth.ts:89)
+Critical Issues:
+1. [95] Missing error handling in OAuth callback (src/auth/oauth.ts:67)
+2. [88] Memory leak: OAuth state not cleaned up (src/auth/oauth.ts:89)
 
-Medium Priority:
-1. Could simplify token refresh logic (src/auth/oauth.ts:120)
-2. Consider extracting OAuth config validation
+Important Issues:
+1. [82] Could simplify token refresh logic (src/auth/oauth.ts:120)
 
-All tests pass. Code follows project conventions.
-
-What would you like to do?
+What would you like to do? Fix now, fix later, or proceed as-is?
 ```
+
+**Artifact produced:** `review.md`
 
 ### Phase 7: Summary
 
-**Goal**: Document what was accomplished
+**Goal**: Document completion and update project tracking
 
 **What happens:**
 - Marks all todos complete
-- Summarizes:
-  - What was built
-  - Key decisions made
-  - Files modified
-  - Suggested next steps
+- Summarizes what was built, key decisions, files changed, next steps
+- Updates `.feature-dev/dashboard.md` with recommended next steps
+- Promotes high-priority backlog items to dashboard
+- Reminds you about the feature branch for PR/merge
 
 **Example:**
 ```
@@ -227,24 +226,24 @@ What was built:
 - OAuth provider abstraction supporting Google and GitHub
 - OAuth routes and middleware integrated with existing auth
 - Token refresh and session integration
-- Error handling for all OAuth flows
 
 Key decisions:
 - Used pragmatic approach with OAuthProvider abstraction
 - Integrated with existing session management
-- Added OAuth state to prevent CSRF
 
-Files modified:
+Files changed:
 - src/auth/OAuthProvider.ts (new)
 - src/auth/AuthService.ts
 - src/routes/auth.ts
-- src/middleware/authMiddleware.ts
 
-Suggested next steps:
+Next steps:
 - Add tests for OAuth flows
 - Add more OAuth providers (Microsoft, Apple)
-- Update documentation
+
+Git: Work is on branch `feature/003-oauth-auth`. Ready to create PR or merge.
 ```
+
+**Artifact produced:** `summary.md`
 
 ## Agents
 
@@ -282,7 +281,7 @@ Suggested next steps:
 - Data flow and build sequence
 
 **When triggered:**
-- Automatically in Phase 4
+- Automatically in Phase 3
 - Can be invoked manually for architecture design
 
 **Output:**
@@ -341,8 +340,8 @@ Let the workflow guide you through all 7 phases.
 ## Best Practices
 
 1. **Use the full workflow for complex features**: The 7 phases ensure thorough planning
-2. **Answer clarifying questions thoughtfully**: Phase 3 prevents future confusion
-3. **Choose architecture deliberately**: Phase 4 gives you options for a reason
+2. **Answer requirements questions thoughtfully**: Phase 1 prevents future confusion
+3. **Choose architecture deliberately**: Phase 3 gives you options for a reason
 4. **Don't skip code review**: Phase 6 catches issues before they reach production
 5. **Read the suggested files**: Phase 2 identifies key files—read them to understand context
 
@@ -377,9 +376,9 @@ Let the workflow guide you through all 7 phases.
 - Agents run in parallel when possible
 - The thoroughness pays off in better understanding
 
-### Too many clarifying questions
+### Too many requirements questions
 
-**Issue**: Phase 3 asks too many questions
+**Issue**: Phase 1 asks too many questions
 
 **Solution**:
 - Be more specific in your initial feature request
@@ -388,7 +387,7 @@ Let the workflow guide you through all 7 phases.
 
 ### Architecture options overwhelming
 
-**Issue**: Too many architecture options in Phase 4
+**Issue**: Too many architecture options in Phase 3
 
 **Solution**:
 - Trust the recommendation—it's based on codebase analysis
@@ -405,8 +404,8 @@ Let the workflow guide you through all 7 phases.
 
 ## Author
 
-Sid Bidasaria (sbidasaria@anthropic.com)
+AstroSteveo
 
 ## Version
 
-1.0.0
+1.1.0

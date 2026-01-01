@@ -17,15 +17,54 @@ Artifact-driven feature development. Each phase produces a document before movin
 
 ---
 
-## Setup: Create Feature Directory
+## Setup: Initialize Feature
 
 **Before anything else:**
 
-1. Check `.feature-dev/` for existing feature directories (NNN-slug format)
+### 1. Verify Git Repository
+
+Check if current directory is a git repository:
+- If not a git repo: Warn user and ask if they want to proceed without version control
+- If uncommitted changes exist: Warn user and recommend committing or stashing first
+
+### 2. Check for Incomplete Features
+
+Look for `.feature-dev/NNN-slug/.state.json` files where `"completed": false`:
+- If found: "Found incomplete feature NNN-slug at Phase X. Resume or start fresh?"
+- If resume: Load state and continue from saved phase
+- If start fresh: Let user decide to archive or delete old directory
+
+### 3. Create Feature Directory
+
+For new features:
+1. Check `.feature-dev/` for existing directories (NNN-slug format)
 2. Create next numbered directory: `.feature-dev/NNN-feature-slug/`
 3. Use kebab-case slug from the feature description
 
-All artifacts will be saved to this directory.
+### 4. Create Feature Branch
+
+Create and checkout a feature branch:
+```
+git checkout -b feature/NNN-feature-slug
+```
+- If branch already exists, check it out
+- All implementation work happens on this branch
+
+### 5. Initialize State
+
+Create `.feature-dev/NNN-slug/.state.json`:
+```json
+{
+  "feature": "feature-slug",
+  "branch": "feature/NNN-feature-slug",
+  "currentPhase": 1,
+  "completedArtifacts": [],
+  "completed": false,
+  "createdAt": "ISO-timestamp"
+}
+```
+
+Update `.state.json` as each phase completes.
 
 ---
 
@@ -82,6 +121,8 @@ Ask questions ONE AT A TIME. Wait for answers. Don't assume.
 
 **Gate**: Do not proceed until requirements.md is written and user confirms.
 
+**State**: Update `.state.json`: `currentPhase: 2`, add `requirements.md` to `completedArtifacts`.
+
 ---
 
 ## Phase 2: Exploration
@@ -123,6 +164,8 @@ Ask questions ONE AT A TIME. Wait for answers. Don't assume.
 **Backlog**: If agents surfaced any tech debt, bugs, or improvements in existing code, log them to `.feature-dev/backlog.md` (see Project Backlog section).
 
 **Gate**: Do not proceed until exploration.md is written.
+
+**State**: Update `.state.json`: `currentPhase: 3`, add `exploration.md` to `completedArtifacts`.
 
 ---
 
@@ -168,6 +211,8 @@ Ask questions ONE AT A TIME. Wait for answers. Don't assume.
 
 **Gate**: Do not proceed until user approves approach and architecture.md is written.
 
+**State**: Update `.state.json`: `currentPhase: 4`, add `architecture.md` to `completedArtifacts`.
+
 ---
 
 ## Phase 4: Plan
@@ -204,6 +249,8 @@ Ask questions ONE AT A TIME. Wait for answers. Don't assume.
 
 **Gate**: Do not proceed until plan.md is written.
 
+**State**: Update `.state.json`: `currentPhase: 5`, add `plan.md` to `completedArtifacts`.
+
 ---
 
 ## Phase 5: Implementation
@@ -220,6 +267,8 @@ Ask questions ONE AT A TIME. Wait for answers. Don't assume.
 5. Follow codebase conventions strictly
 
 **Gate**: All tasks complete, code compiles/runs.
+
+**State**: Update `.state.json`: `currentPhase: 6`.
 
 ---
 
@@ -261,6 +310,8 @@ Ask questions ONE AT A TIME. Wait for answers. Don't assume.
 
 **Backlog**: If reviewers discovered pre-existing bugs or tech debt in the codebase (not introduced by this feature), log them to `.feature-dev/backlog.md`.
 
+**State**: Update `.state.json`: `currentPhase: 7`, add `review.md` to `completedArtifacts`.
+
 ---
 
 ## Phase 7: Summary
@@ -290,6 +341,12 @@ Ask questions ONE AT A TIME. Wait for answers. Don't assume.
 2. Add any "Next Steps" from summary.md to the Recommended Next Steps table
 3. Promote high-priority backlog items to the appropriate dashboard sections
 4. Check off any items that were completed during this feature
+
+**State**: Update `.state.json`: `completed: true`, add `summary.md` to `completedArtifacts`.
+
+**Git**: Remind user that work is on branch `feature/NNN-slug` and suggest:
+- Create PR for review: `gh pr create`
+- Or merge to main if approved: `git checkout main && git merge feature/NNN-slug`
 
 Mark all todos complete. Announce completion.
 

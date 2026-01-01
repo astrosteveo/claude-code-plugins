@@ -2,7 +2,7 @@
   "name": "feature-dev",
   "description": "Artifact-driven feature development: discovery → exploration → clarification → architecture → implementation → review",
   "author": {
-    "name": "Steven Mosley"
+    "name": "AstroSteveo"
   },
   "keywords": ["feature-development", "artifacts", "planning", "architecture", "implementation", "review"],
   "license": "MIT"

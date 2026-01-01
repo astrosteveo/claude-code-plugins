@@ -6,108 +6,45 @@ set -euo pipefail
 
 DASHBOARD_FILE=".feature-dev/dashboard.md"
 
+# Require jq for JSON handling
+if ! command -v jq &> /dev/null; then
+    echo '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"Install jq for dashboard summaries: https://jqlang.github.io/jq/download/"}}'
+    exit 0
+fi
+
 # Check if dashboard exists
 if [ ! -f "$DASHBOARD_FILE" ]; then
-    # No dashboard, output minimal JSON
-    cat <<'EOF'
-{
-  "hookSpecificOutput": {
-    "hookEventName": "SessionStart",
-    "additionalContext": ""
-  }
-}
-EOF
+    echo '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":""}}'
     exit 0
 fi
 
 # Read dashboard content
 DASHBOARD_CONTENT=$(cat "$DASHBOARD_FILE" 2>/dev/null || echo "")
 
-# Check if dashboard has content beyond the template headers
+# Check if dashboard has content beyond template headers
 if [ -z "$DASHBOARD_CONTENT" ] || ! echo "$DASHBOARD_CONTENT" | grep -qE '^\| .+ \| .+ \||\- \[[ x]\]'; then
-    # Dashboard exists but is empty/just template
-    cat <<'EOF'
-{
-  "hookSpecificOutput": {
-    "hookEventName": "SessionStart",
-    "additionalContext": ""
-  }
-}
-EOF
+    echo '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":""}}'
     exit 0
 fi
 
 # Extract top items from each section
-# Get first non-header row from Recommended Next Steps table and extract description
 RECOMMENDED=$(echo "$DASHBOARD_CONTENT" | sed -n '/## Recommended Next Steps/,/^##/p' | grep -E '^\| (High|Medium|Low)' | head -1 | awk -F'|' '{gsub(/^[ \t]+|[ \t]+$/, "", $3); print $3}' || echo "")
-
-# Get first unchecked bug
 BUG=$(echo "$DASHBOARD_CONTENT" | sed -n '/## Priority Bugs/,/^##/p' | grep -E '^- \[ \]' | head -1 | sed 's/^- \[ \] //' || echo "")
-
-# Get first unchecked tech debt
 TECH_DEBT=$(echo "$DASHBOARD_CONTENT" | sed -n '/## Tech Debt Queue/,/^##/p' | grep -E '^- \[ \]' | head -1 | sed 's/^- \[ \] //' || echo "")
-
-# Get first quick win
 QUICK_WIN=$(echo "$DASHBOARD_CONTENT" | sed -n '/## Quick Wins/,/^##/p' | grep -E '^- \[ \]' | head -1 | sed 's/^- \[ \] //' || echo "")
 
-# Build the message
+# Build message if we have content
 MESSAGE=""
-
 if [ -n "$RECOMMENDED" ] || [ -n "$BUG" ] || [ -n "$TECH_DEBT" ] || [ -n "$QUICK_WIN" ]; then
-    MESSAGE="**What's Next** (from .feature-dev/dashboard.md):\\n\\n"
-
-    if [ -n "$RECOMMENDED" ]; then
-        MESSAGE="${MESSAGE}  - **Recommended**: ${RECOMMENDED}\\n"
-    fi
-
-    if [ -n "$BUG" ]; then
-        MESSAGE="${MESSAGE}  - **Bug**: ${BUG}\\n"
-    fi
-
-    if [ -n "$TECH_DEBT" ]; then
-        MESSAGE="${MESSAGE}  - **Tech Debt**: ${TECH_DEBT}\\n"
-    fi
-
-    if [ -n "$QUICK_WIN" ]; then
-        MESSAGE="${MESSAGE}  - **Quick Win**: ${QUICK_WIN}\\n"
-    fi
-
-    MESSAGE="${MESSAGE}\\nRun \`/feature-dev\` to start a new feature, or ask me to tackle any of the above."
+    MESSAGE="**What's Next** (from .feature-dev/dashboard.md):\n\n"
+    [ -n "$RECOMMENDED" ] && MESSAGE+="  - **Recommended**: ${RECOMMENDED}\n"
+    [ -n "$BUG" ] && MESSAGE+="  - **Bug**: ${BUG}\n"
+    [ -n "$TECH_DEBT" ] && MESSAGE+="  - **Tech Debt**: ${TECH_DEBT}\n"
+    [ -n "$QUICK_WIN" ] && MESSAGE+="  - **Quick Win**: ${QUICK_WIN}\n"
+    MESSAGE+="\nRun \`/feature-dev\` to start a new feature, or ask me to tackle any of the above."
 fi
 
-# Escape for JSON
-escape_for_json() {
-    local input="$1"
-    local output=""
-    local i char
-    for (( i=0; i<${#input}; i++ )); do
-        char="${input:$i:1}"
-        case "$char" in
-            $'\\') output+='\\\\' ;;
-            '"') output+='\\"' ;;
-            $'\n') output+='\\n' ;;
-            $'\r') output+='\\r' ;;
-            $'\t') output+='\\t' ;;
-            *) output+="$char" ;;
-        esac
-    done
-    printf '%s' "$output"
-}
-
-if command -v jq &> /dev/null; then
-    MESSAGE_ESCAPED=$(jq -Rs '.' <<< "$MESSAGE" | sed 's/^"//;s/"$//')
-else
-    MESSAGE_ESCAPED=$(escape_for_json "$MESSAGE")
-fi
-
-# Output context injection as JSON
-cat <<EOF
-{
-  "hookSpecificOutput": {
-    "hookEventName": "SessionStart",
-    "additionalContext": "${MESSAGE_ESCAPED}"
-  }
-}
-EOF
+# Output JSON using jq for proper escaping
+jq -n --arg msg "$MESSAGE" '{hookSpecificOutput:{hookEventName:"SessionStart",additionalContext:$msg}}'
 
 exit 0
