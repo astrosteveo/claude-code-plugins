@@ -12,7 +12,10 @@
         "name": "Steven Mosley",
         "email": "stevengmjr@gmail.com"
       },
-      "source": "./plugins/harness",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/astrosteveo/harness.git"
+      },
       "category": "development",
       "homepage": "https://github.com/astrosteveo/claude-code-plugins"
     }
