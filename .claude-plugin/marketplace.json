@@ -18,6 +18,19 @@
       },
       "category": "development",
       "homepage": "https://github.com/astrosteveo/claude-code-plugins"
+    },
+    {
+      "name": "ace-workflows",
+      "description": "ACE-FCA workflow plugin implementing Research → Plan → Implement cycles with intentional context compaction and human leverage points.",
+      "author": {
+        "name": "AstroSteveo"
+      },
+      "source": {
+        "source": "local",
+        "path": "./plugins/ace-workflows"
+      },
+      "category": "development",
+      "homepage": "https://github.com/astrosteveo/claude-code-plugins"
     }
   ]
 }
