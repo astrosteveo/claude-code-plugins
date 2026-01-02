@@ -1,0 +1,13 @@
+{
+  "name": "superharness",
+  "version": "0.1.0",
+  "description": "Command-driven development workflow merging ace-workflows and harness - research-first planning, TDD implementation, context handoffs, and verified delivery",
+  "author": {
+    "name": "Steven Mosley",
+    "email": "stevengmjr@gmail.com"
+  },
+  "homepage": "https://github.com/astrosteveo/superharness",
+  "repository": "https://github.com/astrosteveo/superharness",
+  "license": "MIT",
+  "keywords": ["workflows", "tdd", "research", "handoffs", "context-engineering", "planning", "debugging", "gamedev"]
+}

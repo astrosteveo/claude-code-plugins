@@ -1,0 +1,20 @@
+{
+  "name": "superharness",
+  "description": "Command-driven development workflow with research-first planning, TDD implementation, context handoffs, and verified delivery. ARE YOU HARNESSING THE FULL POWER OF CLAUDE CODE?",
+  "owner": {
+    "name": "astrosteveo"
+  },
+  "plugins": [
+    {
+      "name": "superharness",
+      "description": "Merges ace-workflows (command structure, handoffs) with harness (TDD, research-first, verification) into one powerful workflow",
+      "source": "./",
+      "author": {
+        "name": "Steven Mosley",
+        "email": "stevengmjr@gmail.com"
+      },
+      "category": "development",
+      "homepage": "https://github.com/astrosteveo/superharness"
+    }
+  ]
+}
