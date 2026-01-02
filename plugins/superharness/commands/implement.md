@@ -1,5 +1,4 @@
 ---
-name: implement
 description: "Execute approved implementation plans phase by phase with TDD and verification gates"
 argument-hint: "<path to plan file>"
 load-skills:

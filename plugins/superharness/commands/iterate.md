@@ -1,5 +1,4 @@
 ---
-name: iterate
 description: "Update existing implementation plans based on user feedback with surgical edits"
 argument-hint: "<path to plan file> <feedback/changes>"
 load-skills:

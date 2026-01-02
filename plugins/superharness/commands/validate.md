@@ -1,5 +1,4 @@
 ---
-name: validate
 description: "Verify implementation against plan spec, run all automated verification, identify deviations"
 argument-hint: "<path to plan file>"
 load-skills:

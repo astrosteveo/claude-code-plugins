@@ -1,5 +1,4 @@
 ---
-name: resume
 description: "Resume work from a handoff document with context analysis and state verification"
 argument-hint: "<path to handoff document>"
 ---

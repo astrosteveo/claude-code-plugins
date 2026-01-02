@@ -1,5 +1,4 @@
 ---
-name: gamedev
 description: "Game development workflow with playtesting gates instead of TDD - for when 'does it feel fun?' can't be automated"
 argument-hint: "<game concept or path to GDD>"
 ---

@@ -1,5 +1,4 @@
 ---
-name: backlog
 description: "View and manage bugs, deferred features, and tech debt in BACKLOG.md"
 argument-hint: "<action: view|add|update> [details]"
 ---

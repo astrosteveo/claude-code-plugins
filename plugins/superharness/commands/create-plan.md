@@ -1,5 +1,4 @@
 ---
-name: create-plan
 description: "Create detailed implementation plans through interactive research and iteration"
 argument-hint: "<path to research doc or ticket>"
 load-skills:

@@ -1,5 +1,4 @@
 ---
-name: debug
 description: "Systematic 4-phase debugging with root cause analysis - no random fixes"
 argument-hint: "<description of issue or path to relevant file>"
 load-skills:

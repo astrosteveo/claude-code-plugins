@@ -1,5 +1,4 @@
 ---
-name: research
 description: "Research codebase and external sources to document existing patterns before planning"
 argument-hint: "<research question or area of interest>"
 load-skills:

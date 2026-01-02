@@ -1,5 +1,4 @@
 ---
-name: handoff
 description: "Create structured handoff document for intentional context compaction and session continuation"
 argument-hint: "<optional description>"
 load-skills:

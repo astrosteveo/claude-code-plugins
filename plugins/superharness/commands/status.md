@@ -1,5 +1,4 @@
 ---
-name: status
 description: "Show current work status, phase progress, and recommendations"
 ---
 
