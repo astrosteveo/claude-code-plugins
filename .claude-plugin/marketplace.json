@@ -28,6 +28,16 @@
       "source": "./plugins/ace-workflows",
       "category": "development",
       "homepage": "https://github.com/astrosteveo/claude-code-plugins"
+    },
+    {
+      "name": "superharness",
+      "description": "Command-driven development workflow merging ace-workflows and harness. Features TDD enforcement, research-first planning, systematic debugging, and context handoffs with .harness/ directory structure.",
+      "author": {
+        "name": "AstroSteveo"
+      },
+      "source": "./plugins/superharness",
+      "category": "development",
+      "homepage": "https://github.com/astrosteveo/claude-code-plugins"
     }
   ]
 }
