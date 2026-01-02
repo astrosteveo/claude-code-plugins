@@ -35,48 +35,18 @@ ACE-Workflows provides a disciplined approach to AI-assisted development through
 
 ## Workflow Diagram
 
+```mermaid
+flowchart TD
+     A[Research<br>/research-codebase] --> B[Plan<br>/create-plan]
+     B --> C[Iterate<br>/iterate-plan]
+     C --> D[Implement<br>/implement-plan]
+     D -->|if issues| C
+     D --> E[Validate<br>/validate-plan]
+     E --> F[Handoff<br>/create-handoff]
+     E --> G[Done]
+     F --> H[Resume<br>/resume-handoff]
 ```
-                    +------------------+
-                    |     Research     |
-                    | /research-codebase|
-                    +--------+---------+
-                             |
-                             v
-                    +------------------+
-                    |       Plan       |
-                    |   /create-plan   |
-                    +--------+---------+
-                             |
-                    +--------+---------+
-                    |  /iterate-plan   |<----+
-                    +--------+---------+     |
-                             |               |
-                             v               |
-                    +------------------+     |
-                    |    Implement     |     |
-                    | /implement-plan  |-----+
-                    +--------+---------+  (if issues)
-                             |
-                             v
-                    +------------------+
-                    |     Validate     |
-                    |  /validate-plan  |
-                    +--------+---------+
-                             |
-              +--------------+--------------+
-              |                             |
-              v                             v
-     +------------------+          +------------------+
-     |     Handoff      |          |      Done        |
-     | /create-handoff  |          +------------------+
-     +--------+---------+
-              |
-              v
-     +------------------+
-     |     Resume       |
-     | /resume-handoff  |
-     +------------------+
-```
+
 
 ## thoughts/ Directory Structure
 
