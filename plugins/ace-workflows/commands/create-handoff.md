@@ -1,176 +1,95 @@
 ---
-description: "Create structured handoff document for intentional context compaction and session continuation"
-argument-hint: "<optional ticket number or description>"
+description: Create handoff document for transferring work to another session
 ---
 
 # Create Handoff
 
-You are tasked with creating a handoff document for intentional context compaction. This is a core ACE-FCA principle - distilling current progress into a structured artifact that enables fresh context continuation.
+You are tasked with writing a handoff document to hand off your work to another agent in a new session. You will create a handoff document that is thorough, but also **concise**. The goal is to compact and summarize your context without losing any of the key details of what you're working on.
 
-## Purpose
-
-Handoffs enable:
-- **Intentional Compaction**: Distill accumulated context into essential information
-- **Clean Continuation**: Enable new sessions to resume work efficiently
-- **Knowledge Preservation**: Capture learnings and gotchas that would otherwise be lost
-- **Progress Tracking**: Document what was accomplished and what remains
 
 ## Process
+### 1. Filepath & Metadata
+Use the following information to understand how to create your document:
+    - create your file under `thoughts/shared/handoffs/ENG-XXXX/YYYY-MM-DD_HH-MM-SS_ENG-ZZZZ_description.md`, where:
+        - YYYY-MM-DD is today's date
+        - HH-MM-SS is the hours, minutes and seconds based on the current time, in 24-hour format (i.e. use `13:00` for `1:00 pm`)
+        - ENG-XXXX is the ticket number (replace with `general` if no ticket)
+        - ENG-ZZZZ is the ticket number (omit if no ticket)
+        - description is a brief kebab-case description
+    - Run the `scripts/spec_metadata.sh` script to generate all relevant metadata
+    - Examples:
+        - With ticket: `2025-01-08_13-55-22_ENG-2166_create-context-compaction.md`
+        - Without ticket: `2025-01-08_13-55-22_create-context-compaction.md`
 
-### Step 1: Gather Context
+### 2. Handoff writing.
+using the above conventions, write your document. use the defined filepath, and the following YAML frontmatter pattern. Use the metadata gathered in step 1, Structure the document with YAML frontmatter followed by content:
 
-Before writing, gather information about current state:
-
-1. **Review current work**:
-   - What task(s) were you working on?
-   - What phase of implementation are you in?
-   - Which plan or research document are you following?
-
-2. **Identify recent changes**:
-   - Run `git status` to see uncommitted changes
-   - Run `git log --oneline -10` to see recent commits
-   - Note specific files modified and why
-
-3. **Collect learnings**:
-   - What patterns did you discover?
-   - What gotchas or edge cases did you encounter?
-   - What debugging insights were gained?
-
-4. **List artifacts created**:
-   - Documents written or updated
-   - Code files created or modified
-   - Test files added
-
-### Step 2: Determine Filename
-
-**Filename format:** `thoughts/shared/handoffs/YYYY-MM-DD_HH-MM-SS_description.md`
-- YYYY-MM-DD is today's date
-- HH-MM-SS is the current time in 24-hour format
-- description is a brief kebab-case description
-
-**Examples:**
-- `thoughts/shared/handoffs/2025-01-15_14-30-22_implement-auth-phase-2.md`
-- `thoughts/shared/handoffs/2025-01-15_09-15-00_debug-api-timeout.md`
-
-**If no thoughts directory exists:**
-- Use `handoffs/YYYY-MM-DD_HH-MM-SS_description.md`
-- Or an appropriate location for the project
-
-### Step 3: Write the Handoff
-
-Use this template:
-
+Use the following template structure:
 ```markdown
 ---
-date: [ISO timestamp with timezone]
-researcher: Claude
-topic: "[Brief description of work]"
-tags: [handoff, relevant-tags]
+date: [Current date and time with timezone in ISO format]
+researcher: [Researcher name from thoughts status]
+git_commit: [Current commit hash]
+branch: [Current branch name]
+repository: [Repository name]
+topic: "[Feature/Task Name] Implementation Strategy"
+tags: [implementation, strategy, relevant-component-names]
 status: complete
+last_updated: [Current date in YYYY-MM-DD format]
+last_updated_by: [Researcher name]
+type: implementation_strategy
 ---
 
-# Handoff: [Concise Description]
+# Handoff: ENG-XXXX {very concise description}
 
 ## Task(s)
-
-[Description of task(s) you were working on, with status of each:]
-- **Completed**: [Tasks finished]
-- **In Progress**: [Tasks partially done - be specific about what's done and what remains]
-- **Planned**: [Tasks discussed but not started]
-
-[If working from an implementation plan, specify which phase you're on]
+{description of the task(s) that you were working on, along with the status of each (completed, work in progress, planned/discussed). If you are working on an implementation plan, make sure to call out which phase you are on. Make sure to reference the plan document and/or research document(s) you are working from that were provided to you at the beginning of the session, if applicable.}
 
 ## Critical References
+{List any critical specification documents, architectural decisions, or design docs that must be followed. Include only 2-3 most important file paths. Leave blank if none.}
 
-[Only 2-3 most important documents that must be read to continue:]
-- `path/to/plan.md` - The implementation plan being executed
-- `path/to/research.md` - Key research informing the work
-
-## Recent Changes
-
-[Describe changes made to the codebase in file:line syntax:]
-- `src/auth/handler.ts:45-67` - Added JWT validation logic
-- `tests/auth.test.ts:12-34` - Added unit tests for token refresh
-- `config/settings.json` - Updated timeout configuration
+## Recent changes
+{describe recent changes made to the codebase that you made in line:file syntax}
 
 ## Learnings
-
-[Important discoveries that the next session should know:]
-- Pattern: [Describe pattern discovered, with file reference]
-- Gotcha: [Edge case or bug cause to be aware of]
-- Decision: [Important decision made and why]
+{describe important things that you learned - e.g. patterns, root causes of bugs, or other important pieces of information someone that is picking up your work after you should know. consider listing explicit file paths.}
 
 ## Artifacts
-
-[Exhaustive list of files produced or updated:]
-- `path/to/file.ext` - Description
-- `path/to/another.ext:line-range` - Description
+{ an exhaustive list of artifacts you produced or updated as filepaths and/or file:line references - e.g. paths to feature documents, implementation plans, etc that should be read in order to resume your work.}
 
 ## Action Items & Next Steps
-
-[Prioritized list of what to do next:]
-1. **Immediate**: [Most important next action]
-2. **Next**: [Second priority]
-3. **Later**: [Lower priority items]
+{ a list of action items and next steps for the next agent to accomplish based on your tasks and their statuses}
 
 ## Other Notes
-
-[Any additional context that doesn't fit above:]
-- Relevant code locations: `path/to/relevant/code.ts`
-- Related documentation: `path/to/docs.md`
-- External resources: [URLs if relevant]
-- Blockers or dependencies: [If any]
+{ other notes, references, or useful information - e.g. where relevant sections of the codebase are, where relevant documents are, or other important things you leanrned that you want to pass on but that don't fall into the above categories}
 ```
+---
 
-### Step 4: Write and Present
+### 3. Approve and Sync
+Run `humanlayer thoughts sync` to save the document.
 
-1. **Create the handoff file** using the Write tool
+Once this is completed, you should respond to the user with the template between <template_response></template_response> XML tags. do NOT include the tags in your response.
 
-2. **Present completion**:
+<template_response>
+Handoff created and synced! You can resume from this handoff in a new session with the following command:
 
+```bash
+/resume_handoff path/to/handoff.md
 ```
-Handoff created! You can resume from this handoff in a new session with:
+</template_response>
 
-/ace-workflows:resume-handoff thoughts/shared/handoffs/YYYY-MM-DD_HH-MM-SS_description.md
+for example (between <example_response></example_response> XML tags - do NOT include these tags in your actual response to the user)
+
+<example_response>
+Handoff created and synced! You can resume from this handoff in a new session with the following command:
+
+```bash
+/resume_handoff thoughts/shared/handoffs/ENG-2166/2025-01-08_13-44-55_ENG-2166_create-context-compaction.md
 ```
+</example_response>
 
-## Guidelines
-
-### More Information, Not Less
-
-This template defines the minimum. Include additional information if:
-- Complex debugging context needs to be preserved
-- Multiple interrelated tasks are in progress
-- Important decisions were made that need justification
-
-### Be Thorough and Precise
-
-- Include both top-level objectives and necessary lower-level details
-- Use specific file:line references that an agent can follow
-- Don't assume the next session will have any of your current context
-
-### Avoid Excessive Code Snippets
-
-- Prefer file:line references over large code blocks
-- Only include code if it's essential (e.g., an error being debugged)
-- The next session can read the files directly
-
-### Capture the "Why"
-
-- Don't just list what was done - explain why
-- Document decisions and trade-offs
-- Note anything that was tried and didn't work
-
-## When to Create a Handoff
-
-- Before ending a work session
-- When context is getting too large
-- When switching to a different task temporarily
-- When multiple agents need to coordinate on work
-- When debugging a complex issue over multiple sessions
-
-## Cross-References
-
-- To resume work: `/ace-workflows:resume-handoff`
-- For planning: `/ace-workflows:create-plan`
-- For research: `/ace-workflows:research-codebase`
+---
+##.  Additional Notes & Instructions
+- **more information, not less**. This is a guideline that defines the minimum of what a handoff should be. Always feel free to include more information if necessary.
+- **be thorough and precise**. include both top-level objectives, and lower-level details as necessary.
+- **avoid excessive code snippets**. While a brief snippet to describe some key change is important, avoid large code blocks or diffs; do not include one unless it's necessary (e.g. pertains to an error you're debugging). Prefer using `/path/to/file.ext:line` references that an agent can follow later when it's ready, e.g. `packages/dashboard/src/app/dashboard/page.tsx:12-24`

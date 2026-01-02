@@ -1,117 +1,118 @@
 ---
-description: "Resume work from a handoff document with context analysis and state verification"
-argument-hint: "<path to handoff document>"
+description: Resume work from handoff document with context analysis and validation
 ---
 
-# Resume Handoff
+# Resume work from a handoff document
 
-You are tasked with resuming work from a handoff document. Handoffs contain critical context, learnings, and next steps from previous sessions that need to be understood and continued.
+You are tasked with resuming work from a handoff document through an interactive process. These handoffs contain critical context, learnings, and next steps from previous work sessions that need to be understood and continued.
 
 ## Initial Response
 
-### If handoff path provided:
+When this command is invoked:
 
-- Skip the default message
-- Immediately read the handoff document FULLY
-- Immediately read any plan or research documents it references
-- DO NOT use sub-agents to read these critical files - read them yourself
-- Begin the analysis process
+1. **If the path to a handoff document was provided**:
+   - If a handoff document path was provided as a parameter, skip the default message
+   - Immediately read the handoff document FULLY
+   - Immediately read any research or plan documents that it links to under `thoughts/shared/plans` or `thoughts/shared/research`. do NOT use a sub-agent to read these critical files.
+   - Begin the analysis process by ingesting relevant context from the handoff document, reading additional files it mentions
+   - Then propose a course of action to the user and confirm, or ask for clarification on direction.
 
-### If no parameters provided:
+2. **If a ticket number (like ENG-XXXX) was provided**:
+   - run `humanlayer thoughts sync` to ensure your `thoughts/` directory is up to date.
+   - locate the most recent handoff document for the ticket. Tickets will be located in `thoughts/shared/handoffs/ENG-XXXX` where `ENG-XXXX` is the ticket number. e.g. for `ENG-2124` the handoffs would be in `thoughts/shared/handoffs/ENG-2124/`. **List this directory's contents.**
+   - There may be zero, one or multiple files in the directory.
+   - **If there are zero files in the directory, or the directory does not exist**: tell the user: "I'm sorry, I can't seem to find that handoff document. Can you please provide me with a path to it?"
+   - **If there is only one file in the directory**: proceed with that handoff
+   - **If there are multiple files in the directory**: using the date and time specified in the file name (it will be in the format `YYYY-MM-DD_HH-MM-SS` in 24-hour time format), proceed with the _most recent_ handoff document.
+   - Immediately read the handoff document FULLY
+   - Immediately read any research or plan documents that it links to under `thoughts/shared/plans` or `thoughts/shared/research`; do NOT use a sub-agent to read these critical files.
+   - Begin the analysis process by ingesting relevant context from the handoff document, reading additional files it mentions
+   - Then propose a course of action to the user and confirm, or ask for clarification on direction.
 
+3. **If no parameters provided**, respond with:
 ```
-I'll help you resume work from a handoff document.
+I'll help you resume work from a handoff document. Let me find the available handoffs.
 
-Which handoff would you like to resume from? Please provide the path.
+Which handoff would you like to resume from?
 
-Tip: List recent handoffs with `ls -lt thoughts/shared/handoffs/ | head`
+Tip: You can invoke this command directly with a handoff path: `/resume_handoff `thoughts/shared/handoffs/ENG-XXXX/YYYY-MM-DD_HH-MM-SS_ENG-XXXX_description.md`
 
-Or invoke directly: `/ace-workflows:resume-handoff thoughts/shared/handoffs/YYYY-MM-DD_HH-MM-SS_description.md`
+or using a ticket number to resume from the most recent handoff for that ticket: `/resume_handoff ENG-XXXX`
 ```
 
-Wait for user input.
+Then wait for the user's input.
 
-## Resume Process
+## Process Steps
 
 ### Step 1: Read and Analyze Handoff
 
-1. **Read handoff document COMPLETELY**:
-   - Use Read tool WITHOUT limit/offset parameters
+1. **Read handoff document completely**:
+   - Use the Read tool WITHOUT limit/offset parameters
    - Extract all sections:
      - Task(s) and their statuses
-     - Critical references
      - Recent changes
      - Learnings
      - Artifacts
      - Action items and next steps
      - Other notes
 
-2. **Read referenced critical documents**:
-   - Plans mentioned in "Critical References"
-   - Research documents referenced
-   - Read these yourself in main context - not via sub-agents
-
-3. **Verify current state** by spawning focused research tasks:
+2. **Spawn focused research tasks**:
+   Based on the handoff content, spawn parallel research tasks to verify current state:
 
    ```
-   Task 1 - Verify Recent Changes:
-   Check that changes mentioned in the handoff still exist:
-   1. Read files listed in "Recent Changes"
-   2. Verify the described modifications are present
-   3. Check for any newer changes since the handoff
-   Use tools: Read, Grep, Bash (git commands)
-   Return: Status of each change (present/modified/missing)
-   ```
-
-   ```
-   Task 2 - Gather Artifact Context:
-   Read artifacts mentioned in the handoff:
-   1. Read documents listed in "Artifacts"
-   2. Extract key requirements and decisions
-   3. Note any updates since the handoff
+   Task 1 - Gather artifact context:
+   Read all artifacts mentioned in the handoff.
+   1. Read feature documents listed in "Artifacts"
+   2. Read implementation plans referenced
+   3. Read any research documents mentioned
+   4. Extract key requirements and decisions
    Use tools: Read
-   Return: Summary of artifact contents
+   Return: Summary of artifact contents and key decisions
    ```
 
-4. **Wait for ALL sub-tasks to complete**
+3. **Wait for ALL sub-tasks to complete** before proceeding
+
+4. **Read critical files identified**:
+   - Read files from "Learnings" section completely
+   - Read files from "Recent changes" to understand modifications
+   - Read any new related files discovered during research
 
 ### Step 2: Synthesize and Present Analysis
 
-Present comprehensive analysis to the user:
+1. **Present comprehensive analysis**:
+   ```
+   I've analyzed the handoff from [date] by [researcher]. Here's the current situation:
 
-```
-I've analyzed the handoff from [date]. Here's the current situation:
+   **Original Tasks:**
+   - [Task 1]: [Status from handoff] → [Current verification]
+   - [Task 2]: [Status from handoff] → [Current verification]
 
-**Original Tasks:**
-- [Task 1]: [Status from handoff] -> [Current verification]
-- [Task 2]: [Status from handoff] -> [Current verification]
+   **Key Learnings Validated:**
+   - [Learning with file:line reference] - [Still valid/Changed]
+   - [Pattern discovered] - [Still applicable/Modified]
 
-**Key Learnings (Still Valid):**
-- [Learning with file:line reference] - [Verification status]
-- [Pattern discovered] - [Still applicable]
+   **Recent Changes Status:**
+   - [Change 1] - [Verified present/Missing/Modified]
+   - [Change 2] - [Verified present/Missing/Modified]
 
-**Recent Changes Status:**
-- [Change 1] - [Verified present / Missing / Modified since handoff]
-- [Change 2] - [Status]
+   **Artifacts Reviewed:**
+   - [Document 1]: [Key takeaway]
+   - [Document 2]: [Key takeaway]
 
-**Artifacts Reviewed:**
-- [Document 1]: [Key takeaway]
-- [Document 2]: [Key takeaway]
+   **Recommended Next Actions:**
+   Based on the handoff's action items and current state:
+   1. [Most logical next step based on handoff]
+   2. [Second priority action]
+   3. [Additional tasks discovered]
 
-**Recommended Next Actions:**
-Based on the handoff's action items and current state:
-1. [Most logical next step]
-2. [Second priority]
-3. [Additional tasks if discovered]
+   **Potential Issues Identified:**
+   - [Any conflicts or regressions found]
+   - [Missing dependencies or broken code]
 
-**Potential Issues Identified:**
-- [Any conflicts found between handoff state and current state]
-- [Missing dependencies or unexpected changes]
+   Shall I proceed with [recommended action 1], or would you like to adjust the approach?
+   ```
 
-Shall I proceed with [recommended action 1], or would you like to adjust the approach?
-```
-
-**Get confirmation before proceeding.**
+2. **Get confirmation** before proceeding
 
 ### Step 3: Create Action Plan
 
@@ -121,16 +122,13 @@ Shall I proceed with [recommended action 1], or would you like to adjust the app
    - Prioritize based on dependencies and handoff guidance
 
 2. **Present the plan**:
+   ```
+   I've created a task list based on the handoff and current analysis:
 
-```
-I've created a task list based on the handoff:
+   [Show todo list]
 
-[Show todo list]
-
-Ready to begin with: [first task description]
-
-Proceed?
-```
+   Ready to begin with the first task: [task description]?
+   ```
 
 ### Step 4: Begin Implementation
 
@@ -138,111 +136,82 @@ Proceed?
 2. **Reference learnings from handoff** throughout implementation
 3. **Apply patterns and approaches documented** in the handoff
 4. **Update progress** as tasks are completed
-5. **Consider creating a new handoff** when this session ends
 
 ## Guidelines
 
-### Be Thorough in Analysis
+1. **Be Thorough in Analysis**:
+   - Read the entire handoff document first
+   - Verify ALL mentioned changes still exist
+   - Check for any regressions or conflicts
+   - Read all referenced artifacts
 
-- Read the entire handoff document first
-- Verify ALL mentioned changes still exist
-- Check for any regressions or conflicts
-- Read all referenced artifacts
+2. **Be Interactive**:
+   - Present findings before starting work
+   - Get buy-in on the approach
+   - Allow for course corrections
+   - Adapt based on current state vs handoff state
 
-### Be Interactive
+3. **Leverage Handoff Wisdom**:
+   - Pay special attention to "Learnings" section
+   - Apply documented patterns and approaches
+   - Avoid repeating mistakes mentioned
+   - Build on discovered solutions
 
-- Present findings before starting work
-- Get buy-in on the approach
-- Allow for course corrections
-- Adapt based on current state vs handoff state
+4. **Track Continuity**:
+   - Use TodoWrite to maintain task continuity
+   - Reference the handoff document in commits
+   - Document any deviations from original plan
+   - Consider creating a new handoff when done
 
-### Leverage Handoff Wisdom
-
-- Pay special attention to "Learnings" section
-- Apply documented patterns and approaches
-- Avoid repeating mistakes mentioned
-- Build on discovered solutions
-
-### Track Continuity
-
-- Use TodoWrite to maintain task continuity
-- Reference the handoff document in commits if relevant
-- Document any deviations from original plan
-- Consider creating a new handoff when done
-
-### Validate Before Acting
-
-- Never assume handoff state matches current state
-- Verify all file references still exist
-- Check for breaking changes since handoff
-- Confirm patterns are still valid
+5. **Validate Before Acting**:
+   - Never assume handoff state matches current state
+   - Verify all file references still exist
+   - Check for breaking changes since handoff
+   - Confirm patterns are still valid
 
 ## Common Scenarios
 
 ### Scenario 1: Clean Continuation
-
 - All changes from handoff are present
 - No conflicts or regressions
 - Clear next steps in action items
-- **Action**: Proceed with recommended actions
+- Proceed with recommended actions
 
 ### Scenario 2: Diverged Codebase
-
 - Some changes missing or modified
 - New related code added since handoff
 - Need to reconcile differences
-- **Action**: Adapt plan based on current state
+- Adapt plan based on current state
 
 ### Scenario 3: Incomplete Handoff Work
-
 - Tasks marked as "in_progress" in handoff
-- Partial implementations to complete
-- May need to re-understand partial work
-- **Action**: Focus on completing before new work
+- Need to complete unfinished work first
+- May need to re-understand partial implementations
+- Focus on completing before new work
 
 ### Scenario 4: Stale Handoff
-
 - Significant time has passed
 - Major refactoring has occurred
 - Original approach may no longer apply
-- **Action**: Re-evaluate strategy, possibly re-research
+- Need to re-evaluate strategy
 
 ## Example Interaction Flow
 
 ```
-User: /ace-workflows:resume-handoff thoughts/shared/handoffs/2025-01-15_14-30-22_auth-implementation.md
-
-Agent: Let me read and analyze that handoff document...
+User: /resume_handoff specification/feature/handoffs/handoff-0.md
+Assistant: Let me read and analyze that handoff document...
 
 [Reads handoff completely]
-[Reads referenced plan and research]
-[Spawns verification tasks]
+[Spawns research tasks]
 [Waits for completion]
+[Reads identified files]
 
-I've analyzed the handoff from 2025-01-15. Here's the current situation:
+I've analyzed the handoff from [date]. Here's the current situation...
 
-**Original Tasks:**
-- Implement JWT validation: In Progress -> Verified, changes present in auth/handler.ts
-- Add refresh token logic: Planned -> Not started
+[Presents analysis]
 
-**Key Learnings (Still Valid):**
-- Token expiry edge case at auth/handler.ts:67 - Still relevant
-- Rate limiting pattern from middleware.ts - Still applicable
+Shall I proceed with implementing the webhook validation fix, or would you like to adjust the approach?
 
-**Recommended Next Actions:**
-1. Complete JWT validation (finish error handling)
-2. Implement refresh token logic
-3. Add integration tests
-
-Shall I proceed with completing the JWT validation?
-
-User: Yes, proceed
-
-Agent: [Creates todo list and begins implementation]
+User: Yes, proceed with the webhook validation
+Assistant: [Creates todo list and begins implementation]
 ```
-
-## Cross-References
-
-- To create handoff: `/ace-workflows:create-handoff`
-- For planning: `/ace-workflows:create-plan`
-- For research: `/ace-workflows:research-codebase`
