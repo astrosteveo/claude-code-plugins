@@ -19,19 +19,76 @@ ACE-Workflows provides a disciplined approach to AI-assisted development through
 
 ## Command Reference
 
+### Core Workflow
+
 | Command | Description |
 |---------|-------------|
-| `/ace-workflows:research-codebase` | Research codebase to document existing patterns, architecture, and implementation details before planning |
+| `/ace-workflows:research-codebase` | Document codebase as-is with thoughts directory for historical context |
 | `/ace-workflows:create-plan` | Create detailed implementation plans through interactive research and iteration |
-| `/ace-workflows:implement-plan` | Execute approved implementation plans phase by phase with verification gates |
-| `/ace-workflows:validate-plan` | Verify implementation against plan spec, run all automated verification, identify deviations |
-| `/ace-workflows:iterate-plan` | Update existing implementation plans based on user feedback with surgical edits |
-| `/ace-workflows:create-handoff` | Create structured handoff document for intentional context compaction and session continuation |
-| `/ace-workflows:resume-handoff` | Resume work from a handoff document with context analysis and state verification |
-| `/ace-workflows:debug` | Investigate issues by examining logs, state, and git history with parallel investigation tasks |
-| `/ace-workflows:research-codebase-nt` | Research codebase without thoughts directory (codebase-only exploration) |
-| `/ace-workflows:create-plan-nt` | Create implementation plans without thoughts directory (codebase-only research) |
-| `/ace-workflows:iterate-plan-nt` | Update implementation plans without thoughts directory (codebase-only research) |
+| `/ace-workflows:implement-plan` | Implement technical plans from thoughts/shared/plans with verification |
+| `/ace-workflows:validate-plan` | Validate implementation against plan, verify success criteria, identify issues |
+| `/ace-workflows:iterate-plan` | Iterate on existing implementation plans with thorough research and updates |
+
+### No-Thoughts Variants
+
+For projects without a `thoughts/` directory structure:
+
+| Command | Description |
+|---------|-------------|
+| `/ace-workflows:research-codebase-nt` | Document codebase as-is without evaluation or recommendations |
+| `/ace-workflows:create-plan-nt` | Create implementation plans with thorough research (no thoughts directory) |
+| `/ace-workflows:iterate-plan-nt` | Iterate on existing implementation plans with thorough research and updates |
+
+### Generic Variants
+
+Simplified versions without project-specific conventions:
+
+| Command | Description |
+|---------|-------------|
+| `/ace-workflows:research-codebase-generic` | Research codebase comprehensively using parallel sub-agents |
+| `/ace-workflows:create-plan-generic` | Create detailed implementation plans with thorough research and iteration |
+
+### Handoffs
+
+| Command | Description |
+|---------|-------------|
+| `/ace-workflows:create-handoff` | Create handoff document for transferring work to another session |
+| `/ace-workflows:resume-handoff` | Resume work from handoff document with context analysis and validation |
+
+### Git & PR
+
+| Command | Description |
+|---------|-------------|
+| `/ace-workflows:commit` | Create git commits with user approval and no Claude attribution |
+| `/ace-workflows:ci-commit` | Create git commits for session changes with clear, atomic messages |
+| `/ace-workflows:describe-pr` | Generate comprehensive PR descriptions following repository templates |
+| `/ace-workflows:ci-describe-pr` | Generate comprehensive PR descriptions following repository templates |
+| `/ace-workflows:describe-pr-nt` | Generate comprehensive PR descriptions following repository templates |
+
+### Debugging
+
+| Command | Description |
+|---------|-------------|
+| `/ace-workflows:debug` | Debug issues by investigating logs, database state, and git history |
+
+### Linear Integration
+
+| Command | Description |
+|---------|-------------|
+| `/ace-workflows:linear` | Manage Linear tickets - create, update, comment, and follow workflow patterns |
+| `/ace-workflows:ralph-research` | Research highest priority Linear ticket needing investigation |
+| `/ace-workflows:ralph-plan` | Create implementation plan for highest priority Linear ticket ready for spec |
+| `/ace-workflows:ralph-impl` | Implement highest priority small Linear ticket with worktree setup |
+| `/ace-workflows:oneshot` | Research ticket and launch planning session |
+| `/ace-workflows:oneshot-plan` | Execute ralph plan and implementation for a ticket |
+| `/ace-workflows:founder-mode` | Create Linear ticket and PR for experimental features after implementation |
+
+### Worktree & Review
+
+| Command | Description |
+|---------|-------------|
+| `/ace-workflows:create-worktree` | Create worktree and launch implementation session for a plan |
+| `/ace-workflows:local-review` | Set up worktree for reviewing colleague's branch |
 
 ## Workflow Diagram
 
