@@ -1,0 +1,17 @@
+{
+  "name": "ace-workflows",
+  "version": "0.1.0",
+  "description": "ACE-FCA workflow plugin implementing Research → Plan → Implement cycles with intentional context compaction",
+  "author": {
+    "name": "AstroSteveo"
+  },
+  "keywords": [
+    "ace-fca",
+    "context-engineering",
+    "research",
+    "planning",
+    "workflows",
+    "handoffs"
+  ],
+  "license": "MIT"
+}

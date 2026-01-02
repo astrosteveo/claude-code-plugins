@@ -1,0 +1,12 @@
+{
+  "name": "ace-workflows",
+  "owner": {
+    "name": "astrosteveo"
+  },
+  "plugins": [
+    {
+      "name": "ace-workflows",
+      "description": "ACE-FCA workflow plugin: Research → Plan → Implement with intentional context compaction"
+    }
+  ]
+}
