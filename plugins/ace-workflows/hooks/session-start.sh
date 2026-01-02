@@ -90,23 +90,23 @@ if [ -n "$INCOMPLETE_PLANS" ] || [ -n "$PENDING_HANDOFFS" ]; then
         WORK_NOTIFICATION="${WORK_NOTIFICATION}**Pending Handoffs:**\\n${PENDING_HANDOFFS}"
     fi
 
-    WORK_NOTIFICATION="${WORK_NOTIFICATION}\\n**You should ask the user:** \\\"Would you like to resume previous work?\\\"\\n\\n- To resume a plan: \\\`/ace-workflows:implement-plan <path>\\\`\\n- To resume from handoff: \\\`/ace-workflows:resume-handoff <path>\\\`\\n- To start fresh: Continue with new request"
+    WORK_NOTIFICATION="${WORK_NOTIFICATION}\\n**You should ask the user:** \\\"Would you like to resume previous work?\\\"\\n\\n- To resume a plan: \`/ace-workflows:implement-plan <path>\`\\n- To resume from handoff: \`/ace-workflows:resume-handoff <path>\`\\n- To start fresh: Continue with new request"
 fi
 
 # Build the context message
 ACE_CONTEXT="You have ace-workflows commands available for structured development:\\n\\n"
 ACE_CONTEXT="${ACE_CONTEXT}**Core Workflow (Research -> Plan -> Implement -> Validate):**\\n"
-ACE_CONTEXT="${ACE_CONTEXT}- \\\`/ace-workflows:research-codebase\\\` - Research before planning\\n"
-ACE_CONTEXT="${ACE_CONTEXT}- \\\`/ace-workflows:create-plan\\\` - Create phased implementation plan\\n"
-ACE_CONTEXT="${ACE_CONTEXT}- \\\`/ace-workflows:implement-plan\\\` - Execute plan with verification gates\\n"
-ACE_CONTEXT="${ACE_CONTEXT}- \\\`/ace-workflows:validate-plan\\\` - Verify implementation against spec\\n\\n"
+ACE_CONTEXT="${ACE_CONTEXT}- \`/ace-workflows:research-codebase\` - Research before planning\\n"
+ACE_CONTEXT="${ACE_CONTEXT}- \`/ace-workflows:create-plan\` - Create phased implementation plan\\n"
+ACE_CONTEXT="${ACE_CONTEXT}- \`/ace-workflows:implement-plan\` - Execute plan with verification gates\\n"
+ACE_CONTEXT="${ACE_CONTEXT}- \`/ace-workflows:validate-plan\` - Verify implementation against spec\\n\\n"
 ACE_CONTEXT="${ACE_CONTEXT}**Supporting Commands:**\\n"
-ACE_CONTEXT="${ACE_CONTEXT}- \\\`/ace-workflows:iterate-plan\\\` - Update existing plans\\n"
-ACE_CONTEXT="${ACE_CONTEXT}- \\\`/ace-workflows:create-handoff\\\` - Create context handoff document\\n"
-ACE_CONTEXT="${ACE_CONTEXT}- \\\`/ace-workflows:resume-handoff\\\` - Resume from handoff\\n"
-ACE_CONTEXT="${ACE_CONTEXT}- \\\`/ace-workflows:debug\\\` - Investigate issues\\n\\n"
+ACE_CONTEXT="${ACE_CONTEXT}- \`/ace-workflows:iterate-plan\` - Update existing plans\\n"
+ACE_CONTEXT="${ACE_CONTEXT}- \`/ace-workflows:create-handoff\` - Create context handoff document\\n"
+ACE_CONTEXT="${ACE_CONTEXT}- \`/ace-workflows:resume-handoff\` - Resume from handoff\\n"
+ACE_CONTEXT="${ACE_CONTEXT}- \`/ace-workflows:debug\` - Investigate issues\\n\\n"
 ACE_CONTEXT="${ACE_CONTEXT}**No-Thoughts Variants (for projects without thoughts/ directory):**\\n"
-ACE_CONTEXT="${ACE_CONTEXT}- \\\`/ace-workflows:research-codebase-nt\\\`, \\\`/ace-workflows:create-plan-nt\\\`, \\\`/ace-workflows:iterate-plan-nt\\\`"
+ACE_CONTEXT="${ACE_CONTEXT}- \`/ace-workflows:research-codebase-nt\`, \`/ace-workflows:create-plan-nt\`, \`/ace-workflows:iterate-plan-nt\`"
 
 # Output context injection as JSON
 cat <<EOF
