@@ -25,10 +25,7 @@
       "author": {
         "name": "AstroSteveo"
       },
-      "source": {
-        "source": "local",
-        "path": "./plugins/ace-workflows"
-      },
+      "source": "./plugins/ace-workflows",
       "category": "development",
       "homepage": "https://github.com/astrosteveo/claude-code-plugins"
     }
