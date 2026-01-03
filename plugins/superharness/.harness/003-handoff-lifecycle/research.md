@@ -219,18 +219,25 @@ Session hook would check `status:` field.
         └── *.md
 ```
 
-## Open Questions
+## Questions Resolved
 
-1. Should resolved handoffs be deleted, archived, or marked in-place?
-2. Should the resume command auto-resolve handoffs when work completes?
-3. Should there be a separate `/superharness:resolve` command?
-4. How to handle feature-specific handoffs vs cross-feature handoffs consistently?
+1. ~~Should resolved handoffs be deleted, archived, or marked in-place?~~
+   **Decision:** Archived to `archive/` subdirectory
 
-## Recommendation
+2. ~~Should the resume command auto-resolve handoffs when work completes?~~
+   **Decision:** Yes, prompts user at completion
 
-**Implement Option A (Git Trailers) + Option B (Archive):**
+3. ~~Should there be a separate `/superharness:resolve` command?~~
+   **Decision:** Yes, created for explicit resolution
 
-1. Use git trailers for resolution tracking (consistent with plans)
-2. Provide archive mechanism for cleanup (keeps history available)
-3. Add `/superharness:resolve` command for explicit resolution
-4. Update `/superharness:resume` to optionally resolve on completion
+4. ~~How to handle feature-specific handoffs vs cross-feature handoffs consistently?~~
+   **Decision:** Feature-specific in `.harness/NNN-feature/`, cross-feature in `.harness/handoffs/`
+
+## Implementation (Completed)
+
+The following approach was implemented:
+
+1. Git trailers for resolution tracking (consistent with plans)
+2. Archive mechanism for cleanup (keeps history available)
+3. `/superharness:resolve` command for explicit resolution
+4. `/superharness:resume` prompts to resolve on completion

@@ -368,9 +368,9 @@ Clean up the plugin's own `.harness/` directory: archive resolved handoff, updat
 
 ### Tasks
 
-- [ ] Task 5.1: Archive resolved handoff
-- [ ] Task 5.2: Update plan.md checkboxes
-- [ ] Task 5.3: Update research.md open questions
+- [x] Task 5.1: Archive resolved handoff
+- [x] Task 5.2: Update plan.md checkboxes
+- [x] Task 5.3: Update research.md open questions
 
 ### Changes
 
@@ -419,12 +419,12 @@ mv plugins/superharness/.harness/001-superharness-build/handoff.md \
 ### Success Criteria
 
 #### Automated Verification:
-- [ ] `ls plugins/superharness/.harness/001-superharness-build/archive/` shows handoff.md
-- [ ] `grep -c "\[ \]" plugins/superharness/.harness/003-handoff-lifecycle/plan.md` returns 0
+- [x] `ls plugins/superharness/.harness/001-superharness-build/archive/` shows handoff.md
+- [x] `grep -c "\[ \]" plugins/superharness/.harness/003-handoff-lifecycle/plan.md` returns 0
 
 #### Manual Verification:
-- [ ] Research questions show decisions made
-- [ ] Artifacts reflect completed state
+- [x] Research questions show decisions made
+- [x] Artifacts reflect completed state
 
 ### Commit
 ```bash

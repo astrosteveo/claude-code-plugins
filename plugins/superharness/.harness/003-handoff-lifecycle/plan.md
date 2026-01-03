@@ -107,9 +107,9 @@ Add resolved handoff detection via git trailers and skip archived handoffs.
 - [x] Test script passes all cases
 
 #### Manual Verification:
-- [ ] Create handoff, verify it appears in session start
-- [ ] Resolve handoff via git trailer, verify it no longer appears
-- [ ] Move handoff to archive, verify it no longer appears
+- [x] Create handoff, verify it appears in session start
+- [x] Resolve handoff via git trailer, verify it no longer appears
+- [x] Move handoff to archive, verify it no longer appears
 
 **Human Gate**: Verify hook changes work correctly before proceeding.
 
@@ -156,12 +156,12 @@ Create `/superharness:resolve` command for explicit handoff resolution with git 
 
 #### Automated Verification:
 - [x] Command file exists with valid frontmatter
-- [ ] Git trailer created after resolution (tested in Phase 5)
+- [x] Git trailer created after resolution (tested in Phase 5)
 
 #### Manual Verification:
-- [ ] Run `/superharness:resolve .harness/test/handoff.md`
-- [ ] Verify git log shows trailer
-- [ ] Verify archived file moved correctly
+- [x] Run `/superharness:resolve .harness/test/handoff.md`
+- [x] Verify git log shows trailer
+- [x] Verify archived file moved correctly
 
 **Human Gate**: Verify resolve command works before enhancing resume.
 
@@ -218,10 +218,10 @@ Add picker dialog, completion prompts, and supersede logic to `/superharness:res
 - [x] No syntax errors in markdown
 
 #### Manual Verification:
-- [ ] Run `/superharness:resume` with no args → picker appears
-- [ ] Select handoff → resumes correctly
-- [ ] Complete work → resolution prompt appears
-- [ ] Create new checkpoint → old one auto-resolved
+- [x] Run `/superharness:resume` with no args → picker appears
+- [x] Select handoff → resumes correctly
+- [x] Complete work → resolution prompt appears
+- [x] Create new checkpoint → old one auto-resolved
 
 **Human Gate**: Verify full resume flow before documentation.
 
@@ -279,8 +279,8 @@ Update all documentation to reflect new handoff lifecycle.
 - [x] No broken internal links
 
 #### Manual Verification:
-- [ ] Documentation accurately reflects implementation
-- [ ] Examples are correct and runnable
+- [x] Documentation accurately reflects implementation
+- [x] Examples are correct and runnable
 
 **Human Gate**: Review documentation for accuracy.
 
