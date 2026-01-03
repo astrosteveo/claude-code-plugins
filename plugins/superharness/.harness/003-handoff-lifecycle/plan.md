@@ -82,29 +82,29 @@ Add resolved handoff detection via git trailers and skip archived handoffs.
 
 ### Tasks (TDD Required):
 
-- [ ] Task 1: Create test script for hook behavior
+- [x] Task 1: Create test script for hook behavior
   - Test: Resolved handoff (has git trailer) should not appear in PENDING_HANDOFFS
   - Test: Archived handoff should not appear
   - Test: Active handoff should still appear
 
-- [ ] Task 2: Add `is_handoff_resolved()` function to check git trailers
+- [x] Task 2: Add `is_handoff_resolved()` function to check git trailers
   - Pattern: `handoff: <path>` in git log
   - Return true if trailer exists for given path
 
-- [ ] Task 3: Add archive directory skip logic
+- [x] Task 3: Add archive directory skip logic
   - Skip files matching `.harness/handoffs/archive/*`
   - Skip files matching `.harness/*/archive/*` (future-proofing)
 
-- [ ] Task 4: Integrate resolution check into `check_handoff()` function
+- [x] Task 4: Integrate resolution check into `check_handoff()` function
   - Call `is_handoff_resolved()` before adding to PENDING_HANDOFFS
   - Skip if resolved
 
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] `./hooks/session-start.sh` runs without error
-- [ ] Hook outputs valid JSON
-- [ ] Test script passes all cases
+- [x] `./hooks/session-start.sh` runs without error
+- [x] Hook outputs valid JSON
+- [x] Test script passes all cases
 
 #### Manual Verification:
 - [ ] Create handoff, verify it appears in session start

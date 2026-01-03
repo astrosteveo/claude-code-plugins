@@ -59,6 +59,40 @@ if [ -d ".harness" ]; then
 fi
 
 # =============================================================================
+# HANDOFF RESOLUTION CHECK
+# =============================================================================
+
+# Check if a handoff has been resolved via git trailer
+# Returns 0 (true) if resolved, 1 (false) if still pending
+is_handoff_resolved() {
+    local handoff_path="$1"
+
+    # Check for resolution trailer: "handoff: <path>"
+    if git log --all --format=%B 2>/dev/null | grep -qF "handoff: ${handoff_path}"; then
+        return 0
+    fi
+
+    # Check for abandonment trailer: "handoff-abandoned: <path>"
+    if git log --all --format=%B 2>/dev/null | grep -qF "handoff-abandoned: ${handoff_path}"; then
+        return 0
+    fi
+
+    return 1
+}
+
+# Check if handoff path is in an archive directory
+is_handoff_archived() {
+    local handoff_path="$1"
+
+    # Check if path contains /archive/
+    if [[ "$handoff_path" == *"/archive/"* ]]; then
+        return 0
+    fi
+
+    return 1
+}
+
+# =============================================================================
 # HANDOFF DETECTION
 # =============================================================================
 
@@ -71,6 +105,16 @@ check_handoff() {
     local handoff_timestamp
     local current_timestamp
     local days_old
+
+    # Skip if handoff is in archive directory
+    if is_handoff_archived "$handoff_file"; then
+        return
+    fi
+
+    # Skip if handoff has been resolved or abandoned via git trailer
+    if is_handoff_resolved "$handoff_file"; then
+        return
+    fi
 
     handoff_name=$(basename "$handoff_file" .md)
 
