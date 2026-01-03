@@ -88,61 +88,23 @@ Wait for ALL sub-agents to complete, then:
 
 ### Step 5: Create Research Artifact
 
-**Filename format:** `.harness/NNN-feature-slug/research.md`
+**Location:** `.harness/NNN-feature-slug/research.md`
 - NNN is the next available feature number (001, 002, etc.)
 - feature-slug is a brief kebab-case description
 - Example: `.harness/003-authentication/research.md`
 
+**Template:** Use `templates/research-template.md`
+
 **If researching a standalone topic (not tied to a feature):**
 - Use `.harness/research/YYYY-MM-DD-topic.md`
 
-**Document structure:**
-
-```markdown
----
-date: [ISO timestamp with timezone]
-researcher: Claude
-topic: "[User's Question/Topic]"
-tags: [research, codebase, relevant-component-names]
-status: complete
----
-
-# Research: [User's Question/Topic]
-
-## Research Question
-[Original user query]
-
-## Summary
-[High-level documentation of what was found, answering the user's question]
-
-## Detailed Findings
-
-### [Component/Area 1]
-- Description of what exists
-- How it connects to other components
-- Current implementation details (without evaluation)
-
-### [Component/Area 2]
-...
-
-## External Documentation Findings
-[What current docs/APIs say - include version numbers and links]
-- Library X v2.3.4: [Key API patterns found]
-- Current best practices: [Summary with sources]
-
-## Code References
-- `path/to/file.py:123` - Description of what's there
-- `another/file.ts:45-67` - Description of the code block
-
-## Architecture Documentation
-[Current patterns, conventions, and design implementations]
-
-## Related .harness/ Documents
-[References to other relevant documents found]
-
-## Open Questions
-[Any areas that need further investigation]
-```
+Key sections to complete:
+- Frontmatter (date, researcher, topic, tags, status)
+- Research Question and Summary
+- Detailed Findings with file:line references
+- External Documentation Findings (version numbers, links)
+- Code References and Architecture Documentation
+- Open Questions for follow-up
 
 ### Step 6: Human Leverage Point - Review Research
 

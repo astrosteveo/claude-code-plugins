@@ -69,59 +69,17 @@ When user says "update" with ID and changes:
 2. Update the specified fields
 3. Confirm changes
 
-## Backlog Template
+## Create Backlog (if needed)
 
-```markdown
-# Project Backlog
+**Location:** `.harness/BACKLOG.md`
 
-Last updated: [ISO timestamp]
+**Template:** Use `templates/backlog-template.md`
 
-## Bugs
-
-Items that need fixing - things that are broken or behaving incorrectly.
-
-### [BUG-001] [Critical] Example bug title
-**Source**: .harness/003-auth (discovered during implementation)
-**Description**: What's broken and how it manifests
-**Suggested Fix**: Brief description of likely fix
-**Added**: 2025-01-15
-
----
-
-## Deferred Features
-
-Features identified but intentionally deferred for later implementation.
-
-### [FEAT-001] [High] Example feature title
-**Source**: .harness/003-auth (identified during planning)
-**Description**: What the feature should do
-**Rationale**: Why it was deferred
-**Added**: 2025-01-15
-
----
-
-## Tech Debt
-
-Code improvements that would enhance maintainability or performance.
-
-### [DEBT-001] [Medium] Example debt title
-**Source**: .harness/003-auth (discovered during review)
-**Description**: What needs improvement
-**Impact**: Why this matters
-**Suggested Fix**: How to address
-**Added**: 2025-01-15
-
----
-
-## Improvements
-
-Nice-to-have enhancements that aren't critical.
-
-### [IMP-001] [Low] Example improvement title
-**Source**: general
-**Description**: What could be better
-**Added**: 2025-01-15
-```
+Key sections:
+- Bugs table (ID, Description, Priority, Source, Added)
+- Deferred Features table
+- Tech Debt table
+- Improvements table
 
 ## Priority Levels
 

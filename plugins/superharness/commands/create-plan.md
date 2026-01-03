@@ -148,100 +148,20 @@ Get feedback on structure BEFORE writing details.
 
 ### Step 4: Write the Plan
 
-**Filename format:** `.harness/NNN-feature-slug/plan.md`
-- NNN is the feature number (matching research if exists)
+**Location:** `.harness/NNN-feature-slug/plan.md`
+- NNN matches the feature number from research
 - feature-slug is a brief kebab-case description
 - Example: `.harness/003-authentication/plan.md`
 
-**Plan Template:**
+**Template:** Use `templates/plan-template.md`
 
-```markdown
-# [Feature/Task Name] Implementation Plan
-
-## Overview
-[Brief description of what we're implementing and why]
-
-## Architecture Choice
-[Which option was selected and why]
-
-## Current State Analysis
-[What exists now, what's missing, key constraints discovered]
-
-## Desired End State
-[Specification of the desired end state and how to verify it]
-
-### Key Discoveries:
-- [Important finding with file:line reference]
-- [Pattern to follow]
-- [Constraint to work within]
-
-## What We're NOT Doing
-[Explicitly list out-of-scope items to prevent scope creep]
-
-## Implementation Approach
-[High-level strategy and reasoning]
-
----
-
-## Phase 1: [Descriptive Name]
-
-### Overview
-[What this phase accomplishes]
-
-### Changes Required:
-
-#### 1. [Component/File Group]
-**File**: `path/to/file.ext`
-**Changes**: [Summary of changes]
-
-### Tasks (TDD Required):
-For each task, follow RED-GREEN-REFACTOR:
-1. Write failing test
-2. Run test (verify RED)
-3. Write minimal code to pass
-4. Run test (verify GREEN)
-5. Refactor if needed
-
-- [ ] Task 1: [Description]
-- [ ] Task 2: [Description]
-
-### Success Criteria:
-
-#### Automated Verification:
-- [ ] Tests pass: `make test` or equivalent
-- [ ] Type checking passes
-- [ ] Linting passes
-
-#### Manual Verification:
-- [ ] Feature works as expected when tested
-- [ ] No regressions in related features
-
-**Human Gate**: After automated verification passes, pause for manual confirmation before proceeding to next phase.
-
----
-
-## Phase 2: [Descriptive Name]
-[Similar structure with TDD tasks and success criteria...]
-
----
-
-## Testing Strategy
-
-### Unit Tests:
-- [What to test]
-- [Key edge cases]
-
-### Integration Tests:
-- [End-to-end scenarios]
-
-### Manual Testing Steps:
-1. [Specific step to verify feature]
-2. [Another verification step]
-
-## References
-- Research: `.harness/NNN-feature-slug/research.md`
-- Similar implementation: `[file:line]`
-```
+Key sections to complete:
+- Overview and architecture choice
+- Current state analysis and desired end state
+- What we're NOT doing (scope boundaries)
+- Phase breakdown with TDD tasks
+- Success criteria (automated + manual)
+- Testing strategy
 
 ### Step 5: Human Leverage Point - Approve Plan
 

@@ -89,10 +89,10 @@ Replace inline templates in 4 commands with references to template files. This r
 
 ### Tasks
 
-- [ ] Task 2.1: Extract template from `research.md`
-- [ ] Task 2.2: Extract template from `create-plan.md`
-- [ ] Task 2.3: Extract template from `handoff.md`
-- [ ] Task 2.4: Extract template from `backlog.md`
+- [x] Task 2.1: Extract template from `research.md`
+- [x] Task 2.2: Extract template from `create-plan.md`
+- [x] Task 2.3: Extract template from `handoff.md`
+- [x] Task 2.4: Extract template from `backlog.md`
 
 ### Changes
 
@@ -181,14 +181,14 @@ Key sections:
 ### Success Criteria
 
 #### Automated Verification:
-- [ ] `grep -c "templates/" plugins/superharness/commands/research.md` returns 1+
-- [ ] `grep -c "templates/" plugins/superharness/commands/create-plan.md` returns 1+
-- [ ] `grep -c "templates/" plugins/superharness/commands/handoff.md` returns 1+
-- [ ] `grep -c "templates/" plugins/superharness/commands/backlog.md` returns 1+
+- [x] `grep -c "templates/" plugins/superharness/commands/research.md` returns 1+
+- [x] `grep -c "templates/" plugins/superharness/commands/create-plan.md` returns 1+
+- [x] `grep -c "templates/" plugins/superharness/commands/handoff.md` returns 1+
+- [x] `grep -c "templates/" plugins/superharness/commands/backlog.md` returns 1+
 
 #### Manual Verification:
-- [ ] Commands still explain what each template section is for
-- [ ] Template file paths are correct
+- [x] Commands still explain what each template section is for
+- [x] Template file paths are correct
 
 ### Commit
 ```bash

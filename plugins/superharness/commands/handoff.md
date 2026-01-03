@@ -56,77 +56,22 @@ Examples:
 - `.harness/003-auth/handoff.md`
 - `.harness/handoffs/2025-01-15_14-30-22_debug-api-timeout.md`
 
-### Step 3: Write the Handoff
+### Step 3: Create Handoff Document
 
-Use this template:
+**Location:**
+- Feature-specific: `.harness/NNN-feature/handoff.md`
+- Cross-feature: `.harness/handoffs/YYYY-MM-DD_HH-MM-SS_description.md`
 
-```markdown
----
-date: [ISO timestamp with timezone]
-researcher: Claude
-topic: "[Brief description of work]"
-tags: [handoff, relevant-tags]
-status: complete
----
+**Template:** Use `templates/handoff-template.md`
 
-# Handoff: [Concise Description]
-
-## Task(s)
-
-[Description of task(s) you were working on, with status of each:]
-- **Completed**: [Tasks finished]
-- **In Progress**: [Tasks partially done - be specific about what's done and what remains]
-- **Planned**: [Tasks discussed but not started]
-
-[If working from an implementation plan, specify which phase you're on]
-
-## Phase Progress
-
-[If executing a plan, show phase status:]
-- Phase 1: [x] Complete (phase(1): complete in git)
-- Phase 2: [x] Complete (phase(2): complete in git)
-- Phase 3: [ ] In Progress - Task 2 of 4 done
-
-## Critical References
-
-[Only 2-3 most important documents that must be read to continue:]
-- `.harness/NNN-slug/plan.md` - The implementation plan being executed
-- `.harness/NNN-slug/research.md` - Key research informing the work
-
-## Recent Changes
-
-[Describe changes made to the codebase in file:line syntax:]
-- `src/auth/handler.ts:45-67` - Added JWT validation logic
-- `tests/auth.test.ts:12-34` - Added unit tests for token refresh
-- `config/settings.json` - Updated timeout configuration
-
-## Learnings
-
-[Important discoveries that the next session should know:]
-- Pattern: [Describe pattern discovered, with file reference]
-- Gotcha: [Edge case or bug cause to be aware of]
-- Decision: [Important decision made and why]
-
-## Artifacts
-
-[Exhaustive list of files produced or updated:]
-- `path/to/file.ext` - Description
-- `path/to/another.ext:line-range` - Description
-
-## Action Items & Next Steps
-
-[Prioritized list of what to do next:]
-1. **Immediate**: [Most important next action]
-2. **Next**: [Second priority]
-3. **Later**: [Lower priority items]
-
-## Other Notes
-
-[Any additional context that doesn't fit above:]
-- Relevant code locations: `path/to/relevant/code.ts`
-- Related documentation: `path/to/docs.md`
-- Blockers or dependencies: [If any]
-```
+Key sections to complete:
+- Task status (Completed, In Progress, Planned)
+- Phase Progress (if executing a plan)
+- Critical References (2-3 most important docs)
+- Recent Changes (file:line references)
+- Learnings (patterns, gotchas, decisions)
+- Artifacts created/updated
+- Action Items & Next Steps (prioritized)
 
 ### Step 4: Write and Present
 
