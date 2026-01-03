@@ -1,3 +1,0 @@
-[submodule "plugins/harness"]
-	path = plugins/harness
-	url = git@github.com:astrosteveo/harness.git
