@@ -70,18 +70,38 @@ fi
 # HANDOFF RESOLUTION CHECK
 # =============================================================================
 
+# Cache git log to a temp file once (avoids repeated git calls and pipefail issues)
+GIT_LOG_CACHE=""
+get_git_log_cache() {
+    if [ -z "$GIT_LOG_CACHE" ]; then
+        GIT_LOG_CACHE=$(mktemp)
+        git log --all --format=%B 2>/dev/null > "$GIT_LOG_CACHE"
+    fi
+    echo "$GIT_LOG_CACHE"
+}
+
+# Cleanup git log cache on exit
+cleanup_git_log_cache() {
+    if [ -n "$GIT_LOG_CACHE" ] && [ -f "$GIT_LOG_CACHE" ]; then
+        rm -f "$GIT_LOG_CACHE"
+    fi
+}
+trap cleanup_git_log_cache EXIT
+
 # Check if a handoff has been resolved via git trailer
 # Returns 0 (true) if resolved, 1 (false) if still pending
 is_handoff_resolved() {
     local handoff_path="$1"
+    local cache_file
+    cache_file=$(get_git_log_cache)
 
     # Check for resolution trailer: "handoff: <path>"
-    if git log --all --format=%B 2>/dev/null | grep -qF "handoff: ${handoff_path}"; then
+    if grep -qF "handoff: ${handoff_path}" "$cache_file" 2>/dev/null; then
         return 0
     fi
 
     # Check for abandonment trailer: "handoff-abandoned: <path>"
-    if git log --all --format=%B 2>/dev/null | grep -qF "handoff-abandoned: ${handoff_path}"; then
+    if grep -qF "handoff-abandoned: ${handoff_path}" "$cache_file" 2>/dev/null; then
         return 0
     fi
 
