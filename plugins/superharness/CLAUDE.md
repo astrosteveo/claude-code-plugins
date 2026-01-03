@@ -104,11 +104,13 @@ superharness/
 │   └── systematic-debugging/SKILL.md
 ├── hooks/
 │   ├── hooks.json
-│   └── session-start.sh
+│   ├── session-start.sh
+│   └── test-session-start.sh     # Hook testing script
 ├── templates/
 │   ├── plan-template.md
 │   ├── research-template.md
-│   └── handoff-template.md
+│   ├── handoff-template.md
+│   └── backlog-template.md
 ├── CLAUDE.md                     # This file
 ├── README.md                     # User documentation
 ├── CHANGELOG.md                  # Version history

@@ -209,11 +209,11 @@ Update INDEX.md, CHANGELOG.md, README.md, and CLAUDE.md to fix missing entries a
 
 ### Tasks
 
-- [ ] Task 3.1: Add `resolve` command to INDEX.md mapping
-- [ ] Task 3.2: Add `resolve` command to CHANGELOG.md
-- [ ] Task 3.3: Fix CHANGELOG.md command count (11 → 12)
-- [ ] Task 3.4: Add `backlog-template.md` to README.md directory structure
-- [ ] Task 3.5: Document `test-session-start.sh` in CLAUDE.md
+- [x] Task 3.1: Add `resolve` command to INDEX.md mapping
+- [x] Task 3.2: Add `resolve` command to CHANGELOG.md
+- [x] Task 3.3: Fix CHANGELOG.md command count (11 → 12)
+- [x] Task 3.4: Add `backlog-template.md` to CLAUDE.md directory structure
+- [x] Task 3.5: Document `test-session-start.sh` in CLAUDE.md
 
 ### Changes
 
@@ -268,14 +268,14 @@ Update INDEX.md, CHANGELOG.md, README.md, and CLAUDE.md to fix missing entries a
 ### Success Criteria
 
 #### Automated Verification:
-- [ ] `grep "resolve" plugins/superharness/skills/INDEX.md` finds entry
-- [ ] `grep "12 total" plugins/superharness/CHANGELOG.md` finds entry
-- [ ] `grep "backlog-template" plugins/superharness/README.md` finds entry
-- [ ] `grep "test-session-start" plugins/superharness/CLAUDE.md` finds entry
+- [x] `grep "resolve" plugins/superharness/skills/INDEX.md` finds entry
+- [x] `grep "12 total" plugins/superharness/CHANGELOG.md` finds entry
+- [x] `grep "backlog-template" plugins/superharness/CLAUDE.md` finds entry
+- [x] `grep "test-session-start" plugins/superharness/CLAUDE.md` finds entry
 
 #### Manual Verification:
-- [ ] INDEX.md table is properly formatted
-- [ ] CHANGELOG.md list is in alphabetical order
+- [x] INDEX.md table is properly formatted
+- [x] CHANGELOG.md list is in alphabetical order
 
 ### Commit
 ```bash

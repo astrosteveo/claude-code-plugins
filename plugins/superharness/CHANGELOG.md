@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-#### Commands (11 total)
+#### Commands (12 total)
 - `/superharness:research` - Codebase + external research before planning
 - `/superharness:create-plan` - Create phased implementation plan with 3-option architecture
 - `/superharness:implement` - Execute plan with TDD and phase gates
@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `/superharness:gamedev` - Game development with playtesting gates (not TDD)
 - `/superharness:handoff` - Create context handoff document
 - `/superharness:resume` - Resume from handoff
+- `/superharness:resolve` - Resolve handoff (complete, supersede, or abandon)
 - `/superharness:backlog` - View/manage bugs, deferred features, tech debt
 - `/superharness:status` - Show current progress and recommendations
 

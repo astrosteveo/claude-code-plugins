@@ -124,6 +124,7 @@ When command is invoked:
 | `/superharness:resume` | (none) |
 | `/superharness:backlog` | (none) |
 | `/superharness:status` | (none) |
+| `/superharness:resolve` | (none) |
 
 ## Skill File Format
 
