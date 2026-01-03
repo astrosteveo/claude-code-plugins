@@ -28,11 +28,10 @@ if [ -d ".harness" ]; then
         feature_name=$(basename "$feature_dir")
 
         # Check if plan was abandoned
-        if git log --all --format=%B 2>/dev/null | grep -q "plan: abandoned"; then
-            # Check if this specific feature was abandoned
-            if git log --all --format=%B 2>/dev/null | grep -q "plan: abandoned.*${feature_name}"; then
-                continue
-            fi
+        # Look for commits that have BOTH 'plan: abandoned' trailer AND reference this feature
+        # The feature name appears in the commit subject, trailer is on separate line
+        if git log --all --format="%s%n%b" 2>/dev/null | grep -B5 "^plan: abandoned$" | grep -qi "${feature_name}"; then
+            continue
         fi
 
         # Count total phases from plan header (look for "## Phase N:" patterns)
@@ -44,8 +43,17 @@ if [ -d ".harness" ]; then
         fi
 
         # Count completed phases from git log trailers
-        # Look for "phase(N): complete" trailers in commit messages
-        completed_phases=$(git log --format=%B 2>/dev/null | grep -cE "^phase\([0-9]+\): complete$" || echo "0")
+        # Only count phases SINCE the plan was created (to avoid counting other plans' phases)
+        # Find the commit that added this plan file
+        plan_sha=$(git log --diff-filter=A --format=%H -- "$plan_file" 2>/dev/null | head -1)
+
+        if [ -n "$plan_sha" ]; then
+            # Count phase trailers only in commits after the plan was created
+            completed_phases=$(git log "${plan_sha}..HEAD" --format=%B 2>/dev/null | grep -cE "^phase\([0-9]+\): complete$" || echo "0")
+        else
+            # Fallback: plan not in git yet, no phases complete
+            completed_phases=0
+        fi
         completed_phases=${completed_phases:-0}
 
         # If not all phases complete, add to list
