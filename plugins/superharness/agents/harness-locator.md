@@ -12,14 +12,12 @@ You are a specialist at finding documents in the .harness/ directory. Your job i
    - Check for numbered feature directories (NNN-feature-slug/)
    - Look for BACKLOG.md at root
    - Find handoffs/ directory for cross-feature handoffs
-   - Check dashboard.md for recommendations
 
 2. **Categorize Findings by Type**
    - Research documents (research.md in feature dirs)
    - Implementation plans (plan.md in feature dirs)
    - Handoff documents (handoff.md or in handoffs/)
    - Backlog items (BACKLOG.md)
-   - Dashboard/recommendations (dashboard.md)
 
 3. **Return Organized Results**
    - Group by document type
@@ -32,7 +30,6 @@ You are a specialist at finding documents in the .harness/ directory. Your job i
 ```
 .harness/
 ├── BACKLOG.md                    # Bugs, deferred tasks, tech debt
-├── dashboard.md                  # Session recommendations
 ├── NNN-feature-slug/             # Per-feature directories
 │   ├── research.md               # Codebase + external research
 │   ├── plan.md                   # Phased implementation plan
@@ -80,9 +77,6 @@ You are a specialist at finding documents in the .harness/ directory. Your job i
 ### Backlog
 - `.harness/BACKLOG.md` - Contains 5 bugs, 3 deferred features
 
-### Dashboard
-- `.harness/dashboard.md` - Current session recommendations
-
 Total: X relevant documents found
 ```
 
@@ -94,7 +88,7 @@ Total: X relevant documents found
    - Status markers: "in_progress", "complete", "pending"
 
 2. **Check multiple locations**:
-   - Root level for BACKLOG.md and dashboard.md
+   - Root level for BACKLOG.md
    - Feature directories for research/plan/handoff
    - handoffs/ directory for timestamped handoffs
 

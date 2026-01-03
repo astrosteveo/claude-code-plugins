@@ -175,15 +175,14 @@ read actual files, don't assume
    - What libraries exist for this problem?
    - What approaches haven't we considered?
 
-**Use web search for:**
-
-```
-"[library name] latest version 2025"
-"[library name] [feature] best practices"
-"[problem domain] approaches comparison"
-"how to [specific task] [technology]"
-"[library name] vs [alternative] 2025"
-```
+**Search queries to try:**
+- "[library name] latest version [current year]"
+- "[library name] changelog"
+- "[library name] [feature] best practices"
+- "[problem domain] approaches comparison"
+- "how to [specific task] [technology]"
+- "[library name] vs [alternative] [current year]"
+- "[library name] breaking changes"
 
 **Document what you find:**
 

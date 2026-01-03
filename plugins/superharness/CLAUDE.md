@@ -55,7 +55,6 @@ The session hook detects incomplete work via these trailers.
 ```
 .harness/
 ├── BACKLOG.md                    # Bugs, deferred features, tech debt
-├── dashboard.md                  # Recommendations (session hook reads this)
 ├── NNN-feature-slug/             # Per-feature work
 │   ├── research.md               # Codebase + external research
 │   ├── plan.md                   # Phased implementation plan

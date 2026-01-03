@@ -299,9 +299,9 @@ Fix outdated year in examples and remove references to unused dashboard.md featu
 
 ### Tasks
 
-- [ ] Task 4.1: Update year in research-first examples
-- [ ] Task 4.2: Remove dashboard.md from CLAUDE.md directory structure
-- [ ] Task 4.3: Remove dashboard.md references from harness-locator.md
+- [x] Task 4.1: Update year in research-first examples
+- [x] Task 4.2: Remove dashboard.md from CLAUDE.md directory structure
+- [x] Task 4.3: Remove dashboard.md references from harness-locator.md
 
 ### Changes
 
@@ -342,12 +342,12 @@ Fix outdated year in examples and remove references to unused dashboard.md featu
 ### Success Criteria
 
 #### Automated Verification:
-- [ ] `grep "2025" plugins/superharness/skills/research-first/SKILL.md` returns empty
-- [ ] `grep "dashboard.md" plugins/superharness/CLAUDE.md` returns empty
-- [ ] `grep "dashboard" plugins/superharness/agents/harness-locator.md` returns empty
+- [x] `grep "2025" plugins/superharness/skills/research-first/SKILL.md` returns empty
+- [x] `grep "dashboard.md" plugins/superharness/CLAUDE.md` returns empty
+- [x] `grep "dashboard" plugins/superharness/agents/harness-locator.md` returns empty
 
 #### Manual Verification:
-- [ ] research-first examples make sense with dynamic year guidance
+- [x] research-first examples make sense with dynamic year guidance
 
 ### Commit
 ```bash
