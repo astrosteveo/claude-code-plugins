@@ -7,31 +7,74 @@ argument-hint: "<path to handoff document>"
 
 You are tasked with resuming work from a handoff document. Handoffs contain critical context, learnings, and next steps from previous sessions that need to be understood and continued.
 
+This command is the **primary interface for handoff lifecycle management**:
+- No path? → Picker dialog shows available handoffs
+- Work complete? → Prompts to resolve the handoff
+- Creating checkpoint? → Automatically supersedes the previous handoff
+
 ## Initial Response
 
 ### If handoff path provided:
 
-- Skip the default message
+- Skip the picker dialog
 - Immediately read the handoff document FULLY
 - Immediately read any plan or research documents it references
 - DO NOT use sub-agents to read these critical files - read them yourself
 - Begin the analysis process
+- Store the handoff path for later resolution
 
 ### If no parameters provided:
 
-```
-I'll help you resume work from a handoff document.
+**Run the Handoff Picker Dialog:**
 
-Which handoff would you like to resume from? Please provide the path.
+1. **Discover available handoffs**:
+   ```bash
+   # Find feature handoffs
+   ls -t .harness/*/handoff.md 2>/dev/null
 
-Tip: List recent handoffs with:
-- Feature handoffs: `ls -lt .harness/*/handoff.md`
-- General handoffs: `ls -lt .harness/handoffs/`
+   # Find cross-feature handoffs
+   ls -t .harness/handoffs/*.md 2>/dev/null | grep -v '/archive/'
+   ```
 
-Or invoke directly: `/superharness:resume .harness/003-auth/handoff.md`
-```
+2. **Filter out resolved handoffs** by checking git log:
+   ```bash
+   # For each handoff, check if resolved
+   git log --format=%B | grep -F "handoff: <path>"
+   git log --format=%B | grep -F "handoff-abandoned: <path>"
+   ```
 
-Wait for user input.
+3. **Extract metadata** for each pending handoff:
+   - Topic from frontmatter or H1 heading
+   - Date from filename or file mtime
+   - Days old calculation
+
+4. **Present picker using AskUserQuestion**:
+
+   If handoffs found:
+   ```
+   Use AskUserQuestion with:
+   - question: "Which handoff would you like to resume?"
+   - header: "Resume"
+   - options: Array of handoffs formatted as "[Topic] (N days ago)"
+   - Include "None - start fresh" as final option
+   - multiSelect: false
+   ```
+
+   If no handoffs found:
+   ```
+   No pending handoffs found. You can:
+
+   1. Create a new handoff: `/superharness:handoff`
+   2. Check if handoffs were resolved: `git log --format=%B | grep "handoff:"`
+   3. Start fresh with your current task
+
+   What would you like to do?
+   ```
+
+5. **Handle selection**:
+   - If user selects a handoff → Continue with resume process
+   - If user selects "None - start fresh" → End the command gracefully
+   - Store selected handoff path for later resolution
 
 ## Resume Process
 
@@ -140,7 +183,72 @@ Proceed?
 2. **Reference learnings from handoff** throughout implementation
 3. **Apply patterns and approaches documented** in the handoff
 4. **Update progress** as tasks are completed
-5. **Consider creating a new handoff** when this session ends
+
+### Step 5: Completion Flow
+
+When work is complete or user indicates they're done, present completion options:
+
+```
+Work session ending. How would you like to handle the handoff?
+
+Use AskUserQuestion with:
+- question: "How should we handle the current handoff?"
+- header: "Handoff"
+- options:
+  - "Complete - Work is finished, resolve handoff"
+  - "Checkpoint - Create new handoff, supersede old one"
+  - "Keep Open - Leave handoff pending for next session"
+- multiSelect: false
+```
+
+**Handle each option:**
+
+#### Option: Complete
+1. Create resolution commit:
+   ```bash
+   git commit --allow-empty -m "chore: resolve handoff
+
+   handoff: <handoff-path>
+   reason: complete"
+   ```
+2. Optionally archive (ask user)
+3. Confirm: "Handoff resolved! It will no longer appear in session warnings."
+
+#### Option: Checkpoint (Supersede)
+1. Run `/superharness:handoff` to create new handoff
+2. Add `supersedes: <old-handoff-path>` to new handoff frontmatter
+3. Auto-resolve old handoff:
+   ```bash
+   git commit --allow-empty -m "chore: resolve handoff
+
+   handoff: <old-handoff-path>
+   reason: superseded by <new-handoff-path>"
+   ```
+4. Confirm: "New checkpoint created. Previous handoff auto-resolved."
+
+#### Option: Keep Open
+1. No action needed
+2. Confirm: "Handoff will remain pending. Run `/superharness:resume` next session."
+
+## Supersede Logic
+
+When creating a new handoff during an active resume session:
+
+1. **Track the active handoff path** from picker or argument
+2. **When `/superharness:handoff` is invoked**:
+   - Detect we're in an active resume session
+   - Add to new handoff frontmatter:
+     ```yaml
+     supersedes: <old-handoff-path>
+     ```
+3. **Auto-resolve the old handoff**:
+   ```bash
+   git commit --allow-empty -m "chore: resolve handoff
+
+   handoff: <old-handoff-path>
+   reason: superseded by <new-handoff-path>"
+   ```
+4. **Inform user**: "Previous handoff auto-resolved as superseded."
 
 ## Guidelines
 
@@ -171,7 +279,7 @@ Proceed?
 - Use TodoWrite to maintain task continuity
 - Reference the handoff document in commits if relevant
 - Document any deviations from original plan
-- Consider creating a new handoff when done
+- Prompt for resolution when work completes
 
 ### Validate Before Acting
 
@@ -211,8 +319,17 @@ Proceed?
 - Original approach may no longer apply
 - **Action**: Re-evaluate strategy, possibly re-research
 
+### Scenario 5: Multiple Pending Handoffs
+
+- Picker shows multiple options
+- User must choose which to resume
+- Consider resolving old ones that are no longer relevant
+- **Action**: Select most relevant, resolve/abandon others
+
 ## Cross-References
 
 - To create handoff: `/superharness:handoff`
+- To resolve handoff explicitly: `/superharness:resolve`
 - For planning: `/superharness:create-plan`
 - For research: `/superharness:research`
+- For status overview: `/superharness:status`

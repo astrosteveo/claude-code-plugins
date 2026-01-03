@@ -185,37 +185,37 @@ Add picker dialog, completion prompts, and supersede logic to `/superharness:res
 
 ### Tasks (TDD Required):
 
-- [ ] Task 1: Add handoff discovery function
+- [x] Task 1: Add handoff discovery function
   - Scan `.harness/*/handoff.md` and `.harness/handoffs/*.md`
   - Filter out resolved/archived
   - Sort by date (newest first)
   - Extract topic/description for display
 
-- [ ] Task 2: Implement picker dialog (no args case)
+- [x] Task 2: Implement picker dialog (no args case)
   - Use AskUserQuestion tool
   - Present available handoffs as options
   - Include "None - start fresh" option
   - Format: "[Topic] (N days ago) - path"
 
-- [ ] Task 3: Add completion flow
+- [x] Task 3: Add completion flow
   - At end of resume process, ask: "Work complete?"
   - If yes: Prompt to resolve (calls resolve logic)
   - If no: Prompt to create new checkpoint
 
-- [ ] Task 4: Implement supersede logic
+- [x] Task 4: Implement supersede logic
   - When creating new handoff during active resume
   - Add `supersedes: <old-handoff-path>` to new handoff frontmatter
   - Auto-resolve old handoff with reason "superseded"
 
-- [ ] Task 5: Update initial response section
+- [x] Task 5: Update initial response section
   - If no args: Run picker instead of asking for path
   - If args: Proceed as before
 
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] Command file has updated content
-- [ ] No syntax errors in markdown
+- [x] Command file has updated content
+- [x] No syntax errors in markdown
 
 #### Manual Verification:
 - [ ] Run `/superharness:resume` with no args → picker appears
