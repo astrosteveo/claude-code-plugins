@@ -179,8 +179,23 @@ This template defines the minimum. Include additional information if:
 - When debugging a complex issue over multiple sessions
 - When the session hook prompts about context limits
 
+## Handoff Lifecycle
+
+Handoffs are checkpoints that can be:
+- **Resumed**: Via `/superharness:resume` (shows picker dialog)
+- **Resolved**: When work completes (via resume flow or `/superharness:resolve`)
+- **Superseded**: When a new handoff replaces an old one
+- **Abandoned**: When work is cancelled
+
+The session hook only shows handoffs that are:
+- Less than 7 days old
+- Not resolved (no `handoff:` git trailer)
+- Not abandoned (no `handoff-abandoned:` git trailer)
+- Not in an `archive/` directory
+
 ## Cross-References
 
-- To resume work: `/superharness:resume`
+- To resume work: `/superharness:resume` (primary handoff lifecycle interface)
+- To resolve explicitly: `/superharness:resolve`
 - For planning: `/superharness:create-plan`
 - For research: `/superharness:research`

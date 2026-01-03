@@ -59,9 +59,11 @@ The session hook detects incomplete work via these trailers.
 ├── NNN-feature-slug/             # Per-feature work
 │   ├── research.md               # Codebase + external research
 │   ├── plan.md                   # Phased implementation plan
-│   └── handoff.md                # Context handoff (if paused)
+│   ├── handoff.md                # Context handoff (if paused)
+│   └── archive/                  # Resolved handoffs (optional)
 └── handoffs/                     # Cross-feature handoffs
-    └── YYYY-MM-DD_HH-MM-SS_description.md
+    ├── YYYY-MM-DD_HH-MM-SS_description.md
+    └── archive/                  # Resolved handoffs (optional)
 ```
 
 ## Repository Structure
@@ -71,7 +73,7 @@ superharness/
 ├── .claude-plugin/
 │   ├── plugin.json               # Plugin metadata
 │   └── marketplace.json          # Marketplace config
-├── commands/                     # 11 commands
+├── commands/                     # 12 commands
 │   ├── research.md
 │   ├── create-plan.md
 │   ├── implement.md
@@ -81,6 +83,7 @@ superharness/
 │   ├── gamedev.md
 │   ├── handoff.md
 │   ├── resume.md
+│   ├── resolve.md                # NEW: Resolve handoff lifecycle
 │   ├── backlog.md
 │   └── status.md
 ├── agents/                       # 8 agents
@@ -122,6 +125,9 @@ superharness/
 | `validate` | Evidence-based verification | verification |
 | `debug` | 4-phase systematic debugging | systematic-debugging, tdd |
 | `gamedev` | Playtesting gates (not TDD) | - |
+| `handoff` | Create context handoff checkpoint | verification |
+| `resume` | Resume from handoff (picker + lifecycle) | - |
+| `resolve` | Resolve handoff (complete/supersede/abandon) | - |
 
 ## Session Hook
 
@@ -129,9 +135,39 @@ The session hook (`hooks/session-start.sh`):
 
 1. Injects foundation skill content wrapped in `<EXTREMELY_IMPORTANT>`
 2. Detects incomplete work via git trailers
-3. Detects pending handoffs (< 7 days)
+3. Detects pending handoffs (< 7 days, not resolved)
 4. Surfaces recommendations from BACKLOG.md
 5. Shows brand message if nothing to surface
+
+## Handoff Lifecycle
+
+Handoffs are checkpoints that preserve context across sessions.
+
+**Lifecycle states:**
+- **Pending**: Handoff exists, < 7 days old, not resolved
+- **Resolved**: Git trailer `handoff: <path>` exists
+- **Abandoned**: Git trailer `handoff-abandoned: <path>` exists
+- **Archived**: Moved to `archive/` subdirectory
+
+**Resolution via git trailers:**
+```bash
+# Resolve (complete or superseded)
+git commit --allow-empty -m "chore: resolve handoff
+
+handoff: .harness/001-auth/handoff.md
+reason: complete"
+
+# Abandon
+git commit --allow-empty -m "chore: abandon handoff
+
+handoff-abandoned: .harness/001-auth/handoff.md
+reason: approach changed"
+```
+
+**Primary interface:** `/superharness:resume`
+- No args: Picker dialog shows pending handoffs
+- Completion flow: Prompts to resolve when done
+- Checkpoint mode: Creates new handoff, auto-resolves old one
 
 ## Development Guidelines
 

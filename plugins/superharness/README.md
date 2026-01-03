@@ -40,8 +40,9 @@ claude plugins add superharness
 | `/superharness:iterate` | Update existing plan based on feedback |
 | `/superharness:debug` | 4-phase systematic debugging (root cause first) |
 | `/superharness:gamedev` | Game development with playtesting gates |
-| `/superharness:handoff` | Create context handoff for session continuation |
-| `/superharness:resume` | Resume from handoff document |
+| `/superharness:handoff` | Create context handoff checkpoint |
+| `/superharness:resume` | Resume from handoff (picker dialog + lifecycle management) |
+| `/superharness:resolve` | Resolve handoff (complete, supersede, or abandon) |
 | `/superharness:backlog` | View/manage bugs, features, tech debt |
 | `/superharness:status` | Show current progress and recommendations |
 
@@ -144,13 +145,29 @@ Plan checkboxes are kept in sync with git trailers. The session hook detects inc
    → Documents progress, learnings, next steps
 
 2. (New session)
-   → Session hook detects handoff
-   → Prompts: "Resume? [Yes / No]"
+   → Session hook detects pending handoff
+   → Prompts: "Resume? [Yes / No / Abandon]"
 
-3. /superharness:resume .harness/001-auth/handoff.md
+3. /superharness:resume
+   → Shows picker dialog with pending handoffs
+   → Select one to resume
    → Verifies state matches handoff
    → Continues work
+
+4. (Work complete)
+   → Prompts: "Complete / Checkpoint / Keep Open"
+   → Complete: Resolves handoff via git trailer
+   → Checkpoint: Creates new handoff, supersedes old
+   → Keep Open: Leaves pending for next session
 ```
+
+### Handoff Lifecycle
+
+Handoffs are checkpoints that can be:
+- **Resolved**: Work complete, marked via `handoff:` git trailer
+- **Superseded**: Replaced by newer handoff (auto-resolved)
+- **Abandoned**: Cancelled via `handoff-abandoned:` git trailer
+- **Archived**: Moved to `archive/` subdirectory for cleanup
 
 ### Game Development
 

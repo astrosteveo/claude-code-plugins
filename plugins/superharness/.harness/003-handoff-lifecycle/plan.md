@@ -267,16 +267,16 @@ Update all documentation to reflect new handoff lifecycle.
 
 ### Tasks (TDD Required):
 
-- [ ] Task 1: Update CLAUDE.md with new command and lifecycle docs
-- [ ] Task 2: Update README.md with user-facing documentation
-- [ ] Task 3: Update superharness-core skill with resolve workflow
-- [ ] Task 4: Update handoff command with cross-references
+- [x] Task 1: Update CLAUDE.md with new command and lifecycle docs
+- [x] Task 2: Update README.md with user-facing documentation
+- [x] Task 3: Update superharness-core skill with resolve workflow
+- [x] Task 4: Update handoff command with cross-references
 
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] All markdown files valid
-- [ ] No broken internal links
+- [x] All markdown files valid
+- [x] No broken internal links
 
 #### Manual Verification:
 - [ ] Documentation accurately reflects implementation

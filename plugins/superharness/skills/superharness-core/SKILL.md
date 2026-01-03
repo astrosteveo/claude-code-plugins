@@ -13,9 +13,11 @@ description: "INJECTED AT SESSION START. Foundation skill establishing command-d
 3. **WAIT** - Do not proceed until the user responds
 
 **Handling user response:**
-- **Yes**: Run `/superharness:resume` with the plan/handoff path
+- **Yes**: Run `/superharness:resume` (uses picker dialog if no path specified)
 - **No**: Continue with the user's original request
-- **Abandon**: Create abandon commit: `git commit --allow-empty -m "chore: abandon plan\n\nplan: abandoned"`
+- **Abandon**:
+  - For plans: `git commit --allow-empty -m "chore: abandon plan\n\nplan: abandoned"`
+  - For handoffs: `git commit --allow-empty -m "chore: abandon handoff\n\nhandoff-abandoned: <path>"`
 
 | Rationalization for skipping | Reality |
 |------------------------------|---------|
@@ -42,8 +44,9 @@ SUPERHARNESS is a command-driven development workflow. Users explicitly choose t
 | `/superharness:iterate` | When plan needs updates based on feedback |
 | `/superharness:debug` | When investigating issues - 4-phase root cause analysis |
 | `/superharness:gamedev` | For game projects - playtesting gates instead of TDD |
-| `/superharness:handoff` | When context is filling up - create handoff document |
-| `/superharness:resume` | When resuming from a handoff |
+| `/superharness:handoff` | When context is filling up - create handoff checkpoint |
+| `/superharness:resume` | Resume from handoff - picker dialog + lifecycle management |
+| `/superharness:resolve` | Resolve handoff explicitly (complete, supersede, abandon) |
 | `/superharness:backlog` | View/manage bugs, deferred features, tech debt |
 | `/superharness:status` | Check current progress and get recommendations |
 
@@ -122,9 +125,11 @@ All work is tracked in `.harness/`:
 ├── NNN-feature-slug/             # Per-feature work
 │   ├── research.md               # Codebase + external research
 │   ├── plan.md                   # Phased implementation plan
-│   └── handoff.md                # Context handoff (if paused)
+│   ├── handoff.md                # Context handoff (if paused)
+│   └── archive/                  # Resolved handoffs
 └── handoffs/                     # Cross-feature handoffs
-    └── YYYY-MM-DD_HH-MM-SS_description.md
+    ├── YYYY-MM-DD_HH-MM-SS_description.md
+    └── archive/                  # Resolved handoffs
 ```
 
 ## Progress Tracking
