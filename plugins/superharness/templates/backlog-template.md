@@ -1,3 +1,11 @@
+---
+date: YYYY-MM-DDTHH:MM:SSZ
+researcher: Claude
+topic: "Project Backlog"
+tags: [backlog, bugs, tech-debt, deferred]
+status: active
+---
+
 # BACKLOG
 
 Last Updated: YYYY-MM-DD

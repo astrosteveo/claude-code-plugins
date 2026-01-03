@@ -247,6 +247,18 @@ npm test  # All tests should pass
 | "Just restart the service" | That's not debugging, that's hoping. |
 | "It worked before" | What changed? Investigate. |
 
+## What If (Edge Cases)
+
+| Scenario | How to Handle |
+|----------|---------------|
+| No logs available | Use code tracing, add temporary logging, check stdout/stderr |
+| Issue is intermittent | Document reproduction steps, add monitoring/logging to capture next occurrence |
+| Issue is in third-party code | Document external dependency issue, suggest workaround or upstream report |
+| No working example exists | Research external patterns, document expected behavior from specs/docs |
+| Environment-specific issue | Document environment differences, suggest environment parity check |
+| User insists on quick fix | Explain risks, if they persist get explicit confirmation and document |
+| Root cause is unclear after 3 attempts | Escalate to user with findings, suggest architectural review |
+
 ## Cross-References
 
 - After debugging: `/superharness:create-plan` to plan the fix

@@ -262,6 +262,18 @@ User: Manual testing complete, looks good!
 Agent: Proceeding to Phase 2...
 ```
 
+## What If (Edge Cases)
+
+| Scenario | How to Handle |
+|----------|---------------|
+| No test framework exists | Ask user if they want to add one; if no, document manual verification steps instead |
+| Tests can't be written first | Rare but valid for some UI/visual work; document why and get user approval |
+| Plan file doesn't exist | Ask for path; if truly missing, suggest `/superharness:create-plan` first |
+| Plan is outdated/wrong | Stop, run `/superharness:iterate` to update plan before proceeding |
+| Phase depends on external service | Document dependency, provide mock/stub approach, or flag as blocked |
+| Build/tests take too long | Run subset, note which tests were skipped, run full suite at phase end |
+| User wants to skip phases | Explain risks, get explicit confirmation, document skipped phases |
+
 ## Cross-References
 
 - To validate after implementation: `/superharness:validate`

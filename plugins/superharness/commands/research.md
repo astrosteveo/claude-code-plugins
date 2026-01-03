@@ -145,6 +145,17 @@ If the user has follow-ups:
 - Document cross-component connections and system interactions
 - Include temporal context (when research was conducted)
 
+## What If (Edge Cases)
+
+| Scenario | How to Handle |
+|----------|---------------|
+| No codebase exists (greenfield) | Skip codebase agents, focus on web-researcher for API docs and best practices |
+| Web search unavailable | Note limitation, rely on codebase patterns and training knowledge (flag as potentially stale) |
+| Topic is non-technical | Use web-researcher only, skip codebase agents, document findings differently |
+| Research question is too broad | Ask user to narrow scope, or break into multiple research sessions |
+| External API has no documentation | Search GitHub issues, Stack Overflow, community forums for usage examples |
+| Conflicting information found | Document all perspectives with sources, recommend user decides |
+
 ## Cross-References
 
 - After research, use `/superharness:create-plan` to create an implementation plan

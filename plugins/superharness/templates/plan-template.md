@@ -1,8 +1,14 @@
-# Plan: [Feature Name]
+---
+date: YYYY-MM-DDTHH:MM:SSZ
+researcher: Claude
+topic: "[Brief Topic Description]"
+tags: [plan, feature-name, relevant-tags]
+status: draft
+feature_directory: ".harness/NNN-feature-slug/"
+research: ".harness/NNN-feature-slug/research.md"
+---
 
-**Date:** YYYY-MM-DD
-**Feature Directory:** `.harness/NNN-feature-slug/`
-**Research:** [Link to research.md]
+# Plan: [Feature Name]
 
 ## Overview
 

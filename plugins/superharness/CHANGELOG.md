@@ -8,8 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Removed
-- `spec-reviewer` agent (unused)
-- `code-quality-reviewer` agent (unused)
+- `spec-reviewer` agent - was intended for plan compliance verification but overlaps with `harness-analyzer` and `verification` skill
+- `code-quality-reviewer` agent - functionality better handled by IDE linters and the `verification` skill
 
 ## [0.1.0] - 2026-01-02
 
@@ -36,13 +36,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `verification` - Evidence before completion claims
 - `systematic-debugging` - 4-phase root cause analysis
 
-#### Agents (8 total)
+#### Agents (6 total)
 - `codebase-locator` - Find WHERE files are (paths only)
 - `codebase-analyzer` - Analyze HOW code works (file:line refs)
 - `codebase-pattern-finder` - Find SIMILAR implementations
 - `web-researcher` - External API/version verification
-- `spec-reviewer` - Plan compliance verification
-- `code-quality-reviewer` - Quality review with confidence score
 - `harness-locator` - Find .harness/ documents
 - `harness-analyzer` - Extract insights from .harness/
 

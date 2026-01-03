@@ -85,13 +85,11 @@ superharness/
 │   ├── resolve.md                # NEW: Resolve handoff lifecycle
 │   ├── backlog.md
 │   └── status.md
-├── agents/                       # 8 agents
+├── agents/                       # 6 agents
 │   ├── codebase-locator.md
 │   ├── codebase-analyzer.md
 │   ├── codebase-pattern-finder.md
 │   ├── web-researcher.md
-│   ├── spec-reviewer.md
-│   ├── code-quality-reviewer.md
 │   ├── harness-locator.md
 │   └── harness-analyzer.md
 ├── skills/                       # Loadable disciplines
@@ -106,6 +104,7 @@ superharness/
 │   ├── session-start.sh
 │   └── test-session-start.sh     # Hook testing script
 ├── templates/
+│   ├── README.md                 # Template validation rules
 │   ├── plan-template.md
 │   ├── research-template.md
 │   ├── handoff-template.md
@@ -196,6 +195,25 @@ reason: approach changed"
 2. **Changelog**: Update `CHANGELOG.md`
 3. **Tag**: `git tag -a v0.X.Y -m "v0.X.Y - Description"`
 4. **Push**: `git push origin main --tags`
+
+## Glossary
+
+| Term | Definition |
+|------|------------|
+| **Phase** | A discrete unit of implementation work within a plan. Numbered sequentially (Phase 1, Phase 2, etc.) |
+| **Phase Trailer** | Git commit trailer `phase(N): complete` that marks a phase as done |
+| **Feature** | A complete unit of functionality being developed, tracked in `.harness/NNN-feature/` |
+| **Task** | An individual work item within a phase |
+| **Plan** | Implementation plan document (`.harness/NNN-feature/plan.md`) with phases and tasks |
+| **Handoff** | Context preservation document for pausing/resuming work across sessions |
+| **Skill** | Loadable discipline content (TDD, verification, etc.) injected into commands |
+| **Foundation Skill** | `superharness-core` - injected at every session start |
+| **Gate** | A checkpoint requiring verification before proceeding (human gate, TDD gate, etc.) |
+| **Verification** | Evidence-based confirmation that work is complete (not assumptions) |
+| **Research** | Codebase exploration + external API/version verification before planning |
+| **RED** | TDD phase where test is written and verified to fail |
+| **GREEN** | TDD phase where minimal code is written to pass the test |
+| **REFACTOR** | TDD phase where code is cleaned up while keeping tests green |
 
 ## Philosophy
 

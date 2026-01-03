@@ -103,11 +103,44 @@ load-skills:
 ---
 ```
 
-When command is invoked:
-1. Claude Code reads command file
-2. Parses `load-skills` array
-3. Prepends each skill's SKILL.md content
-4. Claude receives: [skill content] + [command instructions]
+### How It Works Technically
+
+When a command is invoked (e.g., `/superharness:implement`):
+
+1. **Command file read**: Claude Code reads `commands/implement.md`
+2. **Frontmatter parsed**: Extracts `load-skills: [tdd, verification]`
+3. **Skills resolved**: For each skill name, locates `skills/{name}/SKILL.md`
+4. **Content assembled**: Skills prepended in order before command content
+5. **Prompt delivered**: Claude receives: `[tdd SKILL.md] + [verification SKILL.md] + [implement.md instructions]`
+
+### Error Handling
+
+| Scenario | Behavior |
+|----------|----------|
+| Skill not found | Claude Code logs warning, continues without that skill |
+| Malformed frontmatter | Command may fail to parse; check YAML syntax |
+| Empty load-skills | No skills loaded (valid for commands like `resume`) |
+| Circular references | Skills don't load other skills; no cycles possible |
+
+### Frontmatter Requirements
+
+**Required fields:**
+- `description` - One-line description shown in command help
+
+**Optional fields:**
+- `load-skills` - Array of skill names to prepend (default: none)
+- `argument-hint` - Placeholder text for command arguments
+
+**Example with all fields:**
+```yaml
+---
+description: "Execute plan with TDD and verification gates"
+argument-hint: "<path to plan.md>"
+load-skills:
+  - tdd
+  - verification
+---
+```
 
 ## Command-to-Skill Mapping
 

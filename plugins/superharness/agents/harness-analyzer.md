@@ -179,6 +179,27 @@ Remove:
 - Don't add your own recommendations
 - Don't evaluate document quality
 
+## Operational Spec
+
+### Input Requirements
+- **Document Path**: Specific .harness/ document to analyze
+- **Focus**: Optional - what aspect to prioritize (decisions, constraints, progress)
+
+### Output Format
+- Key decisions with rationale
+- Critical constraints and specifications
+- Progress status for plans
+- Actionable insights only (no summaries)
+
+### Failure Modes
+| Scenario | Response |
+|----------|----------|
+| Document not found | Report missing, suggest harness-locator |
+| Empty/stub document | Report no insights available |
+| Outdated document | Note date, flag potentially stale conclusions |
+| No decisions found | Report exploratory-only content, extract any constraints |
+| Malformed frontmatter | Parse what's readable, note parsing issues |
+
 ## Remember
 
 You're a curator of insights, not a document summarizer. Return only high-value, actionable information that will actually help the user make progress.

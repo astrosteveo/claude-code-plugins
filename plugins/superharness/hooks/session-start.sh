@@ -4,6 +4,37 @@
 
 set -euo pipefail
 
+# =============================================================================
+# CONFIGURATION (override via environment variables)
+# =============================================================================
+
+# How many days before handoffs are considered stale (default: 7)
+HANDOFF_DAYS_THRESHOLD="${SUPERHARNESS_HANDOFF_DAYS:-7}"
+
+# Regex pattern for detecting phase completion trailers
+PHASE_TRAILER_PATTERN="${SUPERHARNESS_PHASE_PATTERN:-^phase\([0-9]+\): complete$}"
+
+# Regex pattern for phase headers in plan files
+PHASE_HEADER_PATTERN="${SUPERHARNESS_PHASE_HEADER:-^## Phase [0-9]+:}"
+
+# =============================================================================
+# HELPER FUNCTIONS
+# =============================================================================
+
+# Check if we're in a git repository
+is_git_repo() {
+    git rev-parse --git-dir >/dev/null 2>&1
+}
+
+# Safe mktemp with fallback
+safe_mktemp() {
+    mktemp 2>/dev/null || echo "/tmp/superharness-$$"
+}
+
+# =============================================================================
+# INITIALIZATION
+# =============================================================================
+
 # Determine plugin root directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
@@ -35,7 +66,7 @@ if [ -d ".harness" ]; then
         fi
 
         # Count total phases from plan header (look for "## Phase N:" patterns)
-        total_phases=$(grep -cE "^## Phase [0-9]+:" "$plan_file" 2>/dev/null || echo "0")
+        total_phases=$(grep -cE "$PHASE_HEADER_PATTERN" "$plan_file" 2>/dev/null || echo "0")
         total_phases=${total_phases:-0}
 
         if [ "$total_phases" -eq 0 ]; then
@@ -49,7 +80,7 @@ if [ -d ".harness" ]; then
 
         if [ -n "$plan_sha" ]; then
             # Count phase trailers only in commits after the plan was created
-            completed_phases=$(git log "${plan_sha}..HEAD" --format=%B 2>/dev/null | grep -cE "^phase\([0-9]+\): complete$" || echo "0")
+            completed_phases=$(git log "${plan_sha}..HEAD" --format=%B 2>/dev/null | grep -cE "$PHASE_TRAILER_PATTERN" || echo "0")
         else
             # Fallback: plan not in git yet, no phases complete
             completed_phases=0
@@ -74,8 +105,12 @@ fi
 GIT_LOG_CACHE=""
 get_git_log_cache() {
     if [ -z "$GIT_LOG_CACHE" ]; then
-        GIT_LOG_CACHE=$(mktemp)
-        git log --all --format=%B 2>/dev/null > "$GIT_LOG_CACHE"
+        GIT_LOG_CACHE=$(safe_mktemp)
+        if is_git_repo; then
+            git log --all --format=%B 2>/dev/null > "$GIT_LOG_CACHE" || true
+        else
+            touch "$GIT_LOG_CACHE"
+        fi
     fi
     echo "$GIT_LOG_CACHE"
 }
@@ -168,7 +203,7 @@ check_handoff() {
     current_timestamp=$(date +%s)
     days_old=$(( (current_timestamp - handoff_timestamp) / 86400 ))
 
-    if [ "$days_old" -lt 7 ]; then
+    if [ "$days_old" -lt "$HANDOFF_DAYS_THRESHOLD" ]; then
         PENDING_HANDOFFS="${PENDING_HANDOFFS}Handoff: ${handoff_topic} (${days_old} days old)\\nFile: ${handoff_file}\\n\\n"
     fi
 }

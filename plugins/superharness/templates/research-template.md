@@ -1,8 +1,14 @@
-# Research: [Feature Name]
+---
+date: YYYY-MM-DDTHH:MM:SSZ
+researcher: Claude
+topic: "[Brief Topic Description]"
+tags: [research, feature-name, relevant-tags]
+status: in_progress
+context: "[What task this research supports]"
+feature_directory: ".harness/NNN-feature-slug/"
+---
 
-**Date:** YYYY-MM-DD
-**Context:** [What task this research supports]
-**Feature Directory:** `.harness/NNN-feature-slug/`
+# Research: [Feature Name]
 
 ---
 
