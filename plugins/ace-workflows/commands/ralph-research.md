@@ -4,7 +4,7 @@ description: Research highest priority Linear ticket needing investigation
 
 ## PART I - IF A LINEAR TICKET IS MENTIONED
 
-0c. use `linear` cli to fetch the selected item into thoughts with the ticket number - ./thoughts/shared/tickets/ENG-xxxx.md
+0c. use `linear` cli to fetch the selected item into thoughts with the ticket number - ./.harness/shared/tickets/ENG-xxxx.md
 0d. read the ticket and all comments to understand what research is needed and any previous attempts
 
 ## PART I - IF NO TICKET IS MENTIONED
@@ -12,7 +12,7 @@ description: Research highest priority Linear ticket needing investigation
 0.  read .claude/commands/linear.md
 0a. fetch the top 10 priority items from linear in status "research needed" using the MCP tools, noting all items in the `links` section
 0b. select the highest priority SMALL or XS issue from the list (if no SMALL or XS issues exist, EXIT IMMEDIATELY and inform the user)
-0c. use `linear` cli to fetch the selected item into thoughts with the ticket number - ./thoughts/shared/tickets/ENG-xxxx.md
+0c. use `linear` cli to fetch the selected item into thoughts with the ticket number - ./.harness/shared/tickets/ENG-xxxx.md
 0d. read the ticket and all comments to understand what research is needed and any previous attempts
 
 ## PART II - NEXT STEPS
@@ -32,7 +32,7 @@ think deeply about the research needs
 2d. examine existing similar features or related code
 2e. identify technical constraints and opportunities
 2f. Be unbiased - don't think too much about an ideal implementation plan, just document all related files and how the systems work today
-2g. document findings in a new thoughts document: `thoughts/shared/research/YYYY-MM-DD-ENG-XXXX-description.md`
+2g. document findings in a new thoughts document: `.harness/shared/research/YYYY-MM-DD-ENG-XXXX-description.md`
    - Format: `YYYY-MM-DD-ENG-XXXX-description.md` where:
      - YYYY-MM-DD is today's date
      - ENG-XXXX is the ticket number (omit if no ticket)
@@ -67,7 +67,7 @@ Research topic: [research topic description]
 
 The research has been:
 
-Created at thoughts/shared/research/YYYY-MM-DD-ENG-XXXX-description.md
+Created at .harness/shared/research/YYYY-MM-DD-ENG-XXXX-description.md
 Synced to thoughts repository
 Attached to the Linear ticket
 Ticket moved to "research in review" status

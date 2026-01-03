@@ -13,9 +13,9 @@ INCOMPLETE_PLANS=""
 PENDING_HANDOFFS=""
 WORK_NOTIFICATION=""
 
-# Check for incomplete plans in thoughts/shared/plans/
-if [ -d "thoughts/shared/plans" ]; then
-    for plan_file in thoughts/shared/plans/*.md; do
+# Check for incomplete plans in .harness/shared/plans/
+if [ -d ".harness/shared/plans" ]; then
+    for plan_file in .harness/shared/plans/*.md; do
         [ -f "$plan_file" ] || continue
 
         # Extract plan name from filename
@@ -50,10 +50,10 @@ if [ -d "thoughts/shared/plans" ]; then
     done
 fi
 
-# Check for pending handoffs in thoughts/shared/handoffs/
-if [ -d "thoughts/shared/handoffs" ]; then
+# Check for pending handoffs in .harness/shared/handoffs/
+if [ -d ".harness/shared/handoffs" ]; then
     # Get most recent handoff (by modification time)
-    recent_handoff=$(ls -t thoughts/shared/handoffs/*.md 2>/dev/null | head -1 || echo "")
+    recent_handoff=$(ls -t .harness/shared/handoffs/*.md 2>/dev/null | head -1 || echo "")
 
     if [ -n "$recent_handoff" ] && [ -f "$recent_handoff" ]; then
         handoff_name=$(basename "$recent_handoff" .md)
@@ -105,7 +105,7 @@ ACE_CONTEXT="${ACE_CONTEXT}- \`/ace-workflows:iterate-plan\` - Update existing p
 ACE_CONTEXT="${ACE_CONTEXT}- \`/ace-workflows:create-handoff\` - Create context handoff document\\n"
 ACE_CONTEXT="${ACE_CONTEXT}- \`/ace-workflows:resume-handoff\` - Resume from handoff\\n"
 ACE_CONTEXT="${ACE_CONTEXT}- \`/ace-workflows:debug\` - Investigate issues\\n\\n"
-ACE_CONTEXT="${ACE_CONTEXT}**No-Thoughts Variants (for projects without thoughts/ directory):**\\n"
+ACE_CONTEXT="${ACE_CONTEXT}**No-Thoughts Variants (for projects without .harness/ directory):**\\n"
 ACE_CONTEXT="${ACE_CONTEXT}- \`/ace-workflows:research-codebase-nt\`, \`/ace-workflows:create-plan-nt\`, \`/ace-workflows:iterate-plan-nt\`"
 
 # Output context injection as JSON

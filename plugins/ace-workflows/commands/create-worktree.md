@@ -14,9 +14,9 @@ launch prompt
 command to run
 
 **IMPORTANT PATH USAGE:**
-- The thoughts/ directory is synced between the main repo and worktrees
-- Always use ONLY the relative path starting with `thoughts/shared/...` without any directory prefix
-- Example: `thoughts/shared/plans/fix-mcp-keepalive-proper.md` (not the full absolute path)
+- The .harness/ directory is synced between the main repo and worktrees
+- Always use ONLY the relative path starting with `.harness/shared/...` without any directory prefix
+- Example: `.harness/shared/plans/fix-mcp-keepalive-proper.md` (not the full absolute path)
 - This works because thoughts are synced and accessible from the worktree
 
 3a. confirm with the user by sending a message to the Human

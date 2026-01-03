@@ -5,7 +5,7 @@ model: sonnet
 
 ## PART I - IF A TICKET IS MENTIONED
 
-0c. use `linear` cli to fetch the selected item into thoughts with the ticket number - ./thoughts/shared/tickets/ENG-xxxx.md
+0c. use `linear` cli to fetch the selected item into thoughts with the ticket number - ./.harness/shared/tickets/ENG-xxxx.md
 0d. read the ticket and all comments to understand the implementation plan and any concerns
 
 ## PART I - IF NO TICKET IS MENTIOND
@@ -13,7 +13,7 @@ model: sonnet
 0.  read .claude/commands/linear.md
 0a. fetch the top 10 priority items from linear in status "ready for dev" using the MCP tools, noting all items in the `links` section
 0b. select the highest priority SMALL or XS issue from the list (if no SMALL or XS issues exist, EXIT IMMEDIATELY and inform the user)
-0c. use `linear` cli to fetch the selected item into thoughts with the ticket number - ./thoughts/shared/tickets/ENG-xxxx.md
+0c. use `linear` cli to fetch the selected item into thoughts with the ticket number - ./.harness/shared/tickets/ENG-xxxx.md
 0d. read the ticket and all comments to understand the implementation plan and any concerns
 
 ## PART II - NEXT STEPS

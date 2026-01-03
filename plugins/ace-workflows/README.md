@@ -25,13 +25,13 @@ ACE-Workflows provides a disciplined approach to AI-assisted development through
 |---------|-------------|
 | `/ace-workflows:research-codebase` | Document codebase as-is with thoughts directory for historical context |
 | `/ace-workflows:create-plan` | Create detailed implementation plans through interactive research and iteration |
-| `/ace-workflows:implement-plan` | Implement technical plans from thoughts/shared/plans with verification |
+| `/ace-workflows:implement-plan` | Implement technical plans from .harness/shared/plans with verification |
 | `/ace-workflows:validate-plan` | Validate implementation against plan, verify success criteria, identify issues |
 | `/ace-workflows:iterate-plan` | Iterate on existing implementation plans with thorough research and updates |
 
 ### No-Thoughts Variants
 
-For projects without a `thoughts/` directory structure:
+For projects without a `.harness/` directory structure:
 
 | Command | Description |
 |---------|-------------|
@@ -105,12 +105,12 @@ flowchart TD
 ```
 
 
-## thoughts/ Directory Structure
+## .harness/ Directory Structure
 
-The plugin uses a `thoughts/` directory to persist knowledge across sessions:
+The plugin uses a `.harness/` directory to persist knowledge across sessions:
 
 ```
-thoughts/
+.harness/
 ├── shared/                    # Team-accessible documents
 │   ├── research/              # Codebase research findings
 │   │   └── YYYY-MM-DD-topic.md
@@ -122,7 +122,7 @@ thoughts/
 └── global/                    # Cross-repository thoughts (optional)
 ```
 
-**For projects without a thoughts/ directory**, use the `-nt` (no-thoughts) command variants which work with a simpler structure like `research/` and `plans/` directories.
+**For projects without a .harness/ directory**, use the `-nt` (no-thoughts) command variants which work with a simpler structure like `research/` and `plans/` directories.
 
 ## Agent Descriptions
 
@@ -133,7 +133,7 @@ The plugin uses specialized sub-agents for parallel research:
 | **codebase-locator** | Locates WHERE files live - finds files, directories, and components relevant to a feature. Returns categorized file lists with paths. Does NOT analyze code contents. |
 | **codebase-analyzer** | Analyzes HOW code works - traces data flow, implementation details, and technical workings with precise file:line references. A documentarian that explains without suggesting improvements. |
 | **codebase-pattern-finder** | Finds SIMILAR implementations - existing patterns, usage examples, and code templates in the codebase. Returns concrete code examples with file:line references. Does NOT evaluate which patterns are better. |
-| **thoughts-locator** | Discovers relevant documents in thoughts/ directory - finds tickets, research, plans, and handoffs. Returns list of relevant docs with paths. Does NOT analyze document contents deeply. |
+| **thoughts-locator** | Discovers relevant documents in .harness/ directory - finds tickets, research, plans, and handoffs. Returns list of relevant docs with paths. Does NOT analyze document contents deeply. |
 | **thoughts-analyzer** | Extracts HIGH-VALUE insights from thought documents - decisions, constraints, rationale, and actionable information. Filters ruthlessly for what matters NOW. Does NOT provide summaries. |
 | **web-search-researcher** | EXTERNAL research specialist - finds current APIs, versions, best practices, and documentation from the web. Returns findings with source links and advanced search strategies. |
 
@@ -186,7 +186,7 @@ Claude: Let me research the codebase first.
 [Research complete]
 
 Now let's create an implementation plan.
-/ace-workflows:create-plan thoughts/shared/research/2025-01-02-authentication.md
+/ace-workflows:create-plan .harness/shared/research/2025-01-02-authentication.md
 ```
 
 ### Resuming Previous Work
@@ -197,10 +197,10 @@ User: What were we working on?
 Claude: [Session hook detects incomplete work]
 I found incomplete work:
 - Plan: implement-auth (2/4 phases complete)
-- File: thoughts/shared/plans/2025-01-02-implement-auth.md
+- File: .harness/shared/plans/2025-01-02-implement-auth.md
 
 Would you like to resume? I can continue with:
-/ace-workflows:implement-plan thoughts/shared/plans/2025-01-02-implement-auth.md
+/ace-workflows:implement-plan .harness/shared/plans/2025-01-02-implement-auth.md
 ```
 
 ### Creating a Handoff
@@ -212,7 +212,7 @@ Claude: I'll create a handoff document to preserve our progress.
 /ace-workflows:create-handoff implement-auth-phase-2
 
 Handoff created! Resume tomorrow with:
-/ace-workflows:resume-handoff thoughts/shared/handoffs/2025-01-02_17-30-00_implement-auth-phase-2.md
+/ace-workflows:resume-handoff .harness/shared/handoffs/2025-01-02_17-30-00_implement-auth-phase-2.md
 ```
 
 ## License
