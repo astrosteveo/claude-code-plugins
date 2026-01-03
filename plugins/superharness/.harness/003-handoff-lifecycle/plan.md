@@ -133,21 +133,21 @@ Create `/superharness:resolve` command for explicit handoff resolution with git 
 
 ### Tasks (TDD Required):
 
-- [ ] Task 1: Create command file with frontmatter
+- [x] Task 1: Create command file with frontmatter
   - Description: "Resolve a handoff (mark complete or abandon)"
   - Argument hint: "<handoff path> [--archive] [--abandon]"
 
-- [ ] Task 2: Implement resolution flow
+- [x] Task 2: Implement resolution flow
   - Read handoff to verify it exists
   - Confirm resolution with user
   - Create git commit with trailer
 
-- [ ] Task 3: Implement archive mechanism
+- [x] Task 3: Implement archive mechanism
   - If --archive flag or user confirms
   - Move to `.harness/handoffs/archive/` (cross-feature) or `.harness/NNN-slug/archive/` (feature-specific)
   - Create archive directory if needed
 
-- [ ] Task 4: Implement abandon variant
+- [x] Task 4: Implement abandon variant
   - If --abandon flag
   - Use different trailer: `handoff-abandoned: <path>`
   - Different commit message
@@ -155,8 +155,8 @@ Create `/superharness:resolve` command for explicit handoff resolution with git 
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] Command file exists with valid frontmatter
-- [ ] Git trailer created after resolution
+- [x] Command file exists with valid frontmatter
+- [ ] Git trailer created after resolution (tested in Phase 5)
 
 #### Manual Verification:
 - [ ] Run `/superharness:resolve .harness/test/handoff.md`
